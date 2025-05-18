@@ -21,8 +21,7 @@ public class CabinetController : MonoBehaviour
 
     private void Awake()
     {
-        if (estadoVacio != null) estadoVacio.SetActive(true);
-        if (estadoLleno != null) estadoLleno.SetActive(false);
+        ActualizarEstadoVisual(false);
     }
 
     public void IntentarGuardarPlatos(InteraccionJugador jugador)
@@ -32,29 +31,36 @@ public class CabinetController : MonoBehaviour
         GameObject obj = jugador.ObjetoTransportado;
         if (obj == null || !obj.CompareTag(tagObjetoRequerido)) return;
 
-        jugador.SoltarYDestruirObjeto();
-        GameObject platosVisuales = Instantiate(prefabPlatos1, jugador.puntoDeCarga.position, Quaternion.identity);
-        jugador.RecogerObjeto(platosVisuales);
+        Debug.Log("Guardando platos en el gabinete");
 
+        jugador.SoltarYDestruirObjeto(); // destruye el objeto visual transportado
 
         estaLleno = true;
-        if (estadoVacio != null) estadoVacio.SetActive(false);
-        if (estadoLleno != null) estadoLleno.SetActive(true);
+        ActualizarEstadoVisual(true);
 
         if (sonidoGuardar != null)
             AudioSource.PlayClipAtPoint(sonidoGuardar, transform.position);
     }
 
+
     public void SacarPlatosDelGabinete(InteraccionJugador jugador)
     {
         if (!estaLleno || jugador == null || jugador.EstaLlevandoObjeto() || prefabPlatos1 == null || jugador.puntoDeCarga == null) return;
+
+        Debug.Log("Sacando platos del gabinete");
 
         GameObject nuevosPlatos = Instantiate(prefabPlatos1, jugador.puntoDeCarga.position, Quaternion.identity);
         jugador.RecogerObjeto(nuevosPlatos);
 
         estaLleno = false;
-        if (estadoVacio != null) estadoVacio.SetActive(true);
-        if (estadoLleno != null) estadoLleno.SetActive(false);
+        ActualizarEstadoVisual(false);
+    }
+
+
+    private void ActualizarEstadoVisual(bool lleno)
+    {
+        if (estadoVacio != null) estadoVacio.SetActive(!lleno);
+        if (estadoLleno != null) estadoLleno.SetActive(lleno);
     }
 
     public string TagObjetoRequerido => tagObjetoRequerido;
