@@ -391,11 +391,11 @@ PrefabInstance:
       objectReference: {fileID: 441302571}
     - target: {fileID: 3083488791747815759, guid: ed52dcb83f03ca0419d0e2cbb4f5b908, type: 3}
       propertyPath: velocidadCorrer
-      value: 20
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 3083488791747815759, guid: ed52dcb83f03ca0419d0e2cbb4f5b908, type: 3}
       propertyPath: velocidadMovimiento
-      value: 10
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 8988786418309249222, guid: ed52dcb83f03ca0419d0e2cbb4f5b908, type: 3}
       propertyPath: m_LocalPosition.x
@@ -461,6 +461,7 @@ GameObject:
   m_Component:
   - component: {fileID: 333114509}
   - component: {fileID: 333114508}
+  - component: {fileID: 333114510}
   m_Layer: 3
   m_Name: Chair_Front
   m_TagString: Silla
@@ -535,6 +536,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1990889802}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &333114510
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 333114507}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5bcb52d2879145946b5480992988207b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  triggerAnimacionJugador: isTouchingObject
 --- !u!1 &357489272
 GameObject:
   m_ObjectHideFlags: 0
@@ -1811,7 +1825,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -2678,6 +2692,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1090895085}
   - component: {fileID: 1090895084}
+  - component: {fileID: 1090895086}
   m_Layer: 3
   m_Name: Table_Mid
   m_TagString: Mesa
@@ -2752,6 +2767,51 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &1090895086
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1090895083}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 2.875, y: 1.8125}
+    newSize: {x: 2.875, y: 1.8125}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 2.875, y: 1.8125}
+  m_EdgeRadius: 0
 --- !u!1 &1109911240
 GameObject:
   m_ObjectHideFlags: 0
@@ -5418,6 +5478,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1455584524}
   - component: {fileID: 1455584523}
+  - component: {fileID: 1455584525}
   m_Layer: 3
   m_Name: Chair_Right
   m_TagString: Silla
@@ -5492,6 +5553,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1990889802}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1455584525
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1455584522}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5bcb52d2879145946b5480992988207b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  triggerAnimacionJugador: isTouchingObject
 --- !u!1 &1548980914
 GameObject:
   m_ObjectHideFlags: 0
@@ -7721,6 +7795,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3633164248378021367, guid: 9b84d3c3d05c1c8439696b87385aee41, type: 3}
+      propertyPath: m_TagString
+      value: Sofa
+      objectReference: {fileID: 0}
     - target: {fileID: 4541004641510562395, guid: 9b84d3c3d05c1c8439696b87385aee41, type: 3}
       propertyPath: m_LocalPosition.x
       value: 56.84071
@@ -7763,6 +7841,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6470428044940347613, guid: 9b84d3c3d05c1c8439696b87385aee41, type: 3}
       propertyPath: m_Name
+      value: Sofa
+      objectReference: {fileID: 0}
+    - target: {fileID: 6533804135060411634, guid: 9b84d3c3d05c1c8439696b87385aee41, type: 3}
+      propertyPath: m_TagString
       value: Sofa
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -7895,6 +7977,26 @@ PrefabInstance:
     - target: {fileID: 3519262602946432501, guid: 19dbe556de8d04349a76fa864e9087c7, type: 3}
       propertyPath: m_Name
       value: CabinetPlatos
+      objectReference: {fileID: 0}
+    - target: {fileID: 3519262602946432501, guid: 19dbe556de8d04349a76fa864e9087c7, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3519262602946432501, guid: 19dbe556de8d04349a76fa864e9087c7, type: 3}
+      propertyPath: m_TagString
+      value: Cabinete
+      objectReference: {fileID: 0}
+    - target: {fileID: 3967441397314044447, guid: 19dbe556de8d04349a76fa864e9087c7, type: 3}
+      propertyPath: m_Size.x
+      value: 19.84
+      objectReference: {fileID: 0}
+    - target: {fileID: 3967441397314044447, guid: 19dbe556de8d04349a76fa864e9087c7, type: 3}
+      propertyPath: m_Size.y
+      value: 12.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3967441397314044447, guid: 19dbe556de8d04349a76fa864e9087c7, type: 3}
+      propertyPath: m_UsedByEffector
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7859557252829479869, guid: 19dbe556de8d04349a76fa864e9087c7, type: 3}
       propertyPath: prefabPlatos
