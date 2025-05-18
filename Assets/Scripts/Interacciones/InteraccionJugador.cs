@@ -49,8 +49,11 @@ public class InteraccionJugador : MonoBehaviour
     [SerializeField] private GameObject panelPopUp;
 
     [Header("Teleport")]
+    [Header("Teleport")]
     public Transform puntoSpawn1;
     public Transform puntoSpawn2;
+    public Transform puntoInicial; // este es el punto original del primer Player
+
 
 
 
@@ -359,6 +362,25 @@ public class InteraccionJugador : MonoBehaviour
             Debug.Log("Objeto cercano: " + objetoCercano.name);
 
         }
+
+        if (other.CompareTag("Misterio") && puntoSpawn1 != null)
+        {
+            TeleportarAPunto(puntoSpawn1);
+        }
+        else if (other.CompareTag("Misterio2") && puntoSpawn2 != null)
+        {
+            TeleportarAPunto(puntoSpawn2);
+        }
+        else if (other.CompareTag("Misterio3") && puntoInicial != null)
+        {
+            TeleportarAPunto(puntoInicial);
+        }
+        else if (other.CompareTag("Misterio4") && puntoInicial != null)
+        {
+            TeleportarAPunto(puntoInicial);
+        }
+
+
 
         if (other.CompareTag("Silla"))
         {

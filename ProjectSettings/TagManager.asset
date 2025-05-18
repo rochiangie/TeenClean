@@ -26,6 +26,8 @@ TagManager:
   - Mesa
   - Misterio2
   - Tarea
+  - Misterio3
+  - Misterio4
   layers:
   - Default
   - TransparentFX
