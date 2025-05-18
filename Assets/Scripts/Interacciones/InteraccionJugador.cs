@@ -1,4 +1,3 @@
-// InteraccionJugador.cs
 using UnityEngine;
 using TMPro;
 
@@ -36,11 +35,9 @@ public class InteraccionJugador : MonoBehaviour
     private GameObject objetoCercano;
     private bool enSuelo = true;
 
-    [Header("Teleport")]
-    public Transform puntoSpawn1;
-    public Transform puntoSpawn2;
-
-
+    [Header("Prefabs")]
+    public GameObject prefabPlatosDefinitivo;
+    //public GameObject PrefabPlatosDefinitivo;
 
     void Awake()
     {
@@ -48,24 +45,16 @@ public class InteraccionJugador : MonoBehaviour
         animator = GetComponent<Animator>();
     }
 
-    void Start()
-    {
-        if (mensajeUI != null)
-        {
-            mensajeUI.text = "PROBANDO MENSAJE";
-            mensajeUI.gameObject.SetActive(true);
-        }
-    }
-
-
     void Update()
     {
         input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
 
+        // Movimiento y animación
         bool corriendo = Input.GetKey(teclaCorrer);
         animator.SetBool("isRunning", corriendo && input != Vector2.zero);
         animator.SetBool("isWalking", !corriendo && input != Vector2.zero);
 
+        // Flip de sprite
         if (input.x != 0)
         {
             Vector3 escala = transform.localScale;
@@ -73,18 +62,15 @@ public class InteraccionJugador : MonoBehaviour
             transform.localScale = escala;
         }
 
-        if (mensajeUI != null)
-        {
-            mensajeUI.transform.position = transform.position + new Vector3(0, 1.5f, 0); // Ajustá el offset vertical
-        }
-
+        // Detectar objetos
         DetectarObjetosCercanos();
 
+        // Interacciones
         if (Input.GetKeyDown(teclaInteraccion))
         {
             if (gabinetePlatosCercano != null)
             {
-                if (!gabinetePlatosCercano.EstaLleno() && llevaObjeto && objetoTransportado != null && objetoTransportado.CompareTag(gabinetePlatosCercano.TagObjetoRequerido))
+                if (!gabinetePlatosCercano.EstaLleno() && llevaObjeto && objetoTransportado.CompareTag(gabinetePlatosCercano.TagObjetoRequerido))
                 {
                     gabinetePlatosCercano.IntentarGuardarPlatos(this);
                     return;
@@ -112,6 +98,7 @@ public class InteraccionJugador : MonoBehaviour
             }
         }
 
+        // Soltar objeto (si lleva algo y presiona E)
         if (Input.GetKeyDown(KeyCode.E) && llevaObjeto)
         {
             SoltarObjeto();
@@ -137,28 +124,17 @@ public class InteraccionJugador : MonoBehaviour
 
         foreach (var col in objetos)
         {
-            ControladorEstados interactuable = col.GetComponentInParent<ControladorEstados>();
-            if (interactuable != null)
-            {
+            if (col.TryGetComponent(out ControladorEstados interactuable))
                 objetoInteractuableCercano = interactuable;
-                Debug.Log($"Detectado objeto interactuable: {interactuable.nombreMostrado}");
-
-            }
 
             if (col.TryGetComponent(out CabinetController gabinete))
-            {
                 gabinetePlatosCercano = gabinete;
-            }
 
             if (!llevaObjeto && EsRecogible(col.tag))
-            {
                 objetoCercanoRecogible = col.gameObject;
-            }
 
             if (col.TryGetComponent(out InteraccionSilla silla))
-            {
                 sillaCercana = silla;
-            }
         }
     }
 
@@ -168,20 +144,16 @@ public class InteraccionJugador : MonoBehaviour
 
         if (gabinetePlatosCercano != null)
         {
-            string nombrePlato = gabinetePlatosCercano.PrefabPlatos != null
-                ? gabinetePlatosCercano.PrefabPlatos.name
-                : "objeto";
+            string nombreObjeto = gabinetePlatosCercano.EstaLleno()
+                ? (prefabPlatosDefinitivo != null ? prefabPlatosDefinitivo.name : "objeto")
+                : gabinetePlatosCercano.TagObjetoRequerido;
 
-            mensajeUI.text = gabinetePlatosCercano.EstaLleno()
-                ? $"Presiona {teclaInteraccion} para sacar {nombrePlato}"
-                : $"Presiona {teclaInteraccion} para guardar {gabinetePlatosCercano.TagObjetoRequerido}";
-
+            mensajeUI.text = $"Presiona {teclaInteraccion} para {(gabinetePlatosCercano.EstaLleno() ? "sacar" : "guardar")} {nombreObjeto}";
             mensajeUI.gameObject.SetActive(true);
         }
         else if (objetoInteractuableCercano != null)
         {
-            string nombreEstado = objetoInteractuableCercano.ObtenerNombreEstado();
-            mensajeUI.text = $"Presiona {teclaInteraccion} para usar {nombreEstado}";
+            mensajeUI.text = $"Presiona {teclaInteraccion} para usar {objetoInteractuableCercano.ObtenerNombreEstado()}";
             mensajeUI.gameObject.SetActive(true);
         }
         else if (objetoCercanoRecogible != null && !llevaObjeto)
@@ -215,20 +187,22 @@ public class InteraccionJugador : MonoBehaviour
         objetoTransportado.transform.SetParent(puntoDeCarga);
         objetoTransportado.transform.localPosition = Vector3.zero;
         objetoTransportado.transform.localRotation = Quaternion.identity;
-        objetoTransportado.transform.localScale = Vector3.one;
+        objetoTransportado.transform.localScale = new Vector3(1f / transform.localScale.x, 1f / transform.localScale.y, 1f);
 
-        // 🔽 AQUI insertás este bloque:
         SpriteRenderer srJugador = GetComponent<SpriteRenderer>();
         SpriteRenderer srObjeto = objetoTransportado.GetComponent<SpriteRenderer>();
 
         if (srJugador != null && srObjeto != null)
         {
             srObjeto.sortingLayerName = srJugador.sortingLayerName;
-            srObjeto.sortingOrder = Mathf.Max(srJugador.sortingOrder + 10, 10);
+            srObjeto.sortingOrder = srJugador.sortingOrder + 1;
         }
 
-        if (objetoTransportado.TryGetComponent(out Collider2D col)) col.enabled = false;
-        if (objetoTransportado.TryGetComponent(out Rigidbody2D rb))
+        Collider2D col = objetoTransportado.GetComponent<Collider2D>();
+        if (col != null) col.enabled = false;
+
+        Rigidbody2D rb = objetoTransportado.GetComponent<Rigidbody2D>();
+        if (rb != null)
         {
             rb.simulated = false;
             rb.isKinematic = true;
@@ -239,7 +213,7 @@ public class InteraccionJugador : MonoBehaviour
     }
 
 
-    void SoltarObjeto()
+    public void SoltarObjeto()
     {
         if (objetoTransportado == null) return;
 
@@ -261,10 +235,15 @@ public class InteraccionJugador : MonoBehaviour
     {
         if (!llevaObjeto || objetoTransportado == null) return;
 
+        string nombreObjeto = objetoTransportado.name;
         Destroy(objetoTransportado);
+        Debug.Log("Se destruyó: " + nombreObjeto);
+
         objetoTransportado = null;
         llevaObjeto = false;
     }
+
+
 
     public bool EstaLlevandoObjeto() => llevaObjeto;
 
@@ -276,19 +255,28 @@ public class InteraccionJugador : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
+        GameObject raiz = collision.transform.root.gameObject;
+
         if (collision.collider.CompareTag("Suelo") || collision.collider.CompareTag("Piso"))
         {
             enSuelo = true;
             animator.SetBool("isJumping", false);
         }
+        if (collision.collider.CompareTag("Inodoro") || collision.collider.CompareTag("Lavamanos") || collision.collider.CompareTag("Bañera"))
+        {
+            objetoCercano = collision.gameObject;
+            Debug.Log("Colisionó con: " + objetoCercano.name);
+        }
     }
 
     private void OnCollisionExit2D(Collision2D collision)
     {
-        if (collision.collider.CompareTag("Suelo"))
+        GameObject raiz = collision.transform.root.gameObject;
+
+        if (collision.gameObject == objetoCercano)
         {
-            enSuelo = false;
-            animator.SetBool("isJumping", true);
+            objetoCercano = null;
+            Debug.Log("Salió de la colisión");
         }
     }
 
@@ -301,39 +289,17 @@ public class InteraccionJugador : MonoBehaviour
             enSuelo = false;
         }
 
+        if (other.CompareTag("Inodoro") || other.CompareTag("Lavamanos") || other.CompareTag("Bañera"))
+        {
+            objetoCercano = other.gameObject;
+            Debug.Log("Objeto cercano: " + objetoCercano.name);
+        }
+
         if (other.CompareTag("Silla"))
         {
             animator.SetBool("isTouchingObject", true);
             sillaCercana = other.GetComponent<InteraccionSilla>();
         }
-
-        if (other.CompareTag("Misterio") && puntoSpawn1 != null)
-        {
-            TeleportarAPunto(puntoSpawn1);
-        }
-
-        if (other.CompareTag("Misterio2") && puntoSpawn2 != null)
-        {
-            TeleportarAPunto(puntoSpawn2);
-        }
-
-        if (other.CompareTag("Reloj"))
-        {
-            if (mensajeUI != null)
-            {
-                mensajeUI.text = $"Tocaste el reloj a las {System.DateTime.Now:HH:mm:ss}";
-                mensajeUI.gameObject.SetActive(true);
-                mensajeUI.transform.position = transform.position + new Vector3(0, 2f, 0); // flotando sobre el jugador
-            }
-        }
-
-    }
-
-    void TeleportarAPunto(Transform punto)
-    {
-        transform.position = punto.position;
-        rb.velocity = Vector2.zero;
-        animator.SetBool("isJumping", false);
     }
 
     void OnTriggerExit2D(Collider2D other)
@@ -343,5 +309,40 @@ public class InteraccionJugador : MonoBehaviour
             animator.SetBool("isTouchingObject", false);
             sillaCercana = null;
         }
+
+        if (other.gameObject == objetoCercano)
+        {
+            objetoCercano = null;
+            Debug.Log("Objeto salió de alcance");
+        }
     }
+
+    public void CrearPlatosEnMano()
+    {
+        if (prefabPlatosDefinitivo == null || puntoDeCarga == null) return;
+
+        GameObject platos = Instantiate(prefabPlatosDefinitivo);
+        platos.transform.SetParent(puntoDeCarga);
+        platos.transform.localPosition = Vector3.zero;
+        platos.transform.localRotation = Quaternion.identity;
+        platos.transform.localScale = Vector3.one * 3f;
+
+        RecogerObjeto(platos);
+    }
+
+    public void InstanciarPlatosDefinitivo()
+    {
+        if (prefabPlatosDefinitivo == null || puntoDeCarga == null) return;
+
+        GameObject nuevosPlatos = Instantiate(prefabPlatosDefinitivo);
+        nuevosPlatos.transform.SetParent(puntoDeCarga);
+        nuevosPlatos.transform.localPosition = Vector3.zero;
+        nuevosPlatos.transform.localRotation = Quaternion.identity;
+        nuevosPlatos.transform.localScale = Vector3.one * 3f;
+
+        RecogerObjeto(nuevosPlatos);
+    }
+
+
+
 }
