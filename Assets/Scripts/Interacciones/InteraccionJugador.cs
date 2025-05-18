@@ -52,14 +52,17 @@ public class InteraccionJugador : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
-        rb = GetComponent<Rigidbody2D>();
-        animator = GetComponent<Animator>();
 
-        // Asociar tags con prefabs
+        if (tagsRecogibles == null || tagsRecogibles.Length == 0)
+        {
+            tagsRecogibles = new string[] { "Platos", "Ropa", "Tarea" };
+        }
+
         prefabsPorTag.Add("Platos", prefabPlatosDefinitivo);
         prefabsPorTag.Add("Ropa", prefabRopa);
-        prefabsPorTag.Add("Tarea", prefabBookOpen);
+        prefabsPorTag.Add("Tarea", prefabTarea);
     }
+
 
     void Update()
     {
@@ -138,21 +141,36 @@ public class InteraccionJugador : MonoBehaviour
 
         Collider2D[] objetos = Physics2D.OverlapCircleAll(transform.position, rango, capaInteractuable);
 
+        float distanciaMinima = float.MaxValue;
+
         foreach (var col in objetos)
         {
+            Debug.Log("🔍 Detectado: " + col.name + " | Tag: " + col.tag);
+
             if (col.TryGetComponent(out ControladorEstados interactuable))
                 objetoInteractuableCercano = interactuable;
 
             if (col.TryGetComponent(out CabinetController gabinete))
                 gabinetePlatosCercano = gabinete;
 
-            if (!llevaObjeto && EsRecogible(col.tag))
-                objetoCercanoRecogible = col.gameObject;
+            if (EsRecogible(col.tag) && !llevaObjeto)
+            {
+                float distancia = Vector2.Distance(transform.position, col.transform.position);
+                if (distancia < distanciaMinima)
+                {
+                    objetoCercanoRecogible = col.gameObject;
+                    distanciaMinima = distancia;
+
+                    Debug.Log("🧺 Ropa asignada como objeto cercano recogible: " + col.name);
+                }
+            }
+
 
             if (col.TryGetComponent(out InteraccionSilla silla))
                 sillaCercana = silla;
         }
     }
+
 
     void ActualizarUI()
     {
@@ -203,8 +221,17 @@ public class InteraccionJugador : MonoBehaviour
         objetoTransportado.transform.SetParent(puntoDeCarga);
         objetoTransportado.transform.localPosition = Vector3.zero;
         objetoTransportado.transform.localRotation = Quaternion.identity;
-        objetoTransportado.transform.localScale = Vector3.one * 3f; // Ajustá el 3f si querés más grande o más chico
 
+        // Escala adaptada a la dirección del jugador y tamaño original del objeto
+        Vector3 escalaOriginal = objeto.transform.localScale;
+        Vector3 escalaFinal = new Vector3(
+            Mathf.Abs(escalaOriginal.x) * Mathf.Sign(transform.localScale.x),
+            Mathf.Abs(escalaOriginal.y),
+            1f
+        );
+        objeto.transform.localScale = escalaFinal;
+
+        // Asegurar orden de render
         SpriteRenderer srJugador = GetComponent<SpriteRenderer>();
         SpriteRenderer srObjeto = objetoTransportado.GetComponent<SpriteRenderer>();
 
@@ -223,15 +250,11 @@ public class InteraccionJugador : MonoBehaviour
             rb.simulated = false;
             rb.isKinematic = true;
         }
-        else if (!llevaObjeto && objetoCercanoRecogible != null && EsRecogible(objetoCercanoRecogible.tag))
-        {
-            RecogerObjeto(objetoCercanoRecogible);
-            return;
-        }
 
         objetoCercanoRecogible = null;
         ActualizarUI();
     }
+
 
 
     public void SoltarObjeto()
@@ -241,16 +264,29 @@ public class InteraccionJugador : MonoBehaviour
         objetoTransportado.transform.SetParent(null);
         objetoTransportado.transform.position = transform.position + Vector3.right;
 
+        // Restaurar escala visual si hace falta
+        Vector3 escalaOriginal = objetoTransportado.transform.localScale;
+        objetoTransportado.transform.localScale = new Vector3(
+            Mathf.Abs(escalaOriginal.x),
+            Mathf.Abs(escalaOriginal.y),
+            1f
+        );
+
+        // Reactivar colisión pero NO física
         if (objetoTransportado.TryGetComponent(out Collider2D col)) col.enabled = true;
+
         if (objetoTransportado.TryGetComponent(out Rigidbody2D rb))
         {
             rb.simulated = true;
+            rb.isKinematic = true; // ✅ Mantener Kinematic para que NO se caiga
             rb.velocity = Vector2.zero;
         }
 
         llevaObjeto = false;
         objetoTransportado = null;
     }
+
+
 
     public void SoltarYDestruirObjeto()
     {
@@ -392,9 +428,29 @@ public class InteraccionJugador : MonoBehaviour
         nuevo.transform.SetParent(puntoDeCarga);
         nuevo.transform.localPosition = Vector3.zero;
         nuevo.transform.localRotation = Quaternion.identity;
-        nuevo.transform.localScale = Vector3.one * 3f;
+
+        float escala = tag == "Tarea" ? 10f : 3f;
+        Vector3 escalaFinal = new Vector3(
+            escala * Mathf.Sign(transform.localScale.x),
+            escala * Mathf.Sign(transform.localScale.y),
+            1f
+        );
+        nuevo.transform.localScale = escalaFinal;
 
         RecogerObjeto(nuevo);
+        // Asegurar orden de render
+        SpriteRenderer srJugador = GetComponent<SpriteRenderer>();
+        SpriteRenderer srObjeto = nuevo.GetComponent<SpriteRenderer>();
+
+        if (srJugador != null && srObjeto != null)
+        {
+            srObjeto.sortingLayerName = srJugador.sortingLayerName;
+            srObjeto.sortingOrder = srJugador.sortingOrder + 1; // adelante del jugador
+        }
+
     }
+
+
+
 
 }

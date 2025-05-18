@@ -919,6 +919,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 3609443709605794928, guid: ab9d377e85982a2498a72478633edbc2, type: 3}
     - target: {fileID: 3083488791747815759, guid: ed52dcb83f03ca0419d0e2cbb4f5b908, type: 3}
+      propertyPath: prefabTarea
+      value: 
+      objectReference: {fileID: 3463493620268787513, guid: 134290439da50f64f84b35e83563dfd8, type: 3}
+    - target: {fileID: 3083488791747815759, guid: ed52dcb83f03ca0419d0e2cbb4f5b908, type: 3}
       propertyPath: puntoSpawn1
       value: 
       objectReference: {fileID: 806439918}
@@ -950,6 +954,10 @@ PrefabInstance:
       propertyPath: prefabPlatosDefinitivo
       value: 
       objectReference: {fileID: 3294271535427686419, guid: 1f54f87999d9b5b43b4b82c83bc55ef9, type: 3}
+    - target: {fileID: 3083488791747815759, guid: ed52dcb83f03ca0419d0e2cbb4f5b908, type: 3}
+      propertyPath: tagsRecogibles.Array.data[1]
+      value: Ropa
+      objectReference: {fileID: 0}
     - target: {fileID: 8988786418309249222, guid: ed52dcb83f03ca0419d0e2cbb4f5b908, type: 3}
       propertyPath: m_LocalPosition.x
       value: -51.3
@@ -7600,7 +7608,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 1690204873}
     m_Modifications:
     - target: {fileID: 1156256389057792994, guid: 908866529aef51a42bde28b5b0e307ce, type: 3}
       propertyPath: prefabRopa
@@ -7616,15 +7624,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4626920157283591810, guid: 908866529aef51a42bde28b5b0e307ce, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -74.16
+      value: -71.77327
       objectReference: {fileID: 0}
     - target: {fileID: 4626920157283591810, guid: 908866529aef51a42bde28b5b0e307ce, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -4.23
+      value: 12.214659
       objectReference: {fileID: 0}
     - target: {fileID: 4626920157283591810, guid: 908866529aef51a42bde28b5b0e307ce, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.4869498
+      value: 1.1728733
       objectReference: {fileID: 0}
     - target: {fileID: 4626920157283591810, guid: 908866529aef51a42bde28b5b0e307ce, type: 3}
       propertyPath: m_LocalRotation.w
@@ -7632,15 +7640,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4626920157283591810, guid: 908866529aef51a42bde28b5b0e307ce, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 4626920157283591810, guid: 908866529aef51a42bde28b5b0e307ce, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 4626920157283591810, guid: 908866529aef51a42bde28b5b0e307ce, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 4626920157283591810, guid: 908866529aef51a42bde28b5b0e307ce, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -7659,6 +7667,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 908866529aef51a42bde28b5b0e307ce, type: 3}
+--- !u!4 &1509766255 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4626920157283591810, guid: 908866529aef51a42bde28b5b0e307ce, type: 3}
+  m_PrefabInstance: {fileID: 1500283090}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1540678398
 GameObject:
   m_ObjectHideFlags: 0
@@ -8206,6 +8219,7 @@ Transform:
   - {fileID: 1091391381}
   - {fileID: 856233065}
   - {fileID: 2025889926}
+  - {fileID: 1509766255}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1748919505
@@ -10461,11 +10475,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2980120441759622185, guid: ab9d377e85982a2498a72478633edbc2, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -56.41327
+      value: -53.7
       objectReference: {fileID: 0}
     - target: {fileID: 2980120441759622185, guid: ab9d377e85982a2498a72478633edbc2, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 15.044659
+      value: 20.9
       objectReference: {fileID: 0}
     - target: {fileID: 2980120441759622185, guid: ab9d377e85982a2498a72478633edbc2, type: 3}
       propertyPath: m_LocalPosition.z
@@ -10526,11 +10540,11 @@ PrefabInstance:
       objectReference: {fileID: 3463493620268787513, guid: 134290439da50f64f84b35e83563dfd8, type: 3}
     - target: {fileID: 1156256389057792994, guid: 908866529aef51a42bde28b5b0e307ce, type: 3}
       propertyPath: tagObjetoRequerido
-      value: Ropa
+      value: Tarea
       objectReference: {fileID: 0}
     - target: {fileID: 2512872479426731146, guid: 908866529aef51a42bde28b5b0e307ce, type: 3}
       propertyPath: m_Name
-      value: CabineteRopa
+      value: CabineteLibros
       objectReference: {fileID: 0}
     - target: {fileID: 4626920157283591810, guid: 908866529aef51a42bde28b5b0e307ce, type: 3}
       propertyPath: m_LocalPosition.x
@@ -11274,4 +11288,3 @@ SceneRoots:
   - {fileID: 694450084}
   - {fileID: 54106768}
   - {fileID: 554270892}
-  - {fileID: 1500283090}
