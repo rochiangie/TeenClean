@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using System.Collections.Generic;
 
 [RequireComponent(typeof(Rigidbody2D), typeof(Animator))]
 public class InteraccionJugador : MonoBehaviour
@@ -19,7 +20,7 @@ public class InteraccionJugador : MonoBehaviour
 
     [Header("Transporte Objetos")]
     public Transform puntoDeCarga;
-    [SerializeField] private string[] tagsRecogibles = { "Platos", "RopaSucia", "Tarea" };
+    [SerializeField] private string[] tagsRecogibles = { "Platos", "Ropa", "Tarea" };
 
     private Rigidbody2D rb;
     private Animator animator;
@@ -38,11 +39,26 @@ public class InteraccionJugador : MonoBehaviour
     [Header("Prefabs")]
     public GameObject prefabPlatosDefinitivo;
     //public GameObject PrefabPlatosDefinitivo;
+    public GameObject prefabRopa;
+    public GameObject prefabBookOpen;
+    public GameObject prefabTarea;
+
+
+    private Dictionary<string, GameObject> prefabsPorTag = new Dictionary<string, GameObject>();
+
+
 
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        rb = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
+
+        // Asociar tags con prefabs
+        prefabsPorTag.Add("Platos", prefabPlatosDefinitivo);
+        prefabsPorTag.Add("Ropa", prefabRopa);
+        prefabsPorTag.Add("Tarea", prefabBookOpen);
     }
 
     void Update()
@@ -187,7 +203,7 @@ public class InteraccionJugador : MonoBehaviour
         objetoTransportado.transform.SetParent(puntoDeCarga);
         objetoTransportado.transform.localPosition = Vector3.zero;
         objetoTransportado.transform.localRotation = Quaternion.identity;
-        objetoTransportado.transform.localScale = new Vector3(3f, 3f, 1f);
+        objetoTransportado.transform.localScale = Vector3.one * 3f; // Ajustá el 3f si querés más grande o más chico
 
         SpriteRenderer srJugador = GetComponent<SpriteRenderer>();
         SpriteRenderer srObjeto = objetoTransportado.GetComponent<SpriteRenderer>();
@@ -206,6 +222,11 @@ public class InteraccionJugador : MonoBehaviour
         {
             rb.simulated = false;
             rb.isKinematic = true;
+        }
+        else if (!llevaObjeto && objetoCercanoRecogible != null && EsRecogible(objetoCercanoRecogible.tag))
+        {
+            RecogerObjeto(objetoCercanoRecogible);
+            return;
         }
 
         objetoCercanoRecogible = null;
@@ -343,6 +364,37 @@ public class InteraccionJugador : MonoBehaviour
         RecogerObjeto(nuevosPlatos);
     }
 
+    public void InstanciarRopa()
+    {
+        if (prefabRopa == null || puntoDeCarga == null) return;
 
+        GameObject ropa = Instantiate(prefabRopa);
+        ropa.transform.SetParent(puntoDeCarga);
+        ropa.transform.localPosition = Vector3.zero;
+        ropa.transform.localRotation = Quaternion.identity;
+        ropa.transform.localScale = Vector3.one * 3f;
+
+        RecogerObjeto(ropa);
+    }
+
+    public void InstanciarObjetoPorTag(string tag)
+    {
+        if (!prefabsPorTag.ContainsKey(tag))
+        {
+            Debug.LogWarning("⚠️ No hay prefab asignado para el tag: " + tag);
+            return;
+        }
+
+        GameObject prefab = prefabsPorTag[tag];
+        if (prefab == null || puntoDeCarga == null) return;
+
+        GameObject nuevo = Instantiate(prefab);
+        nuevo.transform.SetParent(puntoDeCarga);
+        nuevo.transform.localPosition = Vector3.zero;
+        nuevo.transform.localRotation = Quaternion.identity;
+        nuevo.transform.localScale = Vector3.one * 3f;
+
+        RecogerObjeto(nuevo);
+    }
 
 }

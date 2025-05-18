@@ -6,9 +6,6 @@ public class CabinetController : MonoBehaviour
     public GameObject estadoVacio;
     public GameObject estadoLleno;
 
-    [Header("Platos")]
-    //public GameObject prefabPLatosDefinitivo;
-
     [Header("Configuración")]
     [SerializeField] private KeyCode teclaInteraccion = KeyCode.E;
     [SerializeField] public string tagObjetoRequerido = "Platos";
@@ -22,7 +19,6 @@ public class CabinetController : MonoBehaviour
     {
         if (estadoVacio != null) estadoVacio.SetActive(true);
         if (estadoLleno != null) estadoLleno.SetActive(false);
-
     }
 
     public void IntentarGuardarPlatos(InteraccionJugador jugador)
@@ -70,25 +66,22 @@ public class CabinetController : MonoBehaviour
         Debug.Log("✅ Objeto guardado, estado actualizado.");
     }
 
-
     public void SacarPlatosDelGabinete(InteraccionJugador jugador)
     {
         if (!estaLleno || jugador == null || jugador.EstaLlevandoObjeto()) return;
 
-        jugador.InstanciarPlatosDefinitivo(); // ✨ Esto es clave
+        // ✅ Aquí llamamos al método genérico del jugador
+        jugador.InstanciarObjetoPorTag(tagObjetoRequerido);
 
         estaLleno = false;
         ActualizarEstadoVisual(false);
     }
-
 
     private void ActualizarEstadoVisual(bool lleno)
     {
         if (estadoVacio != null) estadoVacio.SetActive(!lleno);
         if (estadoLleno != null) estadoLleno.SetActive(lleno);
     }
-
-
 
     public string TagObjetoRequerido => tagObjetoRequerido;
 }
