@@ -23,6 +23,7 @@ TagManager:
   - Tapete
   - Ropa
   - Cama
+  - Mesa
   layers:
   - Default
   - TransparentFX
