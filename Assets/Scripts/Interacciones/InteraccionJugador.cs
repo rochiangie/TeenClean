@@ -120,6 +120,8 @@ public class InteraccionJugador : MonoBehaviour
             if (interactuable != null)
             {
                 objetoInteractuableCercano = interactuable;
+                Debug.Log($"Detectado objeto interactuable: {interactuable.nombreMostrado}");
+
             }
 
             if (col.TryGetComponent(out CabinetController gabinete))
@@ -151,6 +153,13 @@ public class InteraccionJugador : MonoBehaviour
                 : $"Presiona {teclaInteraccion} para guardar {gabinetePlatosCercano.TagObjetoRequerido}";
             mensajeUI.gameObject.SetActive(true);
         }
+        if (objetoInteractuableCercano != null)
+        {
+            Debug.Log("Mostrando mensaje de interacción");
+            mensajeUI.text = $"Presiona {teclaInteraccion} para usar {objetoInteractuableCercano.ObtenerNombreEstado()}";
+            mensajeUI.gameObject.SetActive(true);
+        }
+
         else if (objetoInteractuableCercano != null)
         {
             mensajeUI.text = $"Presiona {teclaInteraccion} para usar {objetoInteractuableCercano.ObtenerNombreEstado()}";
@@ -186,15 +195,16 @@ public class InteraccionJugador : MonoBehaviour
         objetoTransportado.transform.SetParent(puntoDeCarga);
         objetoTransportado.transform.localPosition = Vector3.zero;
         objetoTransportado.transform.localRotation = Quaternion.identity;
-        objetoTransportado.transform.localScale = new Vector3(1f / transform.localScale.x, 1f / transform.localScale.y, 1f);
+        objetoTransportado.transform.localScale = Vector3.one;
 
+        // 🔽 AQUI insertás este bloque:
         SpriteRenderer srJugador = GetComponent<SpriteRenderer>();
         SpriteRenderer srObjeto = objetoTransportado.GetComponent<SpriteRenderer>();
 
         if (srJugador != null && srObjeto != null)
         {
             srObjeto.sortingLayerName = srJugador.sortingLayerName;
-            srObjeto.sortingOrder = srJugador.sortingOrder + 1;
+            srObjeto.sortingOrder = Mathf.Max(srJugador.sortingOrder + 10, 10);
         }
 
         if (objetoTransportado.TryGetComponent(out Collider2D col)) col.enabled = false;
@@ -207,6 +217,7 @@ public class InteraccionJugador : MonoBehaviour
         objetoCercanoRecogible = null;
         ActualizarUI();
     }
+
 
     void SoltarObjeto()
     {

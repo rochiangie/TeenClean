@@ -8,7 +8,7 @@ public class CabinetController : MonoBehaviour
     public GameObject estadoLleno;
 
     [Header("Platos")]
-    public GameObject prefabPlatos;
+    public GameObject prefabPlatos1;
 
     [Header("Configuración")]
     [SerializeField] private KeyCode teclaInteraccion = KeyCode.E;
@@ -27,12 +27,15 @@ public class CabinetController : MonoBehaviour
 
     public void IntentarGuardarPlatos(InteraccionJugador jugador)
     {
-        if (estaLleno || jugador == null) return;
+        if (estaLleno || jugador == null || prefabPlatos1 == null) return;
 
         GameObject obj = jugador.ObjetoTransportado;
         if (obj == null || !obj.CompareTag(tagObjetoRequerido)) return;
 
         jugador.SoltarYDestruirObjeto();
+        GameObject platosVisuales = Instantiate(prefabPlatos1, jugador.puntoDeCarga.position, Quaternion.identity);
+        jugador.RecogerObjeto(platosVisuales);
+
 
         estaLleno = true;
         if (estadoVacio != null) estadoVacio.SetActive(false);
@@ -44,12 +47,9 @@ public class CabinetController : MonoBehaviour
 
     public void SacarPlatosDelGabinete(InteraccionJugador jugador)
     {
-        if (!estaLleno || jugador == null || jugador.EstaLlevandoObjeto() || prefabPlatos == null) return;
+        if (!estaLleno || jugador == null || jugador.EstaLlevandoObjeto() || prefabPlatos1 == null || jugador.puntoDeCarga == null) return;
 
-        Transform puntoCarga = jugador.puntoDeCarga;
-        if (puntoCarga == null) return;
-
-        GameObject nuevosPlatos = Instantiate(prefabPlatos, puntoCarga.position, Quaternion.identity);
+        GameObject nuevosPlatos = Instantiate(prefabPlatos1, jugador.puntoDeCarga.position, Quaternion.identity);
         jugador.RecogerObjeto(nuevosPlatos);
 
         estaLleno = false;
@@ -58,5 +58,5 @@ public class CabinetController : MonoBehaviour
     }
 
     public string TagObjetoRequerido => tagObjetoRequerido;
-    public GameObject PrefabPlatos => prefabPlatos;
+    public GameObject PrefabPlatos => prefabPlatos1;
 }
