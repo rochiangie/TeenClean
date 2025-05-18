@@ -6,9 +6,6 @@ public class CabinetController : MonoBehaviour
     public GameObject estadoVacio;
     public GameObject estadoLleno;
 
-    [Header("Platos")]
-    public GameObject prefabPlatos;
-
     [Header("Configuración")]
     [SerializeField] private KeyCode teclaInteraccion = KeyCode.E;
     [SerializeField] public string tagObjetoRequerido = "Platos";
@@ -69,38 +66,22 @@ public class CabinetController : MonoBehaviour
         Debug.Log("✅ Objeto guardado, estado actualizado.");
     }
 
-
     public void SacarPlatosDelGabinete(InteraccionJugador jugador)
     {
-        if (estaLleno && jugador != null && !jugador.EstaLlevandoObjeto())
-        {
-            if (prefabPlatos == null)
-            {
-                Debug.LogWarning("❌ Prefab de platos no asignado.");
-                return;
-            }
+        if (!estaLleno || jugador == null || jugador.EstaLlevandoObjeto()) return;
 
-            Transform puntoCarga = jugador.puntoDeCarga;
-            if (puntoCarga == null)
-            {
-                Debug.LogWarning("❌ No se encontró el punto de carga en el jugador.");
-                return;
-            }
+        // ✅ Aquí llamamos al método genérico del jugador
+        jugador.InstanciarObjetoPorTag(tagObjetoRequerido);
 
-            GameObject nuevosPlatos = Instantiate(prefabPlatos, puntoCarga.position, Quaternion.identity);
-            Debug.Log("➡ Instanciando nuevos platos desde gabinete");
-
-            jugador.RecogerObjeto(nuevosPlatos);
-
-            estaLleno = false;
-            if (estadoVacio != null) estadoVacio.SetActive(true);
-            if (estadoLleno != null) estadoLleno.SetActive(false);
-        }
+        estaLleno = false;
+        ActualizarEstadoVisual(false);
     }
 
-
-
+    private void ActualizarEstadoVisual(bool lleno)
+    {
+        if (estadoVacio != null) estadoVacio.SetActive(!lleno);
+        if (estadoLleno != null) estadoLleno.SetActive(lleno);
+    }
 
     public string TagObjetoRequerido => tagObjetoRequerido;
-    public GameObject PrefabPlatos => prefabPlatos;
 }

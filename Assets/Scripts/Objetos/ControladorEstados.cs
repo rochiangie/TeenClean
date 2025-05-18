@@ -62,6 +62,7 @@ public class ControladorEstados : MonoBehaviour
         estadoLleno.SetActive(estaLleno);
     }
 
+
     public string ObtenerNombreEstado()
     {
         return $"{nombreMostrado} ({(estaLleno ? "Lleno" : "Vacío")})";

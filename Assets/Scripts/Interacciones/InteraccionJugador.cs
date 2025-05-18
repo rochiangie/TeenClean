@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using System.Collections.Generic;
 
 [RequireComponent(typeof(Rigidbody2D), typeof(Animator))]
 public class InteraccionJugador : MonoBehaviour
@@ -19,7 +20,7 @@ public class InteraccionJugador : MonoBehaviour
 
     [Header("Transporte Objetos")]
     public Transform puntoDeCarga;
-    [SerializeField] private string[] tagsRecogibles = { "Platos", "RopaSucia", "Tarea" };
+    [SerializeField] private string[] tagsRecogibles = { "Platos", "Ropa", "Tarea" };
 
     private Rigidbody2D rb;
     private Animator animator;
@@ -35,11 +36,33 @@ public class InteraccionJugador : MonoBehaviour
     private GameObject objetoCercano;
     private bool enSuelo = true;
 
+    [Header("Prefabs")]
+    public GameObject prefabPlatosDefinitivo;
+    //public GameObject PrefabPlatosDefinitivo;
+    public GameObject prefabRopa;
+    public GameObject prefabBookOpen;
+    public GameObject prefabTarea;
+
+
+    private Dictionary<string, GameObject> prefabsPorTag = new Dictionary<string, GameObject>();
+
+
+
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+
+        if (tagsRecogibles == null || tagsRecogibles.Length == 0)
+        {
+            tagsRecogibles = new string[] { "Platos", "Ropa", "Tarea" };
+        }
+
+        prefabsPorTag.Add("Platos", prefabPlatosDefinitivo);
+        prefabsPorTag.Add("Ropa", prefabRopa);
+        prefabsPorTag.Add("Tarea", prefabTarea);
     }
+
 
     void Update()
     {
@@ -118,37 +141,33 @@ public class InteraccionJugador : MonoBehaviour
 
         Collider2D[] objetos = Physics2D.OverlapCircleAll(transform.position, rango, capaInteractuable);
 
-        Debug.Log($"[DetectarObjetosCercanos] Detectados {objetos.Length} colliders dentro del rango.");
+        float distanciaMinima = float.MaxValue;
 
         foreach (var col in objetos)
         {
-            Debug.Log($"→ Collider detectado: {col.name} | Layer: {LayerMask.LayerToName(col.gameObject.layer)} | Tag: {col.tag}");
-
-            Debug.Log($"[DetectarObjetosCercanos] Evaluando: {col.gameObject.name}");
+            Debug.Log("🔍 Detectado: " + col.name + " | Tag: " + col.tag);
 
             if (col.TryGetComponent(out ControladorEstados interactuable))
-            {
                 objetoInteractuableCercano = interactuable;
-                Debug.Log($"→ Detectado ControladorEstados en: {interactuable.gameObject.name}");
-            }
 
             if (col.TryGetComponent(out CabinetController gabinete))
-            {
                 gabinetePlatosCercano = gabinete;
-                Debug.Log($"→ Detectado CabinetController en: {gabinete.gameObject.name}");
+
+            if (EsRecogible(col.tag) && !llevaObjeto)
+            {
+                float distancia = Vector2.Distance(transform.position, col.transform.position);
+                if (distancia < distanciaMinima)
+                {
+                    objetoCercanoRecogible = col.gameObject;
+                    distanciaMinima = distancia;
+
+                    Debug.Log("🧺 Ropa asignada como objeto cercano recogible: " + col.name);
+                }
             }
 
-            if (!llevaObjeto && EsRecogible(col.tag))
-            {
-                objetoCercanoRecogible = col.gameObject;
-                Debug.Log($"→ Detectado recogible: {col.tag} ({col.gameObject.name})");
-            }
 
             if (col.TryGetComponent(out InteraccionSilla silla))
-            {
                 sillaCercana = silla;
-                Debug.Log($"→ Detectada silla: {silla.gameObject.name}");
-            }
         }
     }
 
@@ -159,9 +178,11 @@ public class InteraccionJugador : MonoBehaviour
 
         if (gabinetePlatosCercano != null)
         {
-            mensajeUI.text = gabinetePlatosCercano.EstaLleno()
-                ? $"Presiona {teclaInteraccion} para sacar {gabinetePlatosCercano.PrefabPlatos.name}"
-                : $"Presiona {teclaInteraccion} para guardar {gabinetePlatosCercano.TagObjetoRequerido}";
+            string nombreObjeto = gabinetePlatosCercano.EstaLleno()
+                ? (prefabPlatosDefinitivo != null ? prefabPlatosDefinitivo.name : "objeto")
+                : gabinetePlatosCercano.TagObjetoRequerido;
+
+            mensajeUI.text = $"Presiona {teclaInteraccion} para {(gabinetePlatosCercano.EstaLleno() ? "sacar" : "guardar")} {nombreObjeto}";
             mensajeUI.gameObject.SetActive(true);
         }
         else if (objetoInteractuableCercano != null)
@@ -179,6 +200,7 @@ public class InteraccionJugador : MonoBehaviour
             mensajeUI.gameObject.SetActive(false);
         }
     }
+
 
     bool EsRecogible(string tag)
     {
@@ -199,8 +221,17 @@ public class InteraccionJugador : MonoBehaviour
         objetoTransportado.transform.SetParent(puntoDeCarga);
         objetoTransportado.transform.localPosition = Vector3.zero;
         objetoTransportado.transform.localRotation = Quaternion.identity;
-        objetoTransportado.transform.localScale = new Vector3(1f / transform.localScale.x, 1f / transform.localScale.y, 1f);
 
+        // Escala adaptada a la dirección del jugador y tamaño original del objeto
+        Vector3 escalaOriginal = objeto.transform.localScale;
+        Vector3 escalaFinal = new Vector3(
+            Mathf.Abs(escalaOriginal.x) * Mathf.Sign(transform.localScale.x),
+            Mathf.Abs(escalaOriginal.y),
+            1f
+        );
+        objeto.transform.localScale = escalaFinal;
+
+        // Asegurar orden de render
         SpriteRenderer srJugador = GetComponent<SpriteRenderer>();
         SpriteRenderer srObjeto = objetoTransportado.GetComponent<SpriteRenderer>();
 
@@ -224,17 +255,30 @@ public class InteraccionJugador : MonoBehaviour
         ActualizarUI();
     }
 
-    void SoltarObjeto()
+
+
+    public void SoltarObjeto()
     {
         if (objetoTransportado == null) return;
 
         objetoTransportado.transform.SetParent(null);
         objetoTransportado.transform.position = transform.position + Vector3.right;
 
+        // Restaurar escala visual si hace falta
+        Vector3 escalaOriginal = objetoTransportado.transform.localScale;
+        objetoTransportado.transform.localScale = new Vector3(
+            Mathf.Abs(escalaOriginal.x),
+            Mathf.Abs(escalaOriginal.y),
+            1f
+        );
+
+        // Reactivar colisión pero NO física
         if (objetoTransportado.TryGetComponent(out Collider2D col)) col.enabled = true;
+
         if (objetoTransportado.TryGetComponent(out Rigidbody2D rb))
         {
             rb.simulated = true;
+            rb.isKinematic = true; // ✅ Mantener Kinematic para que NO se caiga
             rb.velocity = Vector2.zero;
         }
 
@@ -242,14 +286,21 @@ public class InteraccionJugador : MonoBehaviour
         objetoTransportado = null;
     }
 
+
+
     public void SoltarYDestruirObjeto()
     {
         if (!llevaObjeto || objetoTransportado == null) return;
 
+        string nombreObjeto = objetoTransportado.name;
         Destroy(objetoTransportado);
+        Debug.Log("Se destruyó: " + nombreObjeto);
+
         objetoTransportado = null;
         llevaObjeto = false;
     }
+
+
 
     public bool EstaLlevandoObjeto() => llevaObjeto;
 
@@ -273,11 +324,6 @@ public class InteraccionJugador : MonoBehaviour
             objetoCercano = collision.gameObject;
             Debug.Log("Colisionó con: " + objetoCercano.name);
         }
-        if (collision.collider.CompareTag("Suelo"))
-        {
-            enSuelo = true;
-            animator.SetBool("isJumping", false);
-        }
     }
 
     private void OnCollisionExit2D(Collision2D collision)
@@ -289,17 +335,6 @@ public class InteraccionJugador : MonoBehaviour
             objetoCercano = null;
             Debug.Log("Salió de la colisión");
         }
-        if (collision.collider.CompareTag("Suelo"))
-        {
-            enSuelo = false;
-            animator.SetBool("isJumping", true);
-        }
-        if (collision.collider.CompareTag("Tapete"))
-        {
-            enSuelo = true;
-            animator.SetBool("isJumping", false);
-        }
-
     }
 
     void OnTriggerEnter2D(Collider2D other)
@@ -338,4 +373,84 @@ public class InteraccionJugador : MonoBehaviour
             Debug.Log("Objeto salió de alcance");
         }
     }
+
+    public void CrearPlatosEnMano()
+    {
+        if (prefabPlatosDefinitivo == null || puntoDeCarga == null) return;
+
+        GameObject platos = Instantiate(prefabPlatosDefinitivo);
+        platos.transform.SetParent(puntoDeCarga);
+        platos.transform.localPosition = Vector3.zero;
+        platos.transform.localRotation = Quaternion.identity;
+        platos.transform.localScale = Vector3.one * 3f;
+
+        RecogerObjeto(platos);
+    }
+
+    public void InstanciarPlatosDefinitivo()
+    {
+        if (prefabPlatosDefinitivo == null || puntoDeCarga == null) return;
+
+        GameObject nuevosPlatos = Instantiate(prefabPlatosDefinitivo);
+        nuevosPlatos.transform.SetParent(puntoDeCarga);
+        nuevosPlatos.transform.localPosition = Vector3.zero;
+        nuevosPlatos.transform.localRotation = Quaternion.identity;
+        nuevosPlatos.transform.localScale = Vector3.one * 3f;
+
+        RecogerObjeto(nuevosPlatos);
+    }
+
+    public void InstanciarRopa()
+    {
+        if (prefabRopa == null || puntoDeCarga == null) return;
+
+        GameObject ropa = Instantiate(prefabRopa);
+        ropa.transform.SetParent(puntoDeCarga);
+        ropa.transform.localPosition = Vector3.zero;
+        ropa.transform.localRotation = Quaternion.identity;
+        ropa.transform.localScale = Vector3.one * 3f;
+
+        RecogerObjeto(ropa);
+    }
+
+    public void InstanciarObjetoPorTag(string tag)
+    {
+        if (!prefabsPorTag.ContainsKey(tag))
+        {
+            Debug.LogWarning("⚠️ No hay prefab asignado para el tag: " + tag);
+            return;
+        }
+
+        GameObject prefab = prefabsPorTag[tag];
+        if (prefab == null || puntoDeCarga == null) return;
+
+        GameObject nuevo = Instantiate(prefab);
+        nuevo.transform.SetParent(puntoDeCarga);
+        nuevo.transform.localPosition = Vector3.zero;
+        nuevo.transform.localRotation = Quaternion.identity;
+
+        float escala = tag == "Tarea" ? 10f : 3f;
+        Vector3 escalaFinal = new Vector3(
+            escala * Mathf.Sign(transform.localScale.x),
+            escala * Mathf.Sign(transform.localScale.y),
+            1f
+        );
+        nuevo.transform.localScale = escalaFinal;
+
+        RecogerObjeto(nuevo);
+        // Asegurar orden de render
+        SpriteRenderer srJugador = GetComponent<SpriteRenderer>();
+        SpriteRenderer srObjeto = nuevo.GetComponent<SpriteRenderer>();
+
+        if (srJugador != null && srObjeto != null)
+        {
+            srObjeto.sortingLayerName = srJugador.sortingLayerName;
+            srObjeto.sortingOrder = srJugador.sortingOrder + 1; // adelante del jugador
+        }
+
+    }
+
+
+
+
 }
