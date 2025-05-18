@@ -36,6 +36,12 @@ public class InteraccionJugador : MonoBehaviour
     private GameObject objetoCercano;
     private bool enSuelo = true;
 
+    [Header("Teleport")]
+    public Transform puntoSpawn1;
+    public Transform puntoSpawn2;
+
+
+
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -160,11 +166,7 @@ public class InteraccionJugador : MonoBehaviour
             mensajeUI.gameObject.SetActive(true);
         }
 
-        else if (objetoInteractuableCercano != null)
-        {
-            mensajeUI.text = $"Presiona {teclaInteraccion} para usar {objetoInteractuableCercano.ObtenerNombreEstado()}";
-            mensajeUI.gameObject.SetActive(true);
-        }
+        
         else if (objetoCercanoRecogible != null && !llevaObjeto && objetoCercanoRecogible != null)
         {
             mensajeUI.text = $"Presiona {teclaInteraccion} para recoger {objetoCercanoRecogible.tag}";
@@ -286,7 +288,25 @@ public class InteraccionJugador : MonoBehaviour
             animator.SetBool("isTouchingObject", true);
             sillaCercana = other.GetComponent<InteraccionSilla>();
         }
+
+        if (other.CompareTag("Misterio") && puntoSpawn1 != null)
+        {
+            TeleportarAPunto(puntoSpawn1);
+        }
+        else if (other.CompareTag("Misterio2") && puntoSpawn2 != null)
+        {
+            TeleportarAPunto(puntoSpawn2);
+        }
     }
+
+    void TeleportarAPunto(Transform punto)
+    {
+        transform.position = punto.position;
+        rb.velocity = Vector2.zero;
+        animator.SetBool("isJumping", false);
+    }
+
+
 
     void OnTriggerExit2D(Collider2D other)
     {
