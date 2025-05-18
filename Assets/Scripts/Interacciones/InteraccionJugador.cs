@@ -48,6 +48,16 @@ public class InteraccionJugador : MonoBehaviour
         animator = GetComponent<Animator>();
     }
 
+    void Start()
+    {
+        if (mensajeUI != null)
+        {
+            mensajeUI.text = "PROBANDO MENSAJE";
+            mensajeUI.gameObject.SetActive(true);
+        }
+    }
+
+
     void Update()
     {
         input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
@@ -61,6 +71,11 @@ public class InteraccionJugador : MonoBehaviour
             Vector3 escala = transform.localScale;
             escala.x = Mathf.Sign(input.x) * Mathf.Abs(escala.x);
             transform.localScale = escala;
+        }
+
+        if (mensajeUI != null)
+        {
+            mensajeUI.transform.position = transform.position + new Vector3(0, 1.5f, 0); // Ajustá el offset vertical
         }
 
         DetectarObjetosCercanos();
@@ -153,21 +168,23 @@ public class InteraccionJugador : MonoBehaviour
 
         if (gabinetePlatosCercano != null)
         {
-            string nombrePlato = gabinetePlatosCercano.PrefabPlatos != null ? gabinetePlatosCercano.PrefabPlatos.name : "objeto";
+            string nombrePlato = gabinetePlatosCercano.PrefabPlatos != null
+                ? gabinetePlatosCercano.PrefabPlatos.name
+                : "objeto";
+
             mensajeUI.text = gabinetePlatosCercano.EstaLleno()
                 ? $"Presiona {teclaInteraccion} para sacar {nombrePlato}"
                 : $"Presiona {teclaInteraccion} para guardar {gabinetePlatosCercano.TagObjetoRequerido}";
-            mensajeUI.gameObject.SetActive(true);
-        }
-        if (objetoInteractuableCercano != null)
-        {
-            Debug.Log("Mostrando mensaje de interacción");
-            mensajeUI.text = $"Presiona {teclaInteraccion} para usar {objetoInteractuableCercano.ObtenerNombreEstado()}";
-            mensajeUI.gameObject.SetActive(true);
-        }
 
-        
-        else if (objetoCercanoRecogible != null && !llevaObjeto && objetoCercanoRecogible != null)
+            mensajeUI.gameObject.SetActive(true);
+        }
+        else if (objetoInteractuableCercano != null)
+        {
+            string nombreEstado = objetoInteractuableCercano.ObtenerNombreEstado();
+            mensajeUI.text = $"Presiona {teclaInteraccion} para usar {nombreEstado}";
+            mensajeUI.gameObject.SetActive(true);
+        }
+        else if (objetoCercanoRecogible != null && !llevaObjeto)
         {
             mensajeUI.text = $"Presiona {teclaInteraccion} para recoger {objetoCercanoRecogible.tag}";
             mensajeUI.gameObject.SetActive(true);
@@ -177,6 +194,7 @@ public class InteraccionJugador : MonoBehaviour
             mensajeUI.gameObject.SetActive(false);
         }
     }
+
 
     bool EsRecogible(string tag)
     {
@@ -293,10 +311,22 @@ public class InteraccionJugador : MonoBehaviour
         {
             TeleportarAPunto(puntoSpawn1);
         }
-        else if (other.CompareTag("Misterio2") && puntoSpawn2 != null)
+
+        if (other.CompareTag("Misterio2") && puntoSpawn2 != null)
         {
             TeleportarAPunto(puntoSpawn2);
         }
+
+        if (other.CompareTag("Reloj"))
+        {
+            if (mensajeUI != null)
+            {
+                mensajeUI.text = $"Tocaste el reloj a las {System.DateTime.Now:HH:mm:ss}";
+                mensajeUI.gameObject.SetActive(true);
+                mensajeUI.transform.position = transform.position + new Vector3(0, 2f, 0); // flotando sobre el jugador
+            }
+        }
+
     }
 
     void TeleportarAPunto(Transform punto)
@@ -305,8 +335,6 @@ public class InteraccionJugador : MonoBehaviour
         rb.velocity = Vector2.zero;
         animator.SetBool("isJumping", false);
     }
-
-
 
     void OnTriggerExit2D(Collider2D other)
     {
