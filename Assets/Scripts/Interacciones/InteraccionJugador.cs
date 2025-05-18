@@ -48,6 +48,10 @@ public class InteraccionJugador : MonoBehaviour
 
     [SerializeField] private GameObject panelPopUp;
 
+    [Header("Teleport")]
+    public Transform puntoSpawn1;
+    public Transform puntoSpawn2;
+
 
 
     void Awake()
@@ -361,6 +365,15 @@ public class InteraccionJugador : MonoBehaviour
             animator.SetBool("isTouchingObject", true);
             sillaCercana = other.GetComponent<InteraccionSilla>();
         }
+        if (other.CompareTag("Misterio") && puntoSpawn1 != null)
+        {
+            TeleportarAPunto(puntoSpawn1);
+        }
+        else if (other.CompareTag("Misterio2") && puntoSpawn2 != null)
+        {
+            TeleportarAPunto(puntoSpawn2);
+        }
+
     }
 
     void OnTriggerExit2D(Collider2D other)
@@ -455,6 +468,14 @@ public class InteraccionJugador : MonoBehaviour
         }
 
     }
+
+    void TeleportarAPunto(Transform punto)
+    {
+        transform.position = punto.position;
+        rb.velocity = Vector2.zero;
+        animator.SetBool("isJumping", false);
+    }
+
 
     void MostrarPopUp()
     {
