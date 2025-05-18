@@ -106,7 +106,7 @@ public class InteraccionJugador : MonoBehaviour
     void FixedUpdate()
     {
         float velocidad = Input.GetKey(teclaCorrer) ? velocidadCorrer : velocidadMovimiento;
-        rb.linearVelocity = input.normalized * velocidad;
+        rb.velocity = input.normalized * velocidad;
     }
 
     void DetectarObjetosCercanos()
@@ -216,7 +216,7 @@ public class InteraccionJugador : MonoBehaviour
         if (objetoTransportado.TryGetComponent(out Rigidbody2D rb))
         {
             rb.simulated = true;
-            rb.linearVelocity = Vector2.zero;
+            rb.velocity = Vector2.zero;
         }
 
         llevaObjeto = false;
@@ -271,7 +271,7 @@ public class InteraccionJugador : MonoBehaviour
     {
         if (other.CompareTag("Tapete"))
         {
-            rb.linearVelocity = new Vector2(rb.linearVelocity.x, 10f);
+            rb.velocity = new Vector2(rb.velocity.x, 10f);
             animator.SetBool("isJumping", true);
             enSuelo = false;
         }
