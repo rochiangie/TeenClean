@@ -254,6 +254,11 @@ public class InteraccionJugador : MonoBehaviour
             objetoCercano = collision.gameObject;
             Debug.Log("Colisionó con: " + objetoCercano.name);
         }
+        if (collision.collider.CompareTag("Suelo"))
+        {
+            enSuelo = true;
+            animator.SetBool("isJumping", false);
+        }
     }
 
     private void OnCollisionExit2D(Collision2D collision)
@@ -265,6 +270,17 @@ public class InteraccionJugador : MonoBehaviour
             objetoCercano = null;
             Debug.Log("Salió de la colisión");
         }
+        if (collision.collider.CompareTag("Suelo"))
+        {
+            enSuelo = false;
+            animator.SetBool("isJumping", true);
+        }
+        if (collision.collider.CompareTag("Tapete"))
+        {
+            enSuelo = true;
+            animator.SetBool("isJumping", false);
+        }
+
     }
 
     void OnTriggerEnter2D(Collider2D other)

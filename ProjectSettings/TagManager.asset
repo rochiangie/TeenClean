@@ -3,12 +3,24 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Silla
+  - "Ba\xF1era"
+  - Sofa
+  - Inodoro
+  - Lavamanos
+  - "ba\xF1era"
+  - Puerta
+  - Cabinete
+  - Reloj
+  - pared
+  - Platos
+  - Arbol
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Interactuable
   - Water
   - UI
   - 
