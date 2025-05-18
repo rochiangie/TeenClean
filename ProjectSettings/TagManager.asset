@@ -16,6 +16,8 @@ TagManager:
   - pared
   - Platos
   - Arbol
+  - Piedra
+  - Misterio
   layers:
   - Default
   - TransparentFX
