@@ -187,7 +187,7 @@ public class InteraccionJugador : MonoBehaviour
         objetoTransportado.transform.SetParent(puntoDeCarga);
         objetoTransportado.transform.localPosition = Vector3.zero;
         objetoTransportado.transform.localRotation = Quaternion.identity;
-        objetoTransportado.transform.localScale = new Vector3(1f / transform.localScale.x, 1f / transform.localScale.y, 1f);
+        objetoTransportado.transform.localScale = new Vector3(3f, 3f, 1f);
 
         SpriteRenderer srJugador = GetComponent<SpriteRenderer>();
         SpriteRenderer srObjeto = objetoTransportado.GetComponent<SpriteRenderer>();
