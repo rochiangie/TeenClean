@@ -22,6 +22,7 @@ TagManager:
   - Suelo
   - Tapete
   - Ropa
+  - Cama
   layers:
   - Default
   - TransparentFX

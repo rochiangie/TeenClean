@@ -176,9 +176,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 60430137}
-  - component: {fileID: 60430136}
   - component: {fileID: 60430139}
   - component: {fileID: 60430138}
+  - component: {fileID: 60430140}
   m_Layer: 3
   m_Name: Inodoro
   m_TagString: Inodoro
@@ -186,56 +186,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!60 &60430136
-PolygonCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 60430135}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: 0, y: 1}
-      - {x: -0.95105654, y: 0.30901697}
-      - {x: -0.5877852, y: -0.80901706}
-      - {x: 0.58778536, y: -0.80901694}
-      - {x: 0.9510565, y: 0.30901712}
-  m_UseDelaunayMesh: 0
 --- !u!4 &60430137
 Transform:
   m_ObjectHideFlags: 0
@@ -245,7 +195,7 @@ Transform:
   m_GameObject: {fileID: 60430135}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -30.723444, y: -14.276446, z: 0.029547356}
+  m_LocalPosition: {x: -29.7, y: -14.276446, z: 0.029547356}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -297,6 +247,51 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!61 &60430140
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 60430135}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -30.49, y: -5.41}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 3.35, y: 8.78}
+  m_EdgeRadius: 0
 --- !u!1 &257303232
 GameObject:
   m_ObjectHideFlags: 0
@@ -872,9 +867,9 @@ GameObject:
   - component: {fileID: 492927607}
   - component: {fileID: 492927608}
   - component: {fileID: 492927609}
-  m_Layer: 0
-  m_Name: ChatGPT Image May 16, 2025, 03_19_39 PM_0
-  m_TagString: Untagged
+  m_Layer: 3
+  m_Name: CamaDesordenada
+  m_TagString: Cama
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1652,10 +1647,9 @@ GameObject:
   m_Component:
   - component: {fileID: 834390969}
   - component: {fileID: 834390971}
-  - component: {fileID: 834390970}
   m_Layer: 3
   m_Name: Toilet1_Left
-  m_TagString: Untagged
+  m_TagString: Inodoro
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1675,58 +1669,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 60430137}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!60 &834390970
-PolygonCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 834390968}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
-    newSize: {x: 1, y: 1}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: -0.46875, y: 0.46875}
-      - {x: -0.5, y: 0.4375}
-      - {x: -0.5, y: -0.34375}
-      - {x: 0.125, y: -0.34375}
-      - {x: 0.15625, y: -0.25}
-      - {x: 0.15625, y: 0.25}
-      - {x: -0.15625, y: 0.46875}
-  m_UseDelaunayMesh: 0
 --- !u!212 &834390971
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2780,9 +2722,9 @@ GameObject:
   - component: {fileID: 1073823207}
   - component: {fileID: 1073823208}
   - component: {fileID: 1073823209}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: BedDouble_UpLeft
-  m_TagString: Untagged
+  m_TagString: Cama
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5200,9 +5142,9 @@ GameObject:
   - component: {fileID: 1309802288}
   - component: {fileID: 1309802287}
   - component: {fileID: 1309802286}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Cama
-  m_TagString: Untagged
+  m_TagString: Cama
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5267,7 +5209,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 16.49, y: 15.67}
+  m_Size: {x: 17.7, y: 15.67}
   m_EdgeRadius: 0
 --- !u!50 &1309802287
 Rigidbody2D:
@@ -6189,7 +6131,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1.93}
+  m_Size: {x: 0.88, y: 1.93}
   m_EdgeRadius: 0
 --- !u!4 &1689046246
 Transform:
@@ -6249,10 +6191,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1740067142}
   - component: {fileID: 1740067144}
-  - component: {fileID: 1740067143}
   m_Layer: 3
   m_Name: Toilet2_Left
-  m_TagString: Untagged
+  m_TagString: Inodoro
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6272,58 +6213,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 60430137}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!60 &1740067143
-PolygonCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1740067141}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
-    newSize: {x: 1, y: 1}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: -0.46875, y: 0.4375}
-      - {x: -0.5, y: 0.40625}
-      - {x: -0.5, y: -0.375}
-      - {x: 0.125, y: -0.375}
-      - {x: 0.15625, y: -0.28125}
-      - {x: 0.15625, y: 0.21875}
-      - {x: -0.15625, y: 0.4375}
-  m_UseDelaunayMesh: 0
 --- !u!212 &1740067144
 SpriteRenderer:
   m_ObjectHideFlags: 0
