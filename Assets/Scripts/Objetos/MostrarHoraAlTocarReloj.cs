@@ -1,5 +1,5 @@
-using UnityEngine;
 using TMPro;
+using UnityEngine;
 
 public class MostrarHoraAlTocarReloj : MonoBehaviour
 {
@@ -8,25 +8,21 @@ public class MostrarHoraAlTocarReloj : MonoBehaviour
 
     private float tiempoOcultar = 0f;
 
-    void Update()
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        // Ocultar el texto después del tiempo
-        if (textoHora != null && Time.time >= tiempoOcultar && textoHora.gameObject.activeSelf)
+        if (other.CompareTag("Player"))
         {
-            textoHora.gameObject.SetActive(false);
+            textoHora.text = System.DateTime.Now.ToString("HH:mm");
+            textoHora.gameObject.SetActive(true);
+            tiempoOcultar = Time.time + tiempoVisible;
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
+    void Update()
     {
-        if (other.CompareTag("Player") && textoHora != null)
+        if (textoHora != null && Time.time >= tiempoOcultar)
         {
-            string horaActual = System.DateTime.Now.ToString("HH:mm:ss");
-            textoHora.text = $"Hora: {horaActual}";
-            textoHora.gameObject.SetActive(true);
-            tiempoOcultar = Time.time + tiempoVisible;
-
-            Debug.Log("Tocaste el reloj a las " + horaActual);
+            textoHora.gameObject.SetActive(false);
         }
     }
 }

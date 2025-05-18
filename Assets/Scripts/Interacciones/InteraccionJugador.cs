@@ -154,7 +154,7 @@ public class InteraccionJugador : MonoBehaviour
 
         foreach (var col in objetos)
         {
-            Debug.Log("🔍 Detectado: " + col.name + " | Tag: " + col.tag);
+            //Debug.Log("🔍 Detectado: " + col.name + " | Tag: " + col.tag);
 
             if (col.TryGetComponent(out ControladorEstados interactuable))
                 objetoInteractuableCercano = interactuable;
@@ -170,7 +170,7 @@ public class InteraccionJugador : MonoBehaviour
                     objetoCercanoRecogible = col.gameObject;
                     distanciaMinima = distancia;
 
-                    Debug.Log("🧺 Ropa asignada como objeto cercano recogible: " + col.name);
+                    //Debug.Log("🧺 Ropa asignada como objeto cercano recogible: " + col.name);
                 }
             }
 
@@ -191,17 +191,17 @@ public class InteraccionJugador : MonoBehaviour
                 ? (prefabPlatosDefinitivo != null ? prefabPlatosDefinitivo.name : "objeto")
                 : gabinetePlatosCercano.TagObjetoRequerido;
 
-            mensajeUI.text = $"Presiona {teclaInteraccion} para {(gabinetePlatosCercano.EstaLleno() ? "sacar" : "guardar")} {nombreObjeto}";
+            mensajeUI.text = $"\n\n\n\nPresiona {teclaInteraccion} para {(gabinetePlatosCercano.EstaLleno() ? "sacar" : "guardar")} {nombreObjeto}";
             mensajeUI.gameObject.SetActive(true);
         }
         else if (objetoInteractuableCercano != null)
         {
-            mensajeUI.text = $"Presiona {teclaInteraccion} para usar {objetoInteractuableCercano.ObtenerNombreEstado()}";
+            mensajeUI.text = $"\n\n\n\nPresiona {teclaInteraccion} para usar {objetoInteractuableCercano.ObtenerNombreEstado()}";
             mensajeUI.gameObject.SetActive(true);
         }
         else if (objetoCercanoRecogible != null && !llevaObjeto)
         {
-            mensajeUI.text = $"Presiona {teclaInteraccion} para recoger {objetoCercanoRecogible.tag}";
+            mensajeUI.text = $"\n\n\n\nPresiona {teclaInteraccion} para recoger {objetoCercanoRecogible.tag}";
             mensajeUI.gameObject.SetActive(true);
         }
         else
@@ -209,6 +209,7 @@ public class InteraccionJugador : MonoBehaviour
             mensajeUI.gameObject.SetActive(false);
         }
     }
+
 
 
     bool EsRecogible(string tag)
@@ -303,7 +304,7 @@ public class InteraccionJugador : MonoBehaviour
 
         string nombreObjeto = objetoTransportado.name;
         Destroy(objetoTransportado);
-        Debug.Log("Se destruyó: " + nombreObjeto);
+        //Debug.Log("Se destruyó: " + nombreObjeto);
 
         objetoTransportado = null;
         llevaObjeto = false;
@@ -331,7 +332,7 @@ public class InteraccionJugador : MonoBehaviour
         if (collision.collider.CompareTag("Inodoro") || collision.collider.CompareTag("Lavamanos") || collision.collider.CompareTag("Bañera"))
         {
             objetoCercano = collision.gameObject;
-            Debug.Log("Colisionó con: " + objetoCercano.name);
+            //Debug.Log("Colisionó con: " + objetoCercano.name);
             MostrarPopUp();
         }
     }
@@ -343,7 +344,7 @@ public class InteraccionJugador : MonoBehaviour
         if (collision.gameObject == objetoCercano)
         {
             objetoCercano = null;
-            Debug.Log("Salió de la colisión");
+            //Debug.Log("Salió de la colisión");
         }
     }
 
@@ -359,7 +360,7 @@ public class InteraccionJugador : MonoBehaviour
         if (other.CompareTag("Inodoro") || other.CompareTag("Lavamanos") || other.CompareTag("Bañera"))
         {
             objetoCercano = other.gameObject;
-            Debug.Log("Objeto cercano: " + objetoCercano.name);
+            //Debug.Log("Objeto cercano: " + objetoCercano.name);
 
         }
 
@@ -382,11 +383,13 @@ public class InteraccionJugador : MonoBehaviour
 
 
 
-        if (other.CompareTag("Silla"))
+        if (other.CompareTag("Silla") || other.CompareTag("Sofa"))
         {
+            //Debug.Log("🪑 Tocado: Silla");
             animator.SetBool("isTouchingObject", true);
             sillaCercana = other.GetComponent<InteraccionSilla>();
         }
+
         if (other.CompareTag("Misterio") && puntoSpawn1 != null)
         {
             TeleportarAPunto(puntoSpawn1);
@@ -400,8 +403,9 @@ public class InteraccionJugador : MonoBehaviour
 
     void OnTriggerExit2D(Collider2D other)
     {
-        if (other.CompareTag("Silla"))
+        if (other.CompareTag("Silla") || other.CompareTag("Sofa"))
         {
+            //Debug.Log("🪑 Salió de la silla");
             animator.SetBool("isTouchingObject", false);
             sillaCercana = null;
         }
@@ -409,7 +413,7 @@ public class InteraccionJugador : MonoBehaviour
         if (other.gameObject == objetoCercano)
         {
             objetoCercano = null;
-            Debug.Log("Objeto salió de alcance");
+            //Debug.Log("Objeto salió de alcance");
             OcultarPopUp();
 
         }
@@ -458,7 +462,7 @@ public class InteraccionJugador : MonoBehaviour
     {
         if (!prefabsPorTag.ContainsKey(tag))
         {
-            Debug.LogWarning("⚠️ No hay prefab asignado para el tag: " + tag);
+            //Debug.LogWarning("⚠️ No hay prefab asignado para el tag: " + tag);
             return;
         }
 
