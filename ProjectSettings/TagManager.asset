@@ -21,6 +21,7 @@ TagManager:
   - Piso
   - Suelo
   - Tapete
+  - Ropa
   layers:
   - Default
   - TransparentFX
