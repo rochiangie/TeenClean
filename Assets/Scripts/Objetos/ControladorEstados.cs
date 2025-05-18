@@ -4,14 +4,11 @@ using UnityEngine;
 public class ControladorEstados : MonoBehaviour
 {
     [Header("Referencias de Estados")]
-    [Tooltip("Arrastra aquí el GameObject que representa el estado vacío")]
     [SerializeField] private GameObject estadoVacio;
-    [Tooltip("Arrastra aquí el GameObject que representa el estado lleno")]
     [SerializeField] private GameObject estadoLleno;
 
     [Header("Configuración")]
-    [Tooltip("Nombre que se mostrará en la UI")]
-    public string nombreMostrado = "Objeto";
+    public string nombreMostrado = "Bañera";
 
     [Header("Debug")]
     [SerializeField] private bool estaLleno = false;
@@ -27,14 +24,14 @@ public class ControladorEstados : MonoBehaviour
     {
         if (estadoVacio == null || estadoLleno == null)
         {
-            Debug.LogError($"[ControladorEstados] Error en {gameObject.name}: Ambos estados (Vacio/Lleno) deben ser asignados en el inspector");
+            Debug.LogError($"[ControladorEstados] Error en {gameObject.name}: Ambos estados deben ser asignados.");
             enabled = false;
             return;
         }
 
         if (estadoVacio == estadoLleno)
         {
-            Debug.LogError($"[ControladorEstados] Error en {gameObject.name}: Los estados Vacio y Lleno no pueden ser el mismo objeto");
+            Debug.LogError($"[ControladorEstados] Error en {gameObject.name}: Los estados no pueden ser el mismo objeto.");
             enabled = false;
         }
     }
@@ -45,9 +42,7 @@ public class ControladorEstados : MonoBehaviour
         estadoLleno.SetActive(estaLleno);
 
         if (debugLogs)
-        {
-            Debug.Log($"[ControladorEstados] {gameObject.name} inicializado. Estado inicial: {(estaLleno ? "Lleno" : "Vacío")}");
-        }
+            Debug.Log($"[ControladorEstados] {nombreMostrado} inicializado como {(estaLleno ? "Lleno" : "Vacío")}");
     }
 
     public void AlternarEstado()
@@ -58,9 +53,7 @@ public class ControladorEstados : MonoBehaviour
         ActualizarEstados();
 
         if (debugLogs)
-        {
-            Debug.Log($"[ControladorEstados] {gameObject.name} alternado a {(estaLleno ? "Lleno" : "Vacío")}", gameObject);
-        }
+            Debug.Log($"[ControladorEstados] {nombreMostrado} ahora está {(estaLleno ? "Lleno" : "Vacío")}");
     }
 
     private void ActualizarEstados()
@@ -72,13 +65,6 @@ public class ControladorEstados : MonoBehaviour
     public string ObtenerNombreEstado()
     {
         return $"{nombreMostrado} ({(estaLleno ? "Lleno" : "Vacío")})";
-    }
-
-    // Método para forzar un estado específico (opcional)
-    public void SetEstado(bool lleno)
-    {
-        estaLleno = lleno;
-        ActualizarEstados();
     }
 
     void OnValidate()

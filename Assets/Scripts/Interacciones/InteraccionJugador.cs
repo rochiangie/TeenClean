@@ -118,21 +118,40 @@ public class InteraccionJugador : MonoBehaviour
 
         Collider2D[] objetos = Physics2D.OverlapCircleAll(transform.position, rango, capaInteractuable);
 
+        Debug.Log($"[DetectarObjetosCercanos] Detectados {objetos.Length} colliders dentro del rango.");
+
         foreach (var col in objetos)
         {
+            Debug.Log($"→ Collider detectado: {col.name} | Layer: {LayerMask.LayerToName(col.gameObject.layer)} | Tag: {col.tag}");
+
+            Debug.Log($"[DetectarObjetosCercanos] Evaluando: {col.gameObject.name}");
+
             if (col.TryGetComponent(out ControladorEstados interactuable))
+            {
                 objetoInteractuableCercano = interactuable;
+                Debug.Log($"→ Detectado ControladorEstados en: {interactuable.gameObject.name}");
+            }
 
             if (col.TryGetComponent(out CabinetController gabinete))
+            {
                 gabinetePlatosCercano = gabinete;
+                Debug.Log($"→ Detectado CabinetController en: {gabinete.gameObject.name}");
+            }
 
             if (!llevaObjeto && EsRecogible(col.tag))
+            {
                 objetoCercanoRecogible = col.gameObject;
+                Debug.Log($"→ Detectado recogible: {col.tag} ({col.gameObject.name})");
+            }
 
             if (col.TryGetComponent(out InteraccionSilla silla))
+            {
                 sillaCercana = silla;
+                Debug.Log($"→ Detectada silla: {silla.gameObject.name}");
+            }
         }
     }
+
 
     void ActualizarUI()
     {
@@ -254,6 +273,11 @@ public class InteraccionJugador : MonoBehaviour
             objetoCercano = collision.gameObject;
             Debug.Log("Colisionó con: " + objetoCercano.name);
         }
+        if (collision.collider.CompareTag("Suelo"))
+        {
+            enSuelo = true;
+            animator.SetBool("isJumping", false);
+        }
     }
 
     private void OnCollisionExit2D(Collision2D collision)
@@ -265,6 +289,17 @@ public class InteraccionJugador : MonoBehaviour
             objetoCercano = null;
             Debug.Log("Salió de la colisión");
         }
+        if (collision.collider.CompareTag("Suelo"))
+        {
+            enSuelo = false;
+            animator.SetBool("isJumping", true);
+        }
+        if (collision.collider.CompareTag("Tapete"))
+        {
+            enSuelo = true;
+            animator.SetBool("isJumping", false);
+        }
+
     }
 
     void OnTriggerEnter2D(Collider2D other)

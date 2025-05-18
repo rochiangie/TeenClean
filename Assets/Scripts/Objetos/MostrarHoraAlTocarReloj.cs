@@ -19,7 +19,7 @@ public class MostrarHoraAlTocarReloj : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Reloj") && textoHora != null)
+        if (other.CompareTag("Player") && textoHora != null)
         {
             string horaActual = System.DateTime.Now.ToString("HH:mm:ss");
             textoHora.text = $"Hora: {horaActual}";
