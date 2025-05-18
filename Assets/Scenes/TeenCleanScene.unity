@@ -1077,11 +1077,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8988786418309249222, guid: ed52dcb83f03ca0419d0e2cbb4f5b908, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -49.7
+      value: 43.3
       objectReference: {fileID: 0}
     - target: {fileID: 8988786418309249222, guid: ed52dcb83f03ca0419d0e2cbb4f5b908, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 26.2
+      value: 24.4
       objectReference: {fileID: 0}
     - target: {fileID: 8988786418309249222, guid: ed52dcb83f03ca0419d0e2cbb4f5b908, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1463,6 +1463,11 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &432011516 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6470428044940347613, guid: 9b84d3c3d05c1c8439696b87385aee41, type: 3}
+  m_PrefabInstance: {fileID: 3237819074927882848}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &440459815
 GameObject:
   m_ObjectHideFlags: 0
@@ -2819,9 +2824,9 @@ GameObject:
   m_Component:
   - component: {fileID: 826682841}
   - component: {fileID: 826682840}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tapete
-  m_TagString: Untagged
+  m_TagString: Tapete
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8814,6 +8819,11 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &1659792099 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6533804135060411634, guid: 9b84d3c3d05c1c8439696b87385aee41, type: 3}
+  m_PrefabInstance: {fileID: 3237819074927882848}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1689046246 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3111883150572334930, guid: 463a40e980ee5f743b4e0c5ee3fdb343, type: 3}
@@ -9394,6 +9404,23 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4541004641510562395, guid: 9b84d3c3d05c1c8439696b87385aee41, type: 3}
   m_PrefabInstance: {fileID: 3237819074927882848}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1888466159
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 432011516}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebdd51e269661344a99f3b77bb5487ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  estadoVacio: {fileID: 1659792099}
+  estadoLleno: {fileID: 1914601016}
+  nombreMostrado: Sofa
+  estaLleno: 0
+  debugLogs: 1
 --- !u!1 &1896633901
 GameObject:
   m_ObjectHideFlags: 0
@@ -9524,6 +9551,11 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &1914601016 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3633164248378021367, guid: 9b84d3c3d05c1c8439696b87385aee41, type: 3}
+  m_PrefabInstance: {fileID: 3237819074927882848}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1975748134
 GameObject:
   m_ObjectHideFlags: 0
@@ -11116,6 +11148,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 1690204873}
     m_Modifications:
     - target: {fileID: 3633164248378021367, guid: 9b84d3c3d05c1c8439696b87385aee41, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3633164248378021367, guid: 9b84d3c3d05c1c8439696b87385aee41, type: 3}
       propertyPath: m_TagString
       value: Sofa
       objectReference: {fileID: 0}
@@ -11167,10 +11203,15 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Sofa
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2143317768063338198, guid: 9b84d3c3d05c1c8439696b87385aee41, type: 3}
+    - {fileID: 4880816065668641914, guid: 9b84d3c3d05c1c8439696b87385aee41, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6470428044940347613, guid: 9b84d3c3d05c1c8439696b87385aee41, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1888466159}
   m_SourcePrefab: {fileID: 100100000, guid: 9b84d3c3d05c1c8439696b87385aee41, type: 3}
 --- !u!1001 &4312902967585506623
 PrefabInstance:
