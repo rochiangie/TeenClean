@@ -4,22 +4,33 @@ using UnityEngine;
 
 public class CamaraJugador : MonoBehaviour
 {
-    [Header("Objetivo a seguir")]
-    public Transform objetivo;
+    public Vector3 offset = new Vector3(0, 1.5f, -10);
+    public float smoothSpeed = 0.1f;
+    private Transform objetivo;
 
-    [Header("Offset")]
-    public Vector3 offset = new Vector3(2f, 1f, -10f);
+    void Start()
+    {
+        GameObject jugador = GameObject.FindGameObjectWithTag("Player");
+        if (jugador != null)
+        {
+            objetivo = jugador.transform;
+            Debug.Log("[Cámara] Siguiendo al jugador inicial.");
+        }
+    }
 
-    [Header("Movimiento suave")]
-    public float suavizado = 5f;
-
-    private void LateUpdate()
+    void LateUpdate()
     {
         if (objetivo == null) return;
 
         Vector3 posicionDeseada = objetivo.position + offset;
-        Vector3 posicionSuavizada = Vector3.Lerp(transform.position, posicionDeseada, suavizado * Time.deltaTime);
+        Vector3 posicionSuavizada = Vector3.Lerp(transform.position, posicionDeseada, smoothSpeed);
+        transform.position = new Vector3(posicionSuavizada.x, posicionSuavizada.y, transform.position.z);
+    }
 
-        transform.position = posicionSuavizada;
+    public void EstablecerObjetivo(Transform nuevoObjetivo)
+    {
+        objetivo = nuevoObjetivo;
+        Debug.Log("[Cámara] Nuevo objetivo establecido: " + nuevoObjetivo.name);
     }
 }
+

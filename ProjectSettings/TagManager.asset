@@ -18,6 +18,9 @@ TagManager:
   - Arbol
   - Piedra
   - Misterio
+  - Piso
+  - Suelo
+  - Tapete
   layers:
   - Default
   - TransparentFX
