@@ -46,6 +46,8 @@ public class InteraccionJugador : MonoBehaviour
 
     private Dictionary<string, GameObject> prefabsPorTag = new Dictionary<string, GameObject>();
 
+    [SerializeField] private GameObject panelPopUp;
+
 
 
     void Awake()
@@ -323,6 +325,7 @@ public class InteraccionJugador : MonoBehaviour
         {
             objetoCercano = collision.gameObject;
             Debug.Log("Colisionó con: " + objetoCercano.name);
+            MostrarPopUp();
         }
     }
 
@@ -350,6 +353,7 @@ public class InteraccionJugador : MonoBehaviour
         {
             objetoCercano = other.gameObject;
             Debug.Log("Objeto cercano: " + objetoCercano.name);
+
         }
 
         if (other.CompareTag("Silla"))
@@ -371,6 +375,8 @@ public class InteraccionJugador : MonoBehaviour
         {
             objetoCercano = null;
             Debug.Log("Objeto salió de alcance");
+            OcultarPopUp();
+
         }
     }
 
@@ -450,7 +456,15 @@ public class InteraccionJugador : MonoBehaviour
 
     }
 
+    void MostrarPopUp()
+    {
+        panelPopUp.SetActive(true);
+    }
 
+    void OcultarPopUp()
+    {
+        panelPopUp.SetActive(false);
+    }
 
 
 }
