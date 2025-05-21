@@ -1,6 +1,7 @@
 using UnityEngine;
 using TMPro;
 using System.Collections.Generic;
+using System.Linq;
 
 [RequireComponent(typeof(Rigidbody2D), typeof(Animator))]
 public class InteraccionJugador : MonoBehaviour
@@ -49,7 +50,6 @@ public class InteraccionJugador : MonoBehaviour
     private bool cercaDelSink = false;
     private GameObject sinkCercano;
 
-
     private Dictionary<string, GameObject> prefabsPorTag = new Dictionary<string, GameObject>();
 
     [SerializeField] private GameObject panelPopUp;
@@ -59,6 +59,7 @@ public class InteraccionJugador : MonoBehaviour
     public Transform puntoSpawn2;
     public Transform puntoInicial; // este es el punto original del primer Player
 
+    private GameObject objetoRecogibleCercano;
 
 
 
@@ -99,37 +100,76 @@ public class InteraccionJugador : MonoBehaviour
         DetectarObjetosCercanos();
 
         // Interacciones
+        // Interacciones
         if (Input.GetKeyDown(teclaInteraccion))
         {
+            // Soltar objeto con Q (u otra tecla)
+            if (Input.GetKeyDown(KeyCode.Q) && llevaObjeto)
+            {
+                SoltarObjeto();
+                return;
+            }
+
+
             if (gabinetePlatosCercano != null)
             {
-                if (!gabinetePlatosCercano.EstaLleno() && llevaObjeto && objetoTransportado.CompareTag(gabinetePlatosCercano.TagObjetoRequerido))
+                if (!gabinetePlatosCercano.EstaLleno() && objetoTransportado != null && objetoTransportado.CompareTag(gabinetePlatosCercano.TagObjetoRequerido))
                 {
-                    gabinetePlatosCercano.IntentarGuardarPlatos(this);
+                    gabinetePlatosCercano.IntentarGuardar(objetoTransportado);
+                    objetoTransportado = null;
+                    llevaObjeto = false;
                     return;
                 }
                 else if (gabinetePlatosCercano.EstaLleno() && !llevaObjeto)
                 {
-                    gabinetePlatosCercano.SacarPlatosDelGabinete(this);
+                    gabinetePlatosCercano.SacarObjeto();
                     return;
                 }
-                return;
             }
-            else if (objetoInteractuableCercano != null)
+
+            if (objetoRecogibleCercano != null)
             {
-                objetoInteractuableCercano.AlternarEstado();
+                Debug.Log("✅ Recogiendo con E: " + objetoRecogibleCercano.name);
+
+                objetoTransportado = objetoRecogibleCercano;
+                llevaObjeto = true;
+
+                objetoTransportado.transform.SetParent(puntoDeCarga);
+                objetoTransportado.transform.localPosition = Vector3.zero;
+
+                Rigidbody2D rb = objetoTransportado.GetComponent<Rigidbody2D>();
+                if (rb != null) rb.isKinematic = true;
+
+                Collider2D col = objetoTransportado.GetComponent<Collider2D>();
+                if (col != null) col.enabled = false;
+
+                objetoRecogibleCercano = null;
                 return;
-            }
-            else if (!llevaObjeto && objetoCercanoRecogible != null && EsRecogible(objetoCercanoRecogible.tag))
-            {
-                RecogerObjeto(objetoCercanoRecogible);
-                return;
-            }
-            else if (!llevaObjeto && sillaCercana != null)
-            {
-                sillaCercana.EjecutarAccion(gameObject);
             }
         }
+
+
+        if (Input.GetKeyDown(teclaInteraccion) && objetoRecogibleCercano != null && !llevaObjeto)
+        {
+            Debug.Log("✅ Recogiendo con E: " + objetoRecogibleCercano.name);
+
+            objetoTransportado = objetoRecogibleCercano;
+            llevaObjeto = true;
+
+            objetoTransportado.transform.SetParent(puntoDeCarga);
+            objetoTransportado.transform.localPosition = Vector3.zero;
+
+            Rigidbody2D rb = objetoTransportado.GetComponent<Rigidbody2D>();
+            if (rb != null) rb.isKinematic = true;
+
+            Collider2D col = objetoTransportado.GetComponent<Collider2D>();
+            if (col != null) col.enabled = false;
+
+            // Muy importante: limpiar para que no se sobreescriba en el siguiente frame
+            objetoRecogibleCercano = null;
+        }
+
+
 
         // Soltar objeto (si lleva algo y presiona E)
         if (Input.GetKeyDown(KeyCode.E) && llevaObjeto)
@@ -429,6 +469,12 @@ public class InteraccionJugador : MonoBehaviour
             TeleportarAPunto(puntoSpawn2);
         }
 
+        if (tagsRecogibles.Contains(other.tag))
+        {
+            objetoRecogibleCercano = other.gameObject;
+            Debug.Log("🎯 Objeto recogible detectado: " + other.name);
+        }
+
     }
 
     void OnTriggerExit2D(Collider2D other)
@@ -454,6 +500,11 @@ public class InteraccionJugador : MonoBehaviour
             cercaDelSink = false;
             sinkCercano = null;
         }
+        if (other.gameObject == objetoRecogibleCercano)
+        {
+            objetoRecogibleCercano = null;
+        }
+
     }
 
     public void AsignarObjetoTransportado(GameObject objeto)
@@ -553,6 +604,23 @@ public class InteraccionJugador : MonoBehaviour
     void OcultarPopUp()
     {
         panelPopUp.SetActive(false);
+    }
+
+    // Verifica si el jugador lleva un objeto con un tag específico
+    public bool LlevaObjetoConTag(string tag)
+    {
+        return llevaObjeto && objetoTransportado != null && objetoTransportado.CompareTag(tag);
+    }
+
+    // Elimina el objeto que el jugador está transportando
+    public void EliminarObjetoTransportado()
+    {
+        if (objetoTransportado != null)
+        {
+            Destroy(objetoTransportado);
+            objetoTransportado = null;
+            llevaObjeto = false;
+        }
     }
 
 

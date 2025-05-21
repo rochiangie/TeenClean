@@ -8,12 +8,14 @@ public class CabinetController : MonoBehaviour
 
     [Header("Configuración")]
     [SerializeField] private KeyCode teclaInteraccion = KeyCode.E;
-    [SerializeField] public string tagObjetoRequerido = "Platos";
+    [SerializeField] public string tagObjetoRequerido = "PlatosLimpios";
+    [SerializeField] private GameObject prefabPlatosLimpios;
     [SerializeField] private AudioClip sonidoGuardar;
 
     private bool estaLleno = false;
 
     public bool EstaLleno() => estaLleno;
+    public string TagObjetoRequerido => tagObjetoRequerido;
 
     private void Awake()
     {
@@ -21,67 +23,27 @@ public class CabinetController : MonoBehaviour
         if (estadoLleno != null) estadoLleno.SetActive(false);
     }
 
-    public void IntentarGuardarPlatos(InteraccionJugador jugador)
+    public bool IntentarGuardar(GameObject objeto)
     {
-        Debug.Log("🔍 Intentando guardar en gabinete...");
-
-        if (estaLleno)
-        {
-            Debug.Log("⚠ Ya está lleno.");
-            return;
-        }
-
-        if (jugador == null)
-        {
-            Debug.LogWarning("❌ Jugador es null.");
-            return;
-        }
-
-        GameObject obj = jugador.ObjetoTransportado;
-
-        if (obj == null)
-        {
-            Debug.LogWarning("❌ No se está llevando ningún objeto.");
-            return;
-        }
-
-        Debug.Log($"🎯 Objeto tiene tag: {obj.tag}, requerido: {tagObjetoRequerido}");
-
-        if (!obj.CompareTag(tagObjetoRequerido))
-        {
-            Debug.LogWarning("❌ Tag del objeto no coincide.");
-            return;
-        }
-
-        jugador.SoltarYDestruirObjeto();
+        if (estaLleno || objeto.tag != tagObjetoRequerido) return false;
 
         estaLleno = true;
+        estadoVacio.SetActive(false);
+        estadoLleno.SetActive(true);
 
-        if (estadoVacio != null) estadoVacio.SetActive(false);
-        if (estadoLleno != null) estadoLleno.SetActive(true);
+        if (sonidoGuardar) AudioSource.PlayClipAtPoint(sonidoGuardar, transform.position);
 
-        if (sonidoGuardar != null)
-            AudioSource.PlayClipAtPoint(sonidoGuardar, transform.position);
-
-        Debug.Log("✅ Objeto guardado, estado actualizado.");
+        Destroy(objeto);
+        return true;
     }
 
-    public void SacarPlatosDelGabinete(InteraccionJugador jugador)
+    public void SacarObjeto()
     {
-        if (!estaLleno || jugador == null || jugador.EstaLlevandoObjeto()) return;
+        if (!estaLleno || prefabPlatosLimpios == null) return;
 
-        // ✅ Aquí llamamos al método genérico del jugador
-        jugador.InstanciarObjetoPorTag(tagObjetoRequerido);
-
+        Instantiate(prefabPlatosLimpios, transform.position + Vector3.right, Quaternion.identity);
         estaLleno = false;
-        ActualizarEstadoVisual(false);
+        estadoVacio.SetActive(true);
+        estadoLleno.SetActive(false);
     }
-
-    private void ActualizarEstadoVisual(bool lleno)
-    {
-        if (estadoVacio != null) estadoVacio.SetActive(!lleno);
-        if (estadoLleno != null) estadoLleno.SetActive(lleno);
-    }
-
-    public string TagObjetoRequerido => tagObjetoRequerido;
 }
