@@ -30,6 +30,7 @@ TagManager:
   - Misterio4
   - PlatosLimpios
   - Sink
+  - Enemy
   layers:
   - Default
   - TransparentFX
