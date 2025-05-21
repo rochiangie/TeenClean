@@ -69,7 +69,7 @@ public class InteraccionJugador : MonoBehaviour
 
         if (tagsRecogibles == null || tagsRecogibles.Length == 0)
         {
-            tagsRecogibles = new string[] { "Platos", "Ropa", "Tarea" };
+            tagsRecogibles = new string[] { "Platos", "Ropa", "PlatosLimpios", "Tarea" };
         }
 
         prefabsPorTag.Add("Platos", prefabPlatosDefinitivo);
