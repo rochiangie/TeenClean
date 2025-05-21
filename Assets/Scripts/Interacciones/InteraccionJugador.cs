@@ -42,13 +42,18 @@ public class InteraccionJugador : MonoBehaviour
     public GameObject prefabRopa;
     public GameObject prefabBookOpen;
     public GameObject prefabTarea;
+    public GameObject platosLimpiosPrefab; // Asignar desde el Inspector
+
+    public Transform puntoSpawnLimpios;
+
+    private bool cercaDelSink = false;
+    private GameObject sinkCercano;
 
 
     private Dictionary<string, GameObject> prefabsPorTag = new Dictionary<string, GameObject>();
 
     [SerializeField] private GameObject panelPopUp;
 
-    [Header("Teleport")]
     [Header("Teleport")]
     public Transform puntoSpawn1;
     public Transform puntoSpawn2;
@@ -130,6 +135,23 @@ public class InteraccionJugador : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E) && llevaObjeto)
         {
             SoltarObjeto();
+        }
+
+        if (cercaDelSink && objetoTransportado != null && objetoTransportado.CompareTag("Platos"))
+        {
+            if (Input.GetKeyDown(teclaInteraccion))
+            {
+                Transform puntoSpawn = puntoSpawnLimpios != null ? puntoSpawnLimpios : transform;
+
+                // Destruir platos sucios
+                Destroy(objetoTransportado);
+
+                // Instanciar platos limpios
+                Instantiate(platosLimpiosPrefab, puntoSpawn.position, Quaternion.identity);
+
+                // Limpiar referencia
+                objetoTransportado = null;
+            }
         }
 
         ActualizarUI();
@@ -350,6 +372,7 @@ public class InteraccionJugador : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
+
         if (other.CompareTag("Tapete"))
         {
             rb.velocity = new Vector2(rb.velocity.x, 10f);
@@ -381,7 +404,14 @@ public class InteraccionJugador : MonoBehaviour
             TeleportarAPunto(puntoInicial);
         }
 
+        Debug.Log("🧍 Jugador tocó: " + other.name);
 
+        if (other.CompareTag("Sink"))
+        {
+            Debug.Log("✅ Jugador detectó el fregadero (Sink)");
+            cercaDelSink = true;
+            sinkCercano = other.gameObject;
+        }
 
         if (other.CompareTag("Silla") || other.CompareTag("Sofa"))
         {
@@ -417,6 +447,18 @@ public class InteraccionJugador : MonoBehaviour
             OcultarPopUp();
 
         }
+        if (other.CompareTag("Sink"))  // ✅ Correcto
+        {
+            Debug.Log("✅ Entré al fregadero con: " + other.name);
+
+            cercaDelSink = false;
+            sinkCercano = null;
+        }
+    }
+
+    public void AsignarObjetoTransportado(GameObject objeto)
+    {
+        objetoTransportado = objeto;
     }
 
     public void CrearPlatosEnMano()

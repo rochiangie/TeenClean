@@ -28,6 +28,8 @@ TagManager:
   - Tarea
   - Misterio3
   - Misterio4
+  - PlatosLimpios
+  - Sink
   layers:
   - Default
   - TransparentFX
