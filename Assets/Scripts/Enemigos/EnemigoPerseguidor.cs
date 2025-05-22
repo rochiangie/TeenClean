@@ -19,10 +19,10 @@ public class EnemigoPerseguidor : MonoBehaviour
     private bool atacando = false;
     private float tiempoUltimoAtaque;
     private bool puedeSerEliminado = false;
+    private bool estaMuerto = false;
 
     void Start()
     {
-        // Si no se asigna manualmente, busca al jugador por tag
         if (jugador == null)
         {
             GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
@@ -37,18 +37,16 @@ public class EnemigoPerseguidor : MonoBehaviour
 
     void Update()
     {
-        if (jugador == null) return;
+        if (jugador == null || estaMuerto) return;
 
         float distanciaAlJugador = Vector3.Distance(transform.position, jugador.position);
 
-        // Perseguir al jugador si está en rango de detección pero no en rango de ataque
         if (distanciaAlJugador <= distanciaDeteccion && distanciaAlJugador > distanciaAtaque)
         {
             PerseguirJugador();
             jugadorEnRango = false;
             atacando = false;
         }
-        // Atacar si está en rango de ataque
         else if (distanciaAlJugador <= distanciaAtaque)
         {
             if (!atacando && Time.time > tiempoUltimoAtaque + tiempoEntreAtaques)
@@ -63,19 +61,15 @@ public class EnemigoPerseguidor : MonoBehaviour
             atacando = false;
         }
 
-        // Actualizar animaciones
         animator.SetBool("JugadorEnRango", jugadorEnRango);
         animator.SetBool("Atacando", atacando);
     }
 
     void PerseguirJugador()
     {
-        // Rotar hacia el jugador
         Vector3 direccion = (jugador.position - transform.position).normalized;
-        Quaternion rotacionDeseada = Quaternion.LookRotation(direccion);
+        Quaternion rotacionDeseada = Quaternion.LookRotation(Vector3.forward, direccion); // 2D fix
         transform.rotation = Quaternion.Slerp(transform.rotation, rotacionDeseada, Time.deltaTime * 10f);
-
-        // Moverse hacia el jugador
         transform.position = Vector3.MoveTowards(transform.position, jugador.position, velocidadMovimiento * Time.deltaTime);
     }
 
@@ -84,12 +78,11 @@ public class EnemigoPerseguidor : MonoBehaviour
         atacando = true;
         tiempoUltimoAtaque = Time.time;
 
-        // Aquí podrías añadir lógica para hacer daño al jugador
-        // Ejemplo: jugador.GetComponent<SaludJugador>().RecibirDaño(dañoAtaque);
+        // Aquí podrías añadir lógica de daño
+        // Ejemplo: jugador.GetComponent<SaludJugador>()?.RecibirDaño(dañoAtaque);
 
-        // Activar el estado de "puede ser eliminado" durante un breve periodo
         puedeSerEliminado = true;
-        Invoke("DesactivarEliminacion", 0.5f); // El jugador tiene 0.5 segundos para presionar F
+        Invoke("DesactivarEliminacion", 0.5f); // Solo se puede eliminar durante esta ventana
     }
 
     void DesactivarEliminacion()
@@ -97,7 +90,6 @@ public class EnemigoPerseguidor : MonoBehaviour
         puedeSerEliminado = false;
     }
 
-    // Método llamado desde la animación de ataque cuando termina
     public void FinAtaque()
     {
         atacando = false;
@@ -105,7 +97,8 @@ public class EnemigoPerseguidor : MonoBehaviour
 
     void OnTriggerStay(Collider other)
     {
-        // Si el jugador presiona F mientras el enemigo está atacando y en rango
+        if (estaMuerto) return;
+
         if (other.CompareTag("Player") && Input.GetKeyDown(KeyCode.F) && puedeSerEliminado)
         {
             Morir();
@@ -114,14 +107,17 @@ public class EnemigoPerseguidor : MonoBehaviour
 
     void Morir()
     {
-        // Aquí podrías añadir efectos de muerte, sonidos, etc.
+        estaMuerto = true;
         animator.SetTrigger("Morir");
 
-        // Deshabilitar el collider y el script para que no siga funcionando
-        GetComponent<Collider>().enabled = false;
+        // Opcional: reproducir sonido o partículas de muerte aquí
+        // AudioSource.PlayClipAtPoint(clipMuerte, transform.position);
+
+        Collider col = GetComponent<Collider>();
+        if (col != null) col.enabled = false;
+
         this.enabled = false;
 
-        // Destruir el objeto después de un tiempo (para que termine la animación)
-        Destroy(gameObject, 2f);
+        Destroy(gameObject, 2f); // espera 2 segundos para que la animación se reproduzca
     }
 }
