@@ -28,6 +28,11 @@ TagManager:
   - Tarea
   - Misterio3
   - Misterio4
+  - PlatosLimpios
+  - Sink
+  - Enemy
+  - Escudo
+  - Humo
   layers:
   - Default
   - TransparentFX

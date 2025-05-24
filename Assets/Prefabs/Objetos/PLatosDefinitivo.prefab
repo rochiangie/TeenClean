@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7885586864819201871}
   - component: {fileID: 6488871379103755782}
   m_Layer: 3
-  m_Name: PlatosDefinitivo
+  m_Name: PLatosDefinitivo
   m_TagString: Platos
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -28,7 +28,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 6.4148912, y: -33.245525, z: 0}
-  m_LocalScale: {x: 4, y: 4, z: 4}
+  m_LocalScale: {x: 5, y: 5, z: 5}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
