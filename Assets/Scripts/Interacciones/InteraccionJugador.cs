@@ -63,6 +63,11 @@ public class InteraccionJugador : MonoBehaviour
 
     private GameObject objetoRecogibleCercano;
 
+    [Header("Ataque")]
+    public KeyCode teclaAtaque = KeyCode.F;
+    public int dañoAtaque = 10;
+    public float rangoAtaque = 1.2f;
+    public LayerMask capaEnemigos;
 
 
     void Awake()
@@ -194,6 +199,10 @@ public class InteraccionJugador : MonoBehaviour
                 // Limpiar referencia
                 objetoTransportado = null;
             }
+        }
+        if (Input.GetKeyDown(teclaAtaque))
+        {
+            EjecutarAtaque();
         }
 
         ActualizarUI();
@@ -597,6 +606,19 @@ public class InteraccionJugador : MonoBehaviour
         animator.SetBool("isJumping", false);
     }
 
+    void EjecutarAtaque()
+    {
+        Collider2D[] enemigos = Physics2D.OverlapCircleAll(transform.position, rangoAtaque, capaEnemigos);
+
+        foreach (Collider2D col in enemigos)
+        {
+            if (col.TryGetComponent(out Enemigo enemigo))
+            {
+                enemigo.RecibirDaño(dañoAtaque);
+                Debug.Log($"⚔️ Atacaste a {col.name} y le hiciste {dañoAtaque} de daño.");
+            }
+        }
+    }
 
     void MostrarPopUp()
     {
