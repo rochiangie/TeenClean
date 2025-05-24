@@ -1,4 +1,4 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
 public class SaludJugador : MonoBehaviour
 {
@@ -7,24 +7,28 @@ public class SaludJugador : MonoBehaviour
     public int saludActual;
 
     [Header("Referencias")]
-    public Animator animator; // Opcional para animaciones de daño o muerte
+    public Animator animator; // Opcional para animaciones de daÃ±o o muerte
+
+    public bool EstaMuerto => saludActual <= 0;
 
     void Start()
     {
         saludActual = saludMaxima;
     }
 
-    // Llamar cuando recibe daño
-    public void RecibirDaño(int cantidad)
+    // Llamar cuando recibe daÃ±o
+    public void RecibirDaÃ±o(int cantidad)
     {
+        Debug.Log($"ğŸ”¥ SaludJugador.RecibirDaÃ±o llamado con cantidad: {cantidad}");
+
         saludActual -= cantidad;
         saludActual = Mathf.Clamp(saludActual, 0, saludMaxima);
 
-        Debug.Log($"Jugador recibió {cantidad} de daño. Salud actual: {saludActual}");
+        Debug.Log($"â¤ï¸ Salud actual: {saludActual}");
 
         if (animator != null)
         {
-            animator.SetTrigger("Daño");
+            animator.SetTrigger("DaÃ±o");
         }
 
         if (saludActual <= 0)
@@ -33,12 +37,13 @@ public class SaludJugador : MonoBehaviour
         }
     }
 
-    // Llamar cuando toma una poción u objeto de curación
+
+    // Llamar cuando toma una pociÃ³n u objeto de curaciÃ³n
     public void Curar(int cantidad)
     {
         saludActual += cantidad;
         saludActual = Mathf.Clamp(saludActual, 0, saludMaxima);
-        Debug.Log($"Jugador se curó {cantidad}. Salud actual: {saludActual}");
+        Debug.Log($"Jugador se curÃ³ {cantidad}. Salud actual: {saludActual}");
     }
 
     void Morir()
@@ -49,8 +54,8 @@ public class SaludJugador : MonoBehaviour
             animator.SetTrigger("Morir");
         }
 
-        // Aquí podrías desactivar controles, reproducir sonidos, etc.
+        // AquÃ­ podrÃ­as desactivar controles, reproducir sonidos, etc.
         GetComponent<InteraccionJugador>().enabled = false;
-        // También podrías llamar a un GameManager para reiniciar nivel, mostrar UI, etc.
+        // TambiÃ©n podrÃ­as llamar a un GameManager para reiniciar nivel, mostrar UI, etc.
     }
 }

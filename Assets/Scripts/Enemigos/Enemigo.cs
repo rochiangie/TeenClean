@@ -1,4 +1,4 @@
-using UnityEngine;
+Ôªøusing UnityEngine;
 
 [RequireComponent(typeof(Animator))]
 public class Enemigo : MonoBehaviour
@@ -14,7 +14,7 @@ public class Enemigo : MonoBehaviour
 
     [Header("Ataque")]
     public float tiempoEntreAtaques = 2f;
-    public int daÒoAtaque = 10;
+    public int da√±oAtaque = 10;
 
     [Header("Referencias")]
     public Animator animator;
@@ -30,7 +30,6 @@ public class Enemigo : MonoBehaviour
 
     void Awake()
     {
-        // AsignaciÛn autom·tica de componentes si est·n en el mismo GameObject
         if (animator == null)
             animator = GetComponent<Animator>();
 
@@ -50,13 +49,17 @@ public class Enemigo : MonoBehaviour
         }
 
         tiempoUltimoAtaque = -tiempoEntreAtaques;
+        transform.localScale = new Vector3(20f, 20f, 20f); // Forzamos escala
     }
 
     void Update()
     {
+        float distancia = Vector3.Distance(transform.position, jugador.position);
+        //Debug.Log($"üìè Distancia al jugador: {distancia}");
+
         if (jugador == null || estaMuerto) return;
 
-        float distancia = Vector3.Distance(transform.position, jugador.position);
+        //float distancia = Vector3.Distance(transform.position, jugador.position);
 
         if (distancia <= distanciaDeteccion && distancia > distanciaAtaque)
         {
@@ -68,6 +71,7 @@ public class Enemigo : MonoBehaviour
         {
             if (!atacando && Time.time > tiempoUltimoAtaque + tiempoEntreAtaques)
             {
+                Debug.Log("üëä Enemigo intenta atacar al jugador.");
                 Atacar();
             }
             jugadorEnRango = true;
@@ -87,9 +91,8 @@ public class Enemigo : MonoBehaviour
         Vector3 direccion = (jugador.position - transform.position).normalized;
         transform.position += direccion * velocidadMovimiento * Time.deltaTime;
 
-        // Volteo del sprite si se mueve a izquierda o derecha
         if (direccion.x != 0)
-            transform.localScale = new Vector3(Mathf.Sign(direccion.x), 1, 1);
+            transform.localScale = new Vector3(20f * Mathf.Sign(direccion.x), 20f, 20f);
     }
 
     void Atacar()
@@ -97,8 +100,26 @@ public class Enemigo : MonoBehaviour
         atacando = true;
         tiempoUltimoAtaque = Time.time;
 
-        // AquÌ podÈs aplicar daÒo al jugador si tenÈs el script de salud del jugador
-        // jugador.GetComponent<SaludJugador>()?.RecibirDaÒo(daÒoAtaque);
+        if (jugador != null)
+        {
+            var saludJugador = jugador.GetComponent<SaludJugador>();
+            var defensaJugador = jugador.GetComponent<DefensaJugador>();
+
+            bool estaDefendiendo = defensaJugador != null && defensaJugador.EstaDefendiendo();
+
+            if (saludJugador != null && !saludJugador.EstaMuerto)
+            {
+                if (!estaDefendiendo)
+                {
+                    Debug.Log("üí• Da√±o aplicado al jugador.");
+                    saludJugador.RecibirDa√±o(da√±oAtaque);
+                }
+                else
+                {
+                    Debug.Log("üõ°Ô∏è Jugador se est√° defendiendo. No se aplica da√±o.");
+                }
+            }
+        }
 
         puedeSerEliminado = true;
         Invoke("DesactivarEliminacion", 0.5f);
@@ -109,16 +130,14 @@ public class Enemigo : MonoBehaviour
         puedeSerEliminado = false;
     }
 
-    public void RecibirDaÒo(int cantidad)
+    public void RecibirDa√±o(int cantidad)
     {
         if (estaMuerto) return;
 
         saludActual -= cantidad;
         saludActual = Mathf.Clamp(saludActual, 0, saludMaxima);
 
-        Debug.Log($"Enemigo recibiÛ {cantidad} de daÒo. Salud actual: {saludActual}");
-
-        if (animator != null) animator.SetTrigger("DaÒo");
+        if (animator != null) animator.SetTrigger("Da√±o");
 
         if (saludActual <= 0) Morir();
     }
@@ -128,7 +147,6 @@ public class Enemigo : MonoBehaviour
         if (estaMuerto) return;
         estaMuerto = true;
 
-        Debug.Log("°Enemigo eliminado!");
         if (animator != null) animator.SetTrigger("Morir");
         if (sonidoMuerte != null && audioSource != null)
             audioSource.PlayOneShot(sonidoMuerte);
@@ -145,21 +163,27 @@ public class Enemigo : MonoBehaviour
         Destroy(gameObject, 2f);
     }
 
-    void OnTriggerStay(Collider other)
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if (estaMuerto) return;
+
+        if (collision.collider.CompareTag("Player") && Time.time > tiempoUltimoAtaque + tiempoEntreAtaques)
+        {
+            Debug.Log("üëä Enemigo colisionando con el jugador, intenta atacar.");
+            Atacar();
+        }
+    }
+
+
+    void OnTriggerStay2D(Collider2D other)
     {
         if (estaMuerto) return;
 
         if (other.CompareTag("Player") && Input.GetKeyDown(KeyCode.F) && puedeSerEliminado)
         {
-            RecibirDaÒo(saludMaxima); // Mata al enemigo directo
+            Debug.Log("üó°Ô∏è Jugador mat√≥ al enemigo con F");
+            RecibirDa√±o(saludMaxima);
         }
     }
 
-    // BONUS: Si instanci·s enemigos en runtime y est·n muy pequeÒos, podÈs usar este helper
-    public static GameObject InstanciarEscalaNormal(GameObject prefab, Vector3 posicion)
-    {
-        GameObject clon = Instantiate(prefab, posicion, Quaternion.identity);
-        clon.transform.localScale = new Vector3(20f, 20f, 20f);
-        return clon;
-    }
 }

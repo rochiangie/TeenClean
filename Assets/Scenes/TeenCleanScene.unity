@@ -423,8 +423,8 @@ MonoBehaviour:
   distanciaDeteccion: 50
   distanciaAtaque: 5
   saludMaxima: 50
-  tiempoEntreAtaques: 2
-  "da\xF1oAtaque": 10
+  tiempoEntreAtaques: 1
+  "da\xF1oAtaque": 20
   animator: {fileID: 304763886}
   jugador: {fileID: 332908751}
   sonidoMuerte: {fileID: 0}
@@ -1803,6 +1803,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 856048128}
     - target: {fileID: 3083488791747815759, guid: ed52dcb83f03ca0419d0e2cbb4f5b908, type: 3}
+      propertyPath: prefabEnemigo
+      value: 
+      objectReference: {fileID: 304763883}
+    - target: {fileID: 3083488791747815759, guid: ed52dcb83f03ca0419d0e2cbb4f5b908, type: 3}
       propertyPath: prefabBookOpen
       value: 
       objectReference: {fileID: 3463493620268787513, guid: 134290439da50f64f84b35e83563dfd8, type: 3}
@@ -1894,6 +1898,9 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 441302571}
     m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8988786418309249223, guid: ed52dcb83f03ca0419d0e2cbb4f5b908, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1193191339}
     - targetCorrespondingSourceObject: {fileID: 8988786418309249223, guid: ed52dcb83f03ca0419d0e2cbb4f5b908, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1193191333}
@@ -8962,8 +8969,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saludMaxima: 100
-  saludActual: 0
+  saludActual: 100
   animator: {fileID: 1193191332}
+--- !u!114 &1193191339
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1193191326}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a8f2948d5b80aa4c9703dc93863797f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  teclaDefensa: 32
 --- !u!1 &1202513066
 GameObject:
   m_ObjectHideFlags: 0
@@ -9468,7 +9488,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9004148124358793283, guid: 34a3833850ccfea4d8e03f8f79f95a8e, type: 3}
       propertyPath: m_Name
-      value: Character (1)
+      value: EnemigoCharacter (1)
       objectReference: {fileID: 0}
     - target: {fileID: 9004148124358793283, guid: 34a3833850ccfea4d8e03f8f79f95a8e, type: 3}
       propertyPath: m_Layer

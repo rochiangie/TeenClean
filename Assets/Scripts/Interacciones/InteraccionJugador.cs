@@ -43,7 +43,8 @@ public class InteraccionJugador : MonoBehaviour
     public GameObject prefabRopa;
     public GameObject prefabBookOpen;
     public GameObject prefabTarea;
-    public GameObject platosLimpiosPrefab; // Asignar desde el Inspector
+    public GameObject platosLimpiosPrefab;
+    //public GameObject prefabEnemigo;
 
     public Transform puntoSpawnLimpios;
 
