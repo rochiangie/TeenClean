@@ -14318,6 +14318,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: platoslimpios
       objectReference: {fileID: 0}
+    - target: {fileID: 5269092204875667488, guid: 4bb1498d76145a74d837ed4e70730152, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
