@@ -505,7 +505,7 @@ GameObject:
   - component: {fileID: 305650419}
   m_Layer: 3
   m_Name: EnProgreso
-  m_TagString: MainCamera
+  m_TagString: Misterio4
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -539,7 +539,7 @@ PolygonCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -1408,7 +1408,7 @@ GameObject:
   - component: {fileID: 326752660}
   - component: {fileID: 326752662}
   - component: {fileID: 326752661}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: OtroNivel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1425,7 +1425,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -263, y: -25, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1434954942}
@@ -1478,7 +1478,7 @@ TilemapRenderer:
   m_SortOrder: 0
   m_Mode: 0
   m_DetectChunkCullingBounds: 0
-  m_MaskInteraction: 0
+  m_MaskInteraction: 2
 --- !u!1839735485 &326752662
 Tilemap:
   m_ObjectHideFlags: 0
@@ -1791,6 +1791,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 3609443709605794928, guid: ab9d377e85982a2498a72478633edbc2, type: 3}
     - target: {fileID: 3083488791747815759, guid: ed52dcb83f03ca0419d0e2cbb4f5b908, type: 3}
+      propertyPath: puntoCarga
+      value: 
+      objectReference: {fileID: 441302571}
+    - target: {fileID: 3083488791747815759, guid: ed52dcb83f03ca0419d0e2cbb4f5b908, type: 3}
       propertyPath: prefabTarea
       value: 
       objectReference: {fileID: 3463493620268787513, guid: 134290439da50f64f84b35e83563dfd8, type: 3}
@@ -1841,7 +1845,7 @@ PrefabInstance:
     - target: {fileID: 3083488791747815759, guid: ed52dcb83f03ca0419d0e2cbb4f5b908, type: 3}
       propertyPath: prefabPlatosDefinitivo
       value: 
-      objectReference: {fileID: 3294271535427686419, guid: 1f54f87999d9b5b43b4b82c83bc55ef9, type: 3}
+      objectReference: {fileID: 5269092204875667488, guid: 4bb1498d76145a74d837ed4e70730152, type: 3}
     - target: {fileID: 3083488791747815759, guid: ed52dcb83f03ca0419d0e2cbb4f5b908, type: 3}
       propertyPath: tagsRecogibles.Array.size
       value: 4
@@ -2157,7 +2161,7 @@ Transform:
   m_GameObject: {fileID: 357489272}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2180, y: -97, z: -0.6859235}
+  m_LocalPosition: {x: 57.8, y: -106.3, z: -0.6859235}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3025,6 +3029,9 @@ MonoBehaviour:
   teclaInteraccion: 101
   tagPlatosSucios: Platos
   prefabPlatosLimpios: {fileID: 1032204074}
+  mensajeUI: {fileID: 1081921197}
+  puntoCarga: {fileID: 0}
+  puntoDeCarga: {fileID: 0}
 --- !u!1 &609632181
 GameObject:
   m_ObjectHideFlags: 0
@@ -4436,6 +4443,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &778231297 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1392540231803979241, guid: 1f54f87999d9b5b43b4b82c83bc55ef9, type: 3}
+  m_PrefabInstance: {fileID: 865951061}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &806439917
 GameObject:
   m_ObjectHideFlags: 0
@@ -4625,6 +4637,71 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1392540231803979241, guid: 1f54f87999d9b5b43b4b82c83bc55ef9, type: 3}
   m_PrefabInstance: {fileID: 4448160690754780488}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &865951061
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1690204873}
+    m_Modifications:
+    - target: {fileID: 1392540231803979241, guid: 1f54f87999d9b5b43b4b82c83bc55ef9, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1392540231803979241, guid: 1f54f87999d9b5b43b4b82c83bc55ef9, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1392540231803979241, guid: 1f54f87999d9b5b43b4b82c83bc55ef9, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 32.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1392540231803979241, guid: 1f54f87999d9b5b43b4b82c83bc55ef9, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 37
+      objectReference: {fileID: 0}
+    - target: {fileID: 1392540231803979241, guid: 1f54f87999d9b5b43b4b82c83bc55ef9, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.6859235
+      objectReference: {fileID: 0}
+    - target: {fileID: 1392540231803979241, guid: 1f54f87999d9b5b43b4b82c83bc55ef9, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1392540231803979241, guid: 1f54f87999d9b5b43b4b82c83bc55ef9, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1392540231803979241, guid: 1f54f87999d9b5b43b4b82c83bc55ef9, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1392540231803979241, guid: 1f54f87999d9b5b43b4b82c83bc55ef9, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1392540231803979241, guid: 1f54f87999d9b5b43b4b82c83bc55ef9, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1392540231803979241, guid: 1f54f87999d9b5b43b4b82c83bc55ef9, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1392540231803979241, guid: 1f54f87999d9b5b43b4b82c83bc55ef9, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3294271535427686419, guid: 1f54f87999d9b5b43b4b82c83bc55ef9, type: 3}
+      propertyPath: m_Name
+      value: PLatosDefinitivo (1)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 1f54f87999d9b5b43b4b82c83bc55ef9, type: 3}
 --- !u!1001 &885728730
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11128,6 +11205,7 @@ Transform:
   - {fileID: 1091391381}
   - {fileID: 2074133372}
   - {fileID: 856233065}
+  - {fileID: 778231297}
   - {fileID: 2025889926}
   - {fileID: 583565101}
   - {fileID: 1509766255}
@@ -13527,6 +13605,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2035315893}
   - component: {fileID: 2035315892}
+  - component: {fileID: 2035315894}
   m_Layer: 3
   m_Name: normal
   m_TagString: Sink
@@ -13601,6 +13680,27 @@ Transform:
   m_Children: []
   m_Father: {fileID: 608237242}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2035315894
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2035315891}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4d343605bc63b148b0ec1aac9b764f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  estadoVacio: {fileID: 2035315891}
+  estadoSucio: {fileID: 1510390909}
+  estadoLimpio: {fileID: 1863068933}
+  teclaInteraccion: 101
+  tagPlatosSucios: Platos
+  prefabPlatosLimpios: {fileID: 5269092204875667488, guid: 4bb1498d76145a74d837ed4e70730152, type: 3}
+  mensajeUI: {fileID: 1081921197}
+  puntoCarga: {fileID: 2034354229}
+  puntoDeCarga: {fileID: 441302571}
 --- !u!1 &2059927728
 GameObject:
   m_ObjectHideFlags: 0
@@ -14964,6 +15064,14 @@ PrefabInstance:
       propertyPath: prefabPlatos1
       value: 
       objectReference: {fileID: 3294271535427686419, guid: 1f54f87999d9b5b43b4b82c83bc55ef9, type: 3}
+    - target: {fileID: 7859557252829479869, guid: 19dbe556de8d04349a76fa864e9087c7, type: 3}
+      propertyPath: tagObjetoRequerido
+      value: PlatosLimpios
+      objectReference: {fileID: 0}
+    - target: {fileID: 7859557252829479869, guid: 19dbe556de8d04349a76fa864e9087c7, type: 3}
+      propertyPath: prefabPlatosLimpios
+      value: 
+      objectReference: {fileID: 5269092204875667488, guid: 4bb1498d76145a74d837ed4e70730152, type: 3}
     - target: {fileID: 7859557252829479869, guid: 19dbe556de8d04349a76fa864e9087c7, type: 3}
       propertyPath: prefabPLatosDefinitivo
       value: 

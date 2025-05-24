@@ -21,6 +21,7 @@ public class InteraccionJugador : MonoBehaviour
 
     [Header("Transporte Objetos")]
     public Transform puntoDeCarga;
+    public Transform puntoCarga;
     [SerializeField] private string[] tagsRecogibles = { "Platos", "Ropa", "Tarea" };
 
     private Rigidbody2D rb;
