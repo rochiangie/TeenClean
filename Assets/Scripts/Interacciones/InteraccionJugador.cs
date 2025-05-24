@@ -129,7 +129,7 @@ public class InteraccionJugador : MonoBehaviour
 
             if (objetoRecogibleCercano != null)
             {
-                Debug.Log("✅ Recogiendo con E: " + objetoRecogibleCercano.name);
+                //Debug.Log("✅ Recogiendo con E: " + objetoRecogibleCercano.name);
 
                 objetoTransportado = objetoRecogibleCercano;
                 llevaObjeto = true;
@@ -151,7 +151,7 @@ public class InteraccionJugador : MonoBehaviour
 
         if (Input.GetKeyDown(teclaInteraccion) && objetoRecogibleCercano != null && !llevaObjeto)
         {
-            Debug.Log("✅ Recogiendo con E: " + objetoRecogibleCercano.name);
+            //Debug.Log("✅ Recogiendo con E: " + objetoRecogibleCercano.name);
 
             objetoTransportado = objetoRecogibleCercano;
             llevaObjeto = true;
