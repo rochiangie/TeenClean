@@ -28,6 +28,12 @@ public class Enemigo : MonoBehaviour
     private bool puedeSerEliminado = false;
     private bool estaMuerto = false;
 
+
+    [Header("Efecto de Ataque")]
+    public GameObject prefabHumo;
+    public Transform puntoEfecto;
+    public float duracionHumo = 2f;
+
     void Awake()
     {
         if (animator == null)
@@ -119,6 +125,14 @@ public class Enemigo : MonoBehaviour
                     Debug.Log("🛡️ Jugador se está defendiendo. No se aplica daño.");
                 }
             }
+            if (prefabHumo != null && puntoEfecto != null)
+            {
+                GameObject humo = Instantiate(prefabHumo, puntoEfecto.position, Quaternion.identity);
+                humo.tag = "Humo"; // asegurarse por las dudas
+                Destroy(humo, duracionHumo); // lo destruye luego de x segundos
+                Debug.Log("🌫️ Se instanció el efecto de humo contaminante.");
+            }
+
         }
 
         puedeSerEliminado = true;

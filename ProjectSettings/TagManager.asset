@@ -31,6 +31,8 @@ TagManager:
   - PlatosLimpios
   - Sink
   - Enemy
+  - Escudo
+  - Humo
   layers:
   - Default
   - TransparentFX
