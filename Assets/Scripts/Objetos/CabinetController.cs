@@ -37,11 +37,24 @@ public class CabinetController : MonoBehaviour
         return true;
     }
 
-    public void SacarObjeto()
+    // ✅ Nuevo método que recibe la mano del jugador y el script del jugador
+    public void SacarObjeto(Transform puntoDeCarga, InteraccionJugador jugador)
     {
-        if (!estaLleno || prefabPlatosLimpios == null) return;
+        if (!estaLleno || prefabPlatosLimpios == null || puntoDeCarga == null || jugador == null)
+        {
+            Debug.LogWarning("❌ No se puede sacar objeto del cabinet: faltan referencias.");
+            return;
+        }
 
-        Instantiate(prefabPlatosLimpios, transform.position + Vector3.right, Quaternion.identity);
+        GameObject platos = Instantiate(prefabPlatosLimpios, puntoDeCarga.position, Quaternion.identity);
+        platos.transform.SetParent(puntoDeCarga);
+        platos.transform.localPosition = Vector3.zero;
+        platos.transform.localRotation = Quaternion.identity;
+        platos.transform.localScale = Vector3.one * 0.5f;
+        platos.tag = "PlatosLimpios";
+
+        jugador.RecogerObjeto(platos);
+
         estaLleno = false;
         estadoVacio.SetActive(true);
         estadoLleno.SetActive(false);

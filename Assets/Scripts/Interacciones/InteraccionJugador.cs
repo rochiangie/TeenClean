@@ -124,7 +124,7 @@ public class InteraccionJugador : MonoBehaviour
                 }
                 else if (gabinetePlatosCercano.EstaLleno() && !llevaObjeto)
                 {
-                    gabinetePlatosCercano.SacarObjeto();
+                    gabinetePlatosCercano.SacarObjeto(puntoDeCarga, this);
                     return;
                 }
             }

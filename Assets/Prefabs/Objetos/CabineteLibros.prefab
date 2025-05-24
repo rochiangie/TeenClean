@@ -244,6 +244,7 @@ MonoBehaviour:
   estadoLleno: {fileID: 941855796034353215}
   teclaInteraccion: 101
   tagObjetoRequerido: Ropa
+  prefabPlatosLimpios: {fileID: 5269092204875667488, guid: 4bb1498d76145a74d837ed4e70730152, type: 3}
   sonidoGuardar: {fileID: 0}
 --- !u!1 &5513591663989636413
 GameObject:

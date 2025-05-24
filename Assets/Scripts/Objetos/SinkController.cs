@@ -11,19 +11,18 @@ public class SinkController : MonoBehaviour
     [Header("Configuración")]
     public KeyCode teclaInteraccion = KeyCode.E;
     public string tagPlatosSucios = "Platos";
-    public GameObject prefabPlatosLimpios;
+    public GameObject platoslimpios; // Este es el prefab que se instancia
 
     [Header("UI")]
     public TextMeshProUGUI mensajeUI;
+
+    [Header("Punto de carga del jugador")]
+    public Transform puntoCarga; // Se asigna manualmente o desde el jugador
 
     private int estadoActual = 0; // 0: vacío, 1: sucio, 2: limpio
     private bool jugadorEnRango = false;
     private GameObject jugador;
     private InteraccionJugador interaccionJugador;
-    public Transform puntoCarga;
-    public Transform puntoDeCarga;
-
-
 
     private void Start()
     {
@@ -52,18 +51,15 @@ public class SinkController : MonoBehaviour
                 {
                     estadoActual = 2;
                     ActualizarEstados();
-                    Debug.Log("🧼 Fregadero limpio. Listo para entregar platos limpios.");
+                    Debug.Log("🧼 Fregadero limpio. Listo para entregar platoslimpios.");
                 }
-                // Paso 3: entregar platos limpios
+                // Paso 3: entregar platoslimpios
                 else if (estadoActual == 2 && !interaccionJugador.EstaLlevandoObjeto())
                 {
-                    GameObject platos = Instantiate(prefabPlatosLimpios, transform.position + Vector3.right * 1f, Quaternion.identity);
-                    platos.transform.localScale = Vector3.one * 3f;
-                    platos.tag = "PlatosLimpios";
-                    interaccionJugador.RecogerObjeto(platos);
+                    InstanciarYAsignarPlatos(platoslimpios, puntoCarga, interaccionJugador);
                     estadoActual = 0;
                     ActualizarEstados();
-                    Debug.Log("🍽️ Platos limpios entregados al jugador.");
+                    Debug.Log("🍽️ platoslimpios entregados al jugador.");
                 }
             }
         }
@@ -90,7 +86,7 @@ public class SinkController : MonoBehaviour
         }
         else if (estadoActual == 2 && !interaccionJugador.EstaLlevandoObjeto())
         {
-            mensajeUI.text = $"Presiona {teclaInteraccion} para recoger platos limpios";
+            mensajeUI.text = $"Presiona {teclaInteraccion} para recoger platoslimpios";
         }
         else
         {
@@ -117,14 +113,16 @@ public class SinkController : MonoBehaviour
             jugador = other.gameObject;
             interaccionJugador = jugador.GetComponent<InteraccionJugador>();
 
-            // 🔥 Asignar el punto de carga desde el jugador
-            if (interaccionJugador != null)
+            if (interaccionJugador != null && interaccionJugador.puntoCarga != null)
             {
                 puntoCarga = interaccionJugador.puntoCarga;
             }
+            else
+            {
+                Debug.LogWarning("⚠️ interaccionJugador o su puntoCarga es null");
+            }
         }
     }
-
 
     private void OnTriggerExit2D(Collider2D other)
     {
@@ -141,18 +139,41 @@ public class SinkController : MonoBehaviour
 
     public void SacarPlatosLimpios()
     {
-        if (estadoActual == 2 && prefabPlatosLimpios != null)
+        if (estadoActual == 2 && platoslimpios != null && interaccionJugador != null)
         {
-            GameObject platos = Instantiate(prefabPlatosLimpios, puntoCarga.position, Quaternion.identity);
-            platos.transform.SetParent(puntoCarga);
-            platos.transform.localPosition = Vector3.zero;
-            platos.transform.localRotation = Quaternion.identity;
-            platos.transform.localScale = Vector3.one * 3f;
-
-            platos.transform.localScale = Vector3.one * 3f;
-            platos.tag = "PlatosLimpios";
+            InstanciarYAsignarPlatos(platoslimpios, puntoCarga, interaccionJugador);
             estadoActual = 0;
             ActualizarEstados();
         }
     }
+
+    private void InstanciarYAsignarPlatos(GameObject prefab, Transform puntoDeCarga, InteraccionJugador jugador)
+    {
+        if (prefab == null)
+            Debug.LogWarning("❌ Error: prefabPlatosLimpios es null");
+        if (puntoDeCarga == null)
+            Debug.LogWarning("❌ Error: puntoDeCarga es null");
+        if (jugador == null)
+            Debug.LogWarning("❌ Error: interaccionJugador es null");
+
+        if (prefab == null || puntoDeCarga == null || jugador == null)
+        {
+            Debug.LogWarning("❌ No se puede instanciar platos: faltan referencias.");
+            return;
+        }
+
+        GameObject platos = Instantiate(prefab, puntoDeCarga.position, Quaternion.identity);
+        platos.transform.SetParent(puntoDeCarga);
+        platos.transform.localPosition = Vector3.zero;
+        platos.transform.localRotation = Quaternion.identity;
+
+        // ✅ usar la escala del prefab (ya seteada correctamente en Unity)
+        platos.transform.localScale = prefab.transform.localScale;
+
+        // ✅ establecer el tag correcto
+        platos.tag = "PlatosLimpios";
+
+        jugador.RecogerObjeto(platos);
+    }
+
 }
