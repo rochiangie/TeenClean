@@ -10,9 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 96953933307941504}
   - component: {fileID: 1366599735594622115}
-  m_Layer: 0
+  - component: {fileID: 1059319063764319901}
+  m_Layer: 3
   m_Name: Character (26)
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -24,6 +25,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 96953933307941505}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -31,11 +33,10 @@ Transform:
   m_Children:
   - {fileID: 96953934232176510}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &1366599735594622115
 Animator:
-  serializedVersion: 4
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -52,7 +53,33 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1059319063764319901
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 96953933307941505}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98861f614db35fc458ab25c2adb22106, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  velocidadMovimiento: 3
+  distanciaDeteccion: 10
+  distanciaAtaque: 2
+  saludMaxima: 50
+  tiempoEntreAtaques: 2
+  "da\xF1oAtaque": 10
+  animator: {fileID: 1366599735594622115}
+  jugador: {fileID: 0}
+  sonidoMuerte: {fileID: 0}
+  audioSource: {fileID: 0}
+  prefabHumo: {fileID: 0}
+  puntoEfecto: {fileID: 0}
+  duracionHumo: 2
 --- !u!1 &96953934232176511
 GameObject:
   m_ObjectHideFlags: 0
@@ -63,9 +90,9 @@ GameObject:
   m_Component:
   - component: {fileID: 96953934232176510}
   - component: {fileID: 96953934232176509}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Body
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -77,13 +104,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 96953934232176511}
+  serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0.416, y: -0.271, z: 0.0781219}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 96953933307941504}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &96953934232176509
 SpriteRenderer:

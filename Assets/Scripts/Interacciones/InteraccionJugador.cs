@@ -69,6 +69,7 @@ public class InteraccionJugador : MonoBehaviour
     public float rangoAtaque = 1.5f;
     public LayerMask capaEnemigos;
 
+
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -119,6 +120,12 @@ public class InteraccionJugador : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Q) && llevaObjeto)
             {
                 SoltarObjeto();
+                return;
+            }
+
+            if (objetoInteractuableCercano != null)
+            {
+                objetoInteractuableCercano.AlternarEstado();
                 return;
             }
 
