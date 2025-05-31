@@ -167,6 +167,55 @@ public class InteraccionJugador : MonoBehaviour
             }
         }
 
+        if (Input.GetKeyDown(teclaInteraccion) && objetoRecogibleCercano != null && !llevaObjeto)
+        {
+            //Debug.Log("✅ Recogiendo con E: " + objetoRecogibleCercano.name);
+
+            objetoTransportado = objetoRecogibleCercano;
+            llevaObjeto = true;
+
+            objetoTransportado.transform.SetParent(puntoDeCarga);
+            objetoTransportado.transform.localPosition = Vector3.zero;
+
+            Rigidbody2D rb = objetoTransportado.GetComponent<Rigidbody2D>();
+            if (rb != null) rb.isKinematic = true;
+
+            Collider2D col = objetoTransportado.GetComponent<Collider2D>();
+            if (col != null) col.enabled = false;
+
+            // Muy importante: limpiar para que no se sobreescriba en el siguiente frame
+            objetoRecogibleCercano = null;
+        }
+
+
+
+        // Soltar objeto (si lleva algo y presiona E)
+        if (Input.GetKeyDown(KeyCode.E) && llevaObjeto)
+        {
+            SoltarObjeto();
+        }
+
+        if (cercaDelSink && objetoTransportado != null && objetoTransportado.CompareTag("Platos"))
+        {
+            if (Input.GetKeyDown(teclaInteraccion))
+            {
+                Transform puntoSpawn = puntoSpawnLimpios != null ? puntoSpawnLimpios : transform;
+
+                // Destruir platos sucios
+                Destroy(objetoTransportado);
+
+                // Instanciar platos limpios
+                Instantiate(platosLimpiosPrefab, puntoSpawn.position, Quaternion.identity);
+
+                // Limpiar referencia
+                objetoTransportado = null;
+            }
+        }
+        if (Input.GetKeyDown(teclaAtaque))
+        {
+            EjecutarAtaque();
+        }
+
         ActualizarUI();
     }
 
@@ -603,6 +652,7 @@ public class InteraccionJugador : MonoBehaviour
             else
             {
                 Debug.Log($"❌ {col.name} tiene tag '{col.tag}', no es Enemy");
+
             }
         }
     }
