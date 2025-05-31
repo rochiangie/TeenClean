@@ -66,7 +66,7 @@ public class InteraccionJugador : MonoBehaviour
     [Header("Ataque")]
     public KeyCode teclaAtaque = KeyCode.F;
     public int dañoAtaque = 10;
-    public float rangoAtaque = 1.2f;
+    public float rangoAtaque = 1.5f;
     public LayerMask capaEnemigos;
 
 
@@ -106,21 +106,34 @@ public class InteraccionJugador : MonoBehaviour
         // Detectar objetos
         DetectarObjetosCercanos();
 
-        // Interacciones
-        // Interacciones
+        // ✅ ATAQUE independiente
+        if (Input.GetKeyDown(teclaAtaque))
+        {
+            Debug.Log("✅ F fue presionada (input capturado)");
+            EjecutarAtaque();
+        }
+
+        // ✅ INTERACCIONES
         if (Input.GetKeyDown(teclaInteraccion))
         {
-            // Soltar objeto con Q (u otra tecla)
+            // Soltar con Q
             if (Input.GetKeyDown(KeyCode.Q) && llevaObjeto)
             {
                 SoltarObjeto();
                 return;
             }
 
+            if (objetoInteractuableCercano != null)
+            {
+                objetoInteractuableCercano.AlternarEstado();
+                return;
+            }
 
+            // Gabinete
             if (gabinetePlatosCercano != null)
             {
-                if (!gabinetePlatosCercano.EstaLleno() && objetoTransportado != null && objetoTransportado.CompareTag(gabinetePlatosCercano.TagObjetoRequerido))
+                if (!gabinetePlatosCercano.EstaLleno() && objetoTransportado != null &&
+                    objetoTransportado.CompareTag(gabinetePlatosCercano.TagObjetoRequerido))
                 {
                     gabinetePlatosCercano.IntentarGuardar(objetoTransportado);
                     objetoTransportado = null;
@@ -134,10 +147,9 @@ public class InteraccionJugador : MonoBehaviour
                 }
             }
 
+            // Recoger objetos
             if (objetoRecogibleCercano != null)
             {
-                //Debug.Log("✅ Recogiendo con E: " + objetoRecogibleCercano.name);
-
                 objetoTransportado = objetoRecogibleCercano;
                 llevaObjeto = true;
 
@@ -154,7 +166,6 @@ public class InteraccionJugador : MonoBehaviour
                 return;
             }
         }
-
 
         if (Input.GetKeyDown(teclaInteraccion) && objetoRecogibleCercano != null && !llevaObjeto)
         {
@@ -207,6 +218,7 @@ public class InteraccionJugador : MonoBehaviour
 
         ActualizarUI();
     }
+
 
     void FixedUpdate()
     {
@@ -608,14 +620,39 @@ public class InteraccionJugador : MonoBehaviour
 
     void EjecutarAtaque()
     {
+        Debug.Log("🎯 EjecutarAtaque() fue llamado");
+
+        if (animator != null)
+        {
+            animator.SetTrigger("Atacar");
+            Debug.Log("🎬 Trigger de animación Atacar enviado");
+        }
+
         Collider2D[] enemigos = Physics2D.OverlapCircleAll(transform.position, rangoAtaque, capaEnemigos);
+        Debug.Log($"🔍 Detectó {enemigos.Length} colliders");
 
         foreach (Collider2D col in enemigos)
         {
-            if (col.TryGetComponent(out Enemigo enemigo))
+            Debug.Log($"🔍 Analizando: {col.name}");
+
+            if (col.CompareTag("Enemy"))
             {
-                enemigo.RecibirDaño(dañoAtaque);
-                Debug.Log($"⚔️ Atacaste a {col.name} y le hiciste {dañoAtaque} de daño.");
+                Debug.Log($"💥 Detected tag Enemy en {col.name}");
+
+                if (col.TryGetComponent(out Enemigo enemigo))
+                {
+                    enemigo.RecibirDaño(dañoAtaque);
+                    Debug.Log($"💥 Atacando a {col.name} con {dañoAtaque} de daño");
+                }
+                else
+                {
+                    Debug.LogWarning($"❌ {col.name} no tiene componente Enemigo");
+                }
+            }
+            else
+            {
+                Debug.Log($"❌ {col.name} tiene tag '{col.tag}', no es Enemy");
+
             }
         }
     }
