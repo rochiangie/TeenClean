@@ -18,11 +18,10 @@ public class Enemy : MonoBehaviour
 
     void Update()
     {
-        //if (target != null && agent != null && agent.isActiveAndEnabled && agent.isOnNavMesh)
-        
-            Debug.Log("Hola");
-            //Vector3 targetPosition = new Vector3(target.position.x, target.position.y, transform.position.z);
-            agent.SetDestination(target.transform.position);
-        
+        if (agent != null && agent.isActiveAndEnabled && agent.isOnNavMesh)
+        {
+            agent.SetDestination(target.position);
+        }
     }
+
 }
