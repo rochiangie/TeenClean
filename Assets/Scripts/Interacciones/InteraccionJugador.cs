@@ -69,11 +69,15 @@ public class InteraccionJugador : MonoBehaviour
     public float rangoAtaque = 1.5f;
     public LayerMask capaEnemigos;
 
+    private bool isAlive = true;
+
 
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        animator.SetBool("isAlive", true);
+
 
         if (tagsRecogibles == null || tagsRecogibles.Length == 0)
         {
@@ -88,6 +92,8 @@ public class InteraccionJugador : MonoBehaviour
 
     void Update()
     {
+        if (!isAlive) return; // Detiene todo si está muerto
+
         input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
 
         // Movimiento y animación
@@ -222,9 +228,15 @@ public class InteraccionJugador : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (!isAlive) return; // Detiene el movimiento si está muerto
+
+        if (!this.enabled || rb.bodyType == RigidbodyType2D.Static)
+            return;
+
         float velocidad = Input.GetKey(teclaCorrer) ? velocidadCorrer : velocidadMovimiento;
         rb.velocity = input.normalized * velocidad;
     }
+
 
     void DetectarObjetosCercanos()
     {
@@ -467,11 +479,11 @@ public class InteraccionJugador : MonoBehaviour
             TeleportarAPunto(puntoInicial);
         }
 
-        Debug.Log("🧍 Jugador tocó: " + other.name);
+        //Debug.Log("🧍 Jugador tocó: " + other.name);
 
         if (other.CompareTag("Sink"))
         {
-            Debug.Log("✅ Jugador detectó el fregadero (Sink)");
+            //Debug.Log("✅ Jugador detectó el fregadero (Sink)");
             cercaDelSink = true;
             sinkCercano = other.gameObject;
         }
@@ -495,7 +507,7 @@ public class InteraccionJugador : MonoBehaviour
         if (tagsRecogibles.Contains(other.tag))
         {
             objetoRecogibleCercano = other.gameObject;
-            Debug.Log("🎯 Objeto recogible detectado: " + other.name);
+            //Debug.Log("🎯 Objeto recogible detectado: " + other.name);
         }
 
     }
@@ -620,16 +632,16 @@ public class InteraccionJugador : MonoBehaviour
 
     void EjecutarAtaque()
     {
-        Debug.Log("🎯 EjecutarAtaque() fue llamado");
+        //Debug.Log("🎯 EjecutarAtaque() fue llamado");
 
         if (animator != null)
         {
             animator.SetTrigger("Atacar");
-            Debug.Log("🎬 Trigger de animación Atacar enviado");
+            //Debug.Log("🎬 Trigger de animación Atacar enviado");
         }
 
         Collider2D[] enemigos = Physics2D.OverlapCircleAll(transform.position, rangoAtaque, capaEnemigos);
-        Debug.Log($"🔍 Detectó {enemigos.Length} colliders");
+        //Debug.Log($"🔍 Detectó {enemigos.Length} colliders");
 
         foreach (Collider2D col in enemigos)
         {
@@ -642,7 +654,7 @@ public class InteraccionJugador : MonoBehaviour
                 if (col.TryGetComponent(out Enemigo enemigo))
                 {
                     enemigo.RecibirDaño(dañoAtaque);
-                    Debug.Log($"💥 Atacando a {col.name} con {dañoAtaque} de daño");
+                    //Debug.Log($"💥 Atacando a {col.name} con {dañoAtaque} de daño");
                 }
                 else
                 {
@@ -683,6 +695,24 @@ public class InteraccionJugador : MonoBehaviour
             llevaObjeto = false;
         }
     }
+
+    public void Die()
+    {
+        if (!isAlive) return;
+
+        isAlive = false;
+
+        rb.velocity = Vector2.zero;
+        rb.bodyType = RigidbodyType2D.Static;
+
+        if (animator != null)
+        {
+            animator.SetBool("isAlive", false);
+        }
+
+        Debug.Log("¡El jugador ha muerto!");
+    }
+
 
 
 }
