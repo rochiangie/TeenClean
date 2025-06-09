@@ -4167,7 +4167,7 @@ MonoBehaviour:
   estadoLleno: {fileID: 361159726}
   teclaInteraccion: 101
   tagObjetoRequerido: Ropa
-  prefabPlatosLimpios: {fileID: 0}
+  prefabObjetoLleno: {fileID: 0}
   sonidoGuardar: {fileID: 0}
 --- !u!1 &591346793
 GameObject:
@@ -12949,6 +12949,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 3294271535427686419, guid: 1f54f87999d9b5b43b4b82c83bc55ef9, type: 3}
     - target: {fileID: 7859557252829479869, guid: 19dbe556de8d04349a76fa864e9087c7, type: 3}
+      propertyPath: prefabObjetoLleno
+      value: 
+      objectReference: {fileID: 5269092204875667488, guid: 4bb1498d76145a74d837ed4e70730152, type: 3}
+    - target: {fileID: 7859557252829479869, guid: 19dbe556de8d04349a76fa864e9087c7, type: 3}
       propertyPath: tagObjetoRequerido
       value: PlatosLimpios
       objectReference: {fileID: 0}
@@ -17404,6 +17408,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 3463493620268787513, guid: 134290439da50f64f84b35e83563dfd8, type: 3}
     - target: {fileID: 1156256389057792994, guid: 908866529aef51a42bde28b5b0e307ce, type: 3}
+      propertyPath: prefabObjetoLleno
+      value: 
+      objectReference: {fileID: 3463493620268787513, guid: 134290439da50f64f84b35e83563dfd8, type: 3}
+    - target: {fileID: 1156256389057792994, guid: 908866529aef51a42bde28b5b0e307ce, type: 3}
       propertyPath: tagObjetoRequerido
       value: Tarea
       objectReference: {fileID: 0}
@@ -17906,6 +17914,10 @@ PrefabInstance:
       objectReference: {fileID: 3609443709605794928, guid: ab9d377e85982a2498a72478633edbc2, type: 3}
     - target: {fileID: 1156256389057792994, guid: 908866529aef51a42bde28b5b0e307ce, type: 3}
       propertyPath: prefabBookOpen
+      value: 
+      objectReference: {fileID: 3463493620268787513, guid: 134290439da50f64f84b35e83563dfd8, type: 3}
+    - target: {fileID: 1156256389057792994, guid: 908866529aef51a42bde28b5b0e307ce, type: 3}
+      propertyPath: prefabObjetoLleno
       value: 
       objectReference: {fileID: 3463493620268787513, guid: 134290439da50f64f84b35e83563dfd8, type: 3}
     - target: {fileID: 1156256389057792994, guid: 908866529aef51a42bde28b5b0e307ce, type: 3}
@@ -18892,6 +18904,10 @@ PrefabInstance:
       propertyPath: prefabPlatos1
       value: 
       objectReference: {fileID: 3294271535427686419, guid: 1f54f87999d9b5b43b4b82c83bc55ef9, type: 3}
+    - target: {fileID: 7859557252829479869, guid: 19dbe556de8d04349a76fa864e9087c7, type: 3}
+      propertyPath: prefabObjetoLleno
+      value: 
+      objectReference: {fileID: 5269092204875667488, guid: 4bb1498d76145a74d837ed4e70730152, type: 3}
     - target: {fileID: 7859557252829479869, guid: 19dbe556de8d04349a76fa864e9087c7, type: 3}
       propertyPath: tagObjetoRequerido
       value: PlatosLimpios
