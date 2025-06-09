@@ -101,6 +101,14 @@ public class InteraccionJugador : MonoBehaviour
         animator.SetBool("isRunning", corriendo && input != Vector2.zero);
         animator.SetBool("isWalking", !corriendo && input != Vector2.zero);
 
+        if (Input.GetKeyDown(KeyCode.Space) && enSuelo)
+        {
+            rb.velocity = new Vector2(rb.velocity.x, 10f); // Ajusta la fuerza del salto según tu juego
+            animator.SetBool("isJumping", true);
+            enSuelo = false;
+        }
+
+
         // Flip de sprite
         if (input.x != 0)
         {
