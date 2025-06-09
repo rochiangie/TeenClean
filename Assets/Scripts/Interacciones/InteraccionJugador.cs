@@ -17,7 +17,7 @@ public class InteraccionJugador : MonoBehaviour
     public KeyCode teclaInteraccion = KeyCode.E;
 
     [Header("UI")]
-    public TextMeshProUGUI mensajeUI;
+    //public TextMeshProUGUI mensajeUI;
 
     [Header("Transporte Objetos")]
     public Transform puntoDeCarga;
@@ -54,7 +54,14 @@ public class InteraccionJugador : MonoBehaviour
 
     private Dictionary<string, GameObject> prefabsPorTag = new Dictionary<string, GameObject>();
 
-    [SerializeField] private GameObject panelPopUp;
+    [SerializeField] private GameObject panelPopUp; // Para E
+    [SerializeField] private TextMeshProUGUI textoPopUp;
+
+    [SerializeField] private GameObject panelTasks; // Para R (tasks)
+
+    [SerializeField] private GameObject canvasTextoE;
+    [SerializeField] private TextMeshProUGUI textoE;  // El texto dentro del Canvas
+
 
     [Header("Teleport")]
     public Transform puntoSpawn1;
@@ -92,9 +99,19 @@ public class InteraccionJugador : MonoBehaviour
 
     void Update()
     {
-        if (!isAlive) return; // Detiene todo si está muerto
+        if (!isAlive) return;
 
         input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+
+        // Mostrar/ocultar el panel de tasks (R)
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            if (panelTasks != null)
+            {
+                bool isActive = panelTasks.activeSelf;
+                panelTasks.SetActive(!isActive);
+            }
+        }
 
         // Movimiento y animación
         bool corriendo = Input.GetKey(teclaCorrer);
@@ -288,32 +305,75 @@ public class InteraccionJugador : MonoBehaviour
 
     void ActualizarUI()
     {
-        if (mensajeUI == null) return;
-
-        if (gabinetePlatosCercano != null)
+        // Mostrar el panel de interacción solo si hay objetos interactuables cerca
+        if (objetoInteractuableCercano != null)
         {
-            string nombreObjeto = gabinetePlatosCercano.EstaLleno()
-                ? (prefabPlatosDefinitivo != null ? prefabPlatosDefinitivo.name : "objeto")
-                : gabinetePlatosCercano.TagObjetoRequerido;
+            if (panelPopUp != null)
+            {
+                panelPopUp.SetActive(true);
 
-            mensajeUI.text = $"\n\n\n\nPresiona {teclaInteraccion} para {(gabinetePlatosCercano.EstaLleno() ? "sacar" : "guardar")} {nombreObjeto}";
-            mensajeUI.gameObject.SetActive(true);
+                // Activar todos los hijos del panel (imagen y texto)
+                foreach (Transform child in panelPopUp.transform)
+                {
+                    child.gameObject.SetActive(true);
+                }
+
+                // Actualizar el texto TMP
+                TextMeshProUGUI textoTMP = panelPopUp.GetComponentInChildren<TextMeshProUGUI>(true);
+                if (textoTMP != null)
+                {
+                    textoTMP.text = $"Presiona {teclaInteraccion} para usar {objetoInteractuableCercano.ObtenerNombreEstado()}";
+                }
+                else
+                {
+                    Debug.LogError("🚨 No se encontró un TextMeshProUGUI en panelPopUp.");
+                }
+            }
+
+
+
         }
-        else if (objetoInteractuableCercano != null)
+        else if (gabinetePlatosCercano != null)
         {
-            mensajeUI.text = $"\n\n\n\nPresiona {teclaInteraccion} para usar {objetoInteractuableCercano.ObtenerNombreEstado()}";
-            mensajeUI.gameObject.SetActive(true);
+            if (panelPopUp != null)
+            {
+                panelPopUp.SetActive(true);
+
+                TextMeshProUGUI textoTMP = panelPopUp.GetComponentInChildren<TextMeshProUGUI>(true);
+                if (textoTMP != null)
+                {
+                    string nombreObjeto = gabinetePlatosCercano.EstaLleno()
+                        ? (prefabPlatosDefinitivo != null ? prefabPlatosDefinitivo.name : "objeto")
+                        : gabinetePlatosCercano.TagObjetoRequerido;
+
+                    textoTMP.text = $"Presiona {teclaInteraccion} para {(gabinetePlatosCercano.EstaLleno() ? "sacar" : "guardar")} {nombreObjeto}";
+                }
+            }
         }
         else if (objetoCercanoRecogible != null && !llevaObjeto)
         {
-            mensajeUI.text = $"\n\n\n\nPresiona {teclaInteraccion} para recoger {objetoCercanoRecogible.tag}";
-            mensajeUI.gameObject.SetActive(true);
+            if (panelPopUp != null)
+            {
+                panelPopUp.SetActive(true);
+
+                TextMeshProUGUI textoTMP = panelPopUp.GetComponentInChildren<TextMeshProUGUI>(true);
+                if (textoTMP != null)
+                {
+                    textoTMP.text = $"Presiona {teclaInteraccion} para recoger {objetoCercanoRecogible.tag}";
+                }
+            }
         }
         else
         {
-            mensajeUI.gameObject.SetActive(false);
+            // Desactivar el panel de interacción si no hay objetos cerca
+            if (panelPopUp != null)
+            {
+                panelPopUp.SetActive(false);
+            }
         }
     }
+
+
 
 
 
@@ -437,9 +497,9 @@ public class InteraccionJugador : MonoBehaviour
         if (collision.collider.CompareTag("Inodoro") || collision.collider.CompareTag("Lavamanos") || collision.collider.CompareTag("Bañera"))
         {
             objetoCercano = collision.gameObject;
-            //Debug.Log("Colisionó con: " + objetoCercano.name);
-            MostrarPopUp();
+            MostrarPopUp($"Presiona {teclaInteraccion} para interactuar con {collision.collider.tag}");
         }
+
     }
 
     private void OnCollisionExit2D(Collision2D collision)
@@ -677,10 +737,17 @@ public class InteraccionJugador : MonoBehaviour
         }
     }
 
-    void MostrarPopUp()
+    void MostrarPopUp(string mensaje)
     {
+        Debug.Log($"🟢 MostrarPopUp llamado con mensaje: {mensaje}");
         panelPopUp.SetActive(true);
+        if (textoPopUp != null)
+        {
+            textoPopUp.text = mensaje;
+        }
     }
+
+
 
     void OcultarPopUp()
     {
