@@ -61,7 +61,7 @@ public class CabinetController : MonoBehaviour
         // Ajustar la escala según el tag
         if (tagObjetoRequerido == "Tarea")
         {
-            objeto.transform.localScale = Vector3.one * 3f;
+            objeto.transform.localScale = Vector3.one * 10f;
         }
         else if (tagObjetoRequerido == "PlatosLimpios")
         {

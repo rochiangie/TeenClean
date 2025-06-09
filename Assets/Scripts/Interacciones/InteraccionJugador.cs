@@ -279,7 +279,11 @@ public class InteraccionJugador : MonoBehaviour
             //Debug.Log("🔍 Detectado: " + col.name + " | Tag: " + col.tag);
 
             if (col.TryGetComponent(out ControladorEstados interactuable))
+            {
                 objetoInteractuableCercano = interactuable;
+                Debug.Log("Asignando objeto interactiable");
+            }
+                
 
             if (col.TryGetComponent(out CabinetController gabinete))
                 gabinetePlatosCercano = gabinete;
@@ -308,8 +312,12 @@ public class InteraccionJugador : MonoBehaviour
         // Mostrar el panel de interacción solo si hay objetos interactuables cerca
         if (objetoInteractuableCercano != null)
         {
+            Debug.Log("Me acerque...");
             if (panelPopUp != null)
+            
+
             {
+                Debug.Log("Panel pop up...");
                 panelPopUp.SetActive(true);
 
                 // Activar todos los hijos del panel (imagen y texto)
