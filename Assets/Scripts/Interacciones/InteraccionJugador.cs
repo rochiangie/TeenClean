@@ -103,8 +103,8 @@ public class InteraccionJugador : MonoBehaviour
 
         input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
 
-        // Mostrar/ocultar el panel de tasks (R)
-        if (Input.GetKeyDown(KeyCode.R))
+        // Mostrar/ocultar el panel de tasks (T)
+        if (Input.GetKeyDown(KeyCode.T))
         {
             if (panelTasks != null)
             {
