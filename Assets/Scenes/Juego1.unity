@@ -421,7 +421,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 1085331136}
   toggleTransition: 1
   graphic: {fileID: 713513632}
@@ -429,7 +429,7 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_IsOn: 1
+  m_IsOn: 0
 --- !u!224 &122775086 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2421335752151209914, guid: abb3345e8e6c9ee4983e17079adb3930, type: 3}
@@ -523,7 +523,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 695755958}
   toggleTransition: 1
   graphic: {fileID: 773210006}
@@ -531,7 +531,7 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_IsOn: 1
+  m_IsOn: 0
 --- !u!1 &252065935
 GameObject:
   m_ObjectHideFlags: 0
@@ -10052,7 +10052,7 @@ RectTransform:
   m_GameObject: {fileID: 1127466405}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalScale: {x: 3, y: 3, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1506987539}
@@ -10064,7 +10064,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -608, y: -14}
+  m_AnchoredPosition: {x: -759, y: -12}
   m_SizeDelta: {x: -848.821, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1127466407
@@ -13394,7 +13394,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 1968937505}
   toggleTransition: 1
   graphic: {fileID: 857260006}
@@ -13402,7 +13402,7 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_IsOn: 1
+  m_IsOn: 0
 --- !u!1 &1383934631
 GameObject:
   m_ObjectHideFlags: 0

@@ -4,8 +4,8 @@ using UnityEngine.UI;
 public class TareasManager : MonoBehaviour
 {
     [Header("Panel de Tasks")]
-    [SerializeField] private GameObject panelTasks; // Panel de tareas (Canvas - tasks > panelTasks)
-    [SerializeField] private GameObject panelWin;   // Panel de victoria final
+    [SerializeField] private GameObject panelTasks;
+    [SerializeField] private GameObject panelWin;
 
     [Header("Toggles de Tasks")]
     [SerializeField] private Toggle RopaToggle;
@@ -15,6 +15,13 @@ public class TareasManager : MonoBehaviour
     private bool ropaCompletada = false;
     private bool platosCompletados = false;
     private bool tareaCompletada = false;
+
+    void Start()
+    {
+        if (RopaToggle != null) RopaToggle.interactable = false;
+        if (PlatosToggle != null) PlatosToggle.interactable = false;
+        if (TareaToggle != null) TareaToggle.interactable = false;
+    }
 
     void Update()
     {
@@ -40,30 +47,10 @@ public class TareasManager : MonoBehaviour
             return;
         }
 
-        // Primero activa el panel
-        panelTasks.SetActive(true);
-
-        if (activar)
-        {
-            // Luego activa todos los hijos (incluidos los inactivos)
-            foreach (Transform child in panelTasks.GetComponentsInChildren<Transform>(true))
-            {
-                if (child != panelTasks.transform)
-                {
-                    child.gameObject.SetActive(true);
-                }
-            }
-            Debug.Log("✅ Panel de tasks activado.");
-        }
-        else
-        {
-            panelTasks.SetActive(false);
-            Debug.Log("❌ Panel de tasks desactivado.");
-        }
+        panelTasks.SetActive(activar);
+        Debug.Log(activar ? "✅ Panel de tasks activado." : "❌ Panel de tasks desactivado.");
     }
 
-
-    // Método para marcar la tarea como completada
     public void CompletarTarea(string tarea)
     {
         switch (tarea)
@@ -92,7 +79,7 @@ public class TareasManager : MonoBehaviour
             if (panelWin != null)
             {
                 panelWin.SetActive(true);
-                Time.timeScale = 0f; // Pausar el juego
+                Time.timeScale = 0f;
                 Debug.Log("🎉 ¡Felicidades! Has completado todas las tareas.");
             }
         }
