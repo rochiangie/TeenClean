@@ -8,8 +8,8 @@ public class CabinetController : MonoBehaviour
 
     [Header("Configuración")]
     [SerializeField] private KeyCode teclaInteraccion = KeyCode.E;
-    [SerializeField] public string tagObjetoRequerido = "PlatosLimpios";
-    [SerializeField] private GameObject prefabPlatosLimpios;
+    [SerializeField] private string tagObjetoRequerido = "PlatosLimpios"; // o "Tarea"
+    [SerializeField] private GameObject prefabObjetoLleno;
     [SerializeField] private AudioClip sonidoGuardar;
 
     private bool estaLleno = false;
@@ -25,7 +25,11 @@ public class CabinetController : MonoBehaviour
 
     public bool IntentarGuardar(GameObject objeto)
     {
-        if (estaLleno || objeto.tag != tagObjetoRequerido) return false;
+        if (estaLleno || objeto.tag != tagObjetoRequerido)
+        {
+            Debug.Log($"❌ No se pudo guardar: {objeto.name} no coincide con el tag requerido ({tagObjetoRequerido}).");
+            return false;
+        }
 
         estaLleno = true;
         estadoVacio.SetActive(false);
@@ -34,29 +38,43 @@ public class CabinetController : MonoBehaviour
         if (sonidoGuardar) AudioSource.PlayClipAtPoint(sonidoGuardar, transform.position);
 
         Destroy(objeto);
+        Debug.Log($"✅ {objeto.name} guardado correctamente en el gabinete.");
         return true;
     }
 
-    // ✅ Nuevo método que recibe la mano del jugador y el script del jugador
     public void SacarObjeto(Transform puntoDeCarga, InteraccionJugador jugador)
     {
-        if (!estaLleno || prefabPlatosLimpios == null || puntoDeCarga == null || jugador == null)
+        if (!estaLleno || prefabObjetoLleno == null || puntoDeCarga == null || jugador == null)
         {
-            Debug.LogWarning("❌ No se puede sacar objeto del cabinet: faltan referencias.");
+            Debug.LogWarning("❌ No se puede sacar objeto del gabinete: faltan referencias.");
             return;
         }
 
-        GameObject platos = Instantiate(prefabPlatosLimpios, puntoDeCarga.position, Quaternion.identity);
-        platos.transform.SetParent(puntoDeCarga);
-        platos.transform.localPosition = Vector3.zero;
-        platos.transform.localRotation = Quaternion.identity;
-        platos.transform.localScale = Vector3.one * 0.5f;
-        platos.tag = "PlatosLimpios";
+        // Calcular la posición delante del jugador
+        Vector3 posicionDelante = puntoDeCarga.position + puntoDeCarga.right * (jugador.transform.localScale.x > 0 ? 1f : -1f);
 
-        jugador.RecogerObjeto(platos);
+        GameObject objeto = Instantiate(prefabObjetoLleno, posicionDelante, Quaternion.identity);
+        objeto.transform.SetParent(puntoDeCarga);
+        objeto.transform.localPosition = Vector3.zero;
+        objeto.transform.localRotation = Quaternion.identity;
+
+        // Ajustar la escala según el tag
+        if (tagObjetoRequerido == "Tarea")
+        {
+            objeto.transform.localScale = Vector3.one * 10f;
+        }
+        else if (tagObjetoRequerido == "PlatosLimpios")
+        {
+            objeto.transform.localScale = Vector3.one * 0.5f;
+        }
+
+        objeto.tag = tagObjetoRequerido;
+
+        jugador.RecogerObjeto(objeto);
 
         estaLleno = false;
         estadoVacio.SetActive(true);
         estadoLleno.SetActive(false);
+        Debug.Log($"✅ {tagObjetoRequerido} entregado al jugador desde el gabinete.");
     }
 }

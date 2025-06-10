@@ -17,7 +17,7 @@ public class InteraccionJugador : MonoBehaviour
     public KeyCode teclaInteraccion = KeyCode.E;
 
     [Header("UI")]
-    public TextMeshProUGUI mensajeUI;
+    //public TextMeshProUGUI mensajeUI;
 
     [Header("Transporte Objetos")]
     public Transform puntoDeCarga;
@@ -54,7 +54,14 @@ public class InteraccionJugador : MonoBehaviour
 
     private Dictionary<string, GameObject> prefabsPorTag = new Dictionary<string, GameObject>();
 
-    [SerializeField] private GameObject panelPopUp;
+    [SerializeField] private GameObject panelPopUp; // Para E
+    [SerializeField] private TextMeshProUGUI textoPopUp;
+
+    [SerializeField] private GameObject panelTasks; // Para R (tasks)
+
+    [SerializeField] private GameObject canvasTextoE;
+    [SerializeField] private TextMeshProUGUI textoE;  // El texto dentro del Canvas
+
 
     [Header("Teleport")]
     public Transform puntoSpawn1;
@@ -69,11 +76,15 @@ public class InteraccionJugador : MonoBehaviour
     public float rangoAtaque = 1.5f;
     public LayerMask capaEnemigos;
 
+    private bool isAlive = true;
+
 
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        animator.SetBool("isAlive", true);
+
 
         if (tagsRecogibles == null || tagsRecogibles.Length == 0)
         {
@@ -88,12 +99,32 @@ public class InteraccionJugador : MonoBehaviour
 
     void Update()
     {
+        if (!isAlive) return;
+
         input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+
+        // Mostrar/ocultar el panel de tasks (T)
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            if (panelTasks != null)
+            {
+                bool isActive = panelTasks.activeSelf;
+                panelTasks.SetActive(!isActive);
+            }
+        }
 
         // Movimiento y animación
         bool corriendo = Input.GetKey(teclaCorrer);
         animator.SetBool("isRunning", corriendo && input != Vector2.zero);
         animator.SetBool("isWalking", !corriendo && input != Vector2.zero);
+
+        if (Input.GetKeyDown(KeyCode.Space) && enSuelo)
+        {
+            rb.velocity = new Vector2(rb.velocity.x, 10f); // Ajusta la fuerza del salto según tu juego
+            animator.SetBool("isJumping", true);
+            enSuelo = false;
+        }
+
 
         // Flip de sprite
         if (input.x != 0)
@@ -222,9 +253,15 @@ public class InteraccionJugador : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (!isAlive) return; // Detiene el movimiento si está muerto
+
+        if (!this.enabled || rb.bodyType == RigidbodyType2D.Static)
+            return;
+
         float velocidad = Input.GetKey(teclaCorrer) ? velocidadCorrer : velocidadMovimiento;
         rb.velocity = input.normalized * velocidad;
     }
+
 
     void DetectarObjetosCercanos()
     {
@@ -242,7 +279,11 @@ public class InteraccionJugador : MonoBehaviour
             //Debug.Log("🔍 Detectado: " + col.name + " | Tag: " + col.tag);
 
             if (col.TryGetComponent(out ControladorEstados interactuable))
+            {
                 objetoInteractuableCercano = interactuable;
+                Debug.Log("Asignando objeto interactiable");
+            }
+                
 
             if (col.TryGetComponent(out CabinetController gabinete))
                 gabinetePlatosCercano = gabinete;
@@ -268,32 +309,79 @@ public class InteraccionJugador : MonoBehaviour
 
     void ActualizarUI()
     {
-        if (mensajeUI == null) return;
-
-        if (gabinetePlatosCercano != null)
+        // Mostrar el panel de interacción solo si hay objetos interactuables cerca
+        if (objetoInteractuableCercano != null)
         {
-            string nombreObjeto = gabinetePlatosCercano.EstaLleno()
-                ? (prefabPlatosDefinitivo != null ? prefabPlatosDefinitivo.name : "objeto")
-                : gabinetePlatosCercano.TagObjetoRequerido;
+            Debug.Log("Me acerque...");
+            if (panelPopUp != null)
+            
 
-            mensajeUI.text = $"\n\n\n\nPresiona {teclaInteraccion} para {(gabinetePlatosCercano.EstaLleno() ? "sacar" : "guardar")} {nombreObjeto}";
-            mensajeUI.gameObject.SetActive(true);
+            {
+                Debug.Log("Panel pop up...");
+                panelPopUp.SetActive(true);
+
+                // Activar todos los hijos del panel (imagen y texto)
+                foreach (Transform child in panelPopUp.transform)
+                {
+                    child.gameObject.SetActive(true);
+                }
+
+                // Actualizar el texto TMP
+                TextMeshProUGUI textoTMP = panelPopUp.GetComponentInChildren<TextMeshProUGUI>(true);
+                if (textoTMP != null)
+                {
+                    textoTMP.text = $"Presiona {teclaInteraccion} para usar {objetoInteractuableCercano.ObtenerNombreEstado()}";
+                }
+                else
+                {
+                    Debug.LogError("🚨 No se encontró un TextMeshProUGUI en panelPopUp.");
+                }
+            }
+
+
+
         }
-        else if (objetoInteractuableCercano != null)
+        else if (gabinetePlatosCercano != null)
         {
-            mensajeUI.text = $"\n\n\n\nPresiona {teclaInteraccion} para usar {objetoInteractuableCercano.ObtenerNombreEstado()}";
-            mensajeUI.gameObject.SetActive(true);
+            if (panelPopUp != null)
+            {
+                panelPopUp.SetActive(true);
+
+                TextMeshProUGUI textoTMP = panelPopUp.GetComponentInChildren<TextMeshProUGUI>(true);
+                if (textoTMP != null)
+                {
+                    string nombreObjeto = gabinetePlatosCercano.EstaLleno()
+                        ? (prefabPlatosDefinitivo != null ? prefabPlatosDefinitivo.name : "objeto")
+                        : gabinetePlatosCercano.TagObjetoRequerido;
+
+                    textoTMP.text = $"Presiona {teclaInteraccion} para {(gabinetePlatosCercano.EstaLleno() ? "sacar" : "guardar")} {nombreObjeto}";
+                }
+            }
         }
         else if (objetoCercanoRecogible != null && !llevaObjeto)
         {
-            mensajeUI.text = $"\n\n\n\nPresiona {teclaInteraccion} para recoger {objetoCercanoRecogible.tag}";
-            mensajeUI.gameObject.SetActive(true);
+            if (panelPopUp != null)
+            {
+                panelPopUp.SetActive(true);
+
+                TextMeshProUGUI textoTMP = panelPopUp.GetComponentInChildren<TextMeshProUGUI>(true);
+                if (textoTMP != null)
+                {
+                    textoTMP.text = $"Presiona {teclaInteraccion} para recoger {objetoCercanoRecogible.tag}";
+                }
+            }
         }
         else
         {
-            mensajeUI.gameObject.SetActive(false);
+            // Desactivar el panel de interacción si no hay objetos cerca
+            if (panelPopUp != null)
+            {
+                panelPopUp.SetActive(false);
+            }
         }
     }
+
+
 
 
 
@@ -417,9 +505,9 @@ public class InteraccionJugador : MonoBehaviour
         if (collision.collider.CompareTag("Inodoro") || collision.collider.CompareTag("Lavamanos") || collision.collider.CompareTag("Bañera"))
         {
             objetoCercano = collision.gameObject;
-            //Debug.Log("Colisionó con: " + objetoCercano.name);
-            MostrarPopUp();
+            MostrarPopUp($"Presiona {teclaInteraccion} para interactuar con {collision.collider.tag}");
         }
+
     }
 
     private void OnCollisionExit2D(Collision2D collision)
@@ -467,11 +555,11 @@ public class InteraccionJugador : MonoBehaviour
             TeleportarAPunto(puntoInicial);
         }
 
-        Debug.Log("🧍 Jugador tocó: " + other.name);
+        //Debug.Log("🧍 Jugador tocó: " + other.name);
 
         if (other.CompareTag("Sink"))
         {
-            Debug.Log("✅ Jugador detectó el fregadero (Sink)");
+            //Debug.Log("✅ Jugador detectó el fregadero (Sink)");
             cercaDelSink = true;
             sinkCercano = other.gameObject;
         }
@@ -495,7 +583,7 @@ public class InteraccionJugador : MonoBehaviour
         if (tagsRecogibles.Contains(other.tag))
         {
             objetoRecogibleCercano = other.gameObject;
-            Debug.Log("🎯 Objeto recogible detectado: " + other.name);
+            //Debug.Log("🎯 Objeto recogible detectado: " + other.name);
         }
 
     }
@@ -620,16 +708,16 @@ public class InteraccionJugador : MonoBehaviour
 
     void EjecutarAtaque()
     {
-        Debug.Log("🎯 EjecutarAtaque() fue llamado");
+        //Debug.Log("🎯 EjecutarAtaque() fue llamado");
 
         if (animator != null)
         {
             animator.SetTrigger("Atacar");
-            Debug.Log("🎬 Trigger de animación Atacar enviado");
+            //Debug.Log("🎬 Trigger de animación Atacar enviado");
         }
 
         Collider2D[] enemigos = Physics2D.OverlapCircleAll(transform.position, rangoAtaque, capaEnemigos);
-        Debug.Log($"🔍 Detectó {enemigos.Length} colliders");
+        //Debug.Log($"🔍 Detectó {enemigos.Length} colliders");
 
         foreach (Collider2D col in enemigos)
         {
@@ -642,7 +730,7 @@ public class InteraccionJugador : MonoBehaviour
                 if (col.TryGetComponent(out Enemigo enemigo))
                 {
                     enemigo.RecibirDaño(dañoAtaque);
-                    Debug.Log($"💥 Atacando a {col.name} con {dañoAtaque} de daño");
+                    //Debug.Log($"💥 Atacando a {col.name} con {dañoAtaque} de daño");
                 }
                 else
                 {
@@ -657,10 +745,17 @@ public class InteraccionJugador : MonoBehaviour
         }
     }
 
-    void MostrarPopUp()
+    void MostrarPopUp(string mensaje)
     {
+        Debug.Log($"🟢 MostrarPopUp llamado con mensaje: {mensaje}");
         panelPopUp.SetActive(true);
+        if (textoPopUp != null)
+        {
+            textoPopUp.text = mensaje;
+        }
     }
+
+
 
     void OcultarPopUp()
     {
@@ -683,6 +778,24 @@ public class InteraccionJugador : MonoBehaviour
             llevaObjeto = false;
         }
     }
+
+    public void Die()
+    {
+        if (!isAlive) return;
+
+        isAlive = false;
+
+        rb.velocity = Vector2.zero;
+        rb.bodyType = RigidbodyType2D.Static;
+
+        if (animator != null)
+        {
+            animator.SetBool("isAlive", false);
+        }
+
+        Debug.Log("¡El jugador ha muerto!");
+    }
+
 
 
 }

@@ -18,10 +18,9 @@ public class Enemy : MonoBehaviour
 
     void Update()
     {
-        if (agent != null && agent.isActiveAndEnabled && agent.isOnNavMesh)
+        if (target != null && agent != null && agent.isActiveAndEnabled && agent.isOnNavMesh)
         {
             agent.SetDestination(target.position);
         }
     }
-
 }
