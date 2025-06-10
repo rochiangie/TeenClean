@@ -171,6 +171,10 @@ public class InteraccionJugador : MonoBehaviour
                         {
                             tareasManager.CompletarTarea("Ropa");
                         }
+                        if (gabinetePlatosCercano.TagObjetoRequerido == "PlatosLimpios")
+                        {
+                            tareasManager.CompletarTarea("Platos");
+                        }
                         else if (gabinetePlatosCercano.TagObjetoRequerido == "Tarea")
                         {
                             tareasManager.CompletarTarea("Tarea");
