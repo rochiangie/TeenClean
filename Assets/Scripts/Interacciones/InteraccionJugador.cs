@@ -84,6 +84,8 @@ public class InteraccionJugador : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        isAlive = true;
+        rb.bodyType = RigidbodyType2D.Dynamic;
         animator.SetBool("isAlive", true);
 
         if (tagsRecogibles == null || tagsRecogibles.Length == 0)
@@ -102,6 +104,7 @@ public class InteraccionJugador : MonoBehaviour
         }
     }
 
+
     void Update()
     {
         if (!isAlive) return;
@@ -116,6 +119,20 @@ public class InteraccionJugador : MonoBehaviour
                 panelTasks.SetActive(!isActive);
             }
         }
+
+        if (objetoInteractuableCercano != null)
+        {
+            objetoInteractuableCercano.AlternarEstado();
+
+            // Revisar si es la cama para completar la tarea
+            if (objetoInteractuableCercano.CompareTag("Cama") && tareasManager != null)
+            {
+                tareasManager.CompletarTarea("Cama");
+            }
+
+            return;
+        }
+
 
         bool corriendo = Input.GetKey(teclaCorrer);
         animator.SetBool("isRunning", corriendo && input != Vector2.zero);

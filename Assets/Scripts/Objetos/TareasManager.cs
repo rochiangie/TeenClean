@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class TareasManager : MonoBehaviour
 {
@@ -11,21 +12,33 @@ public class TareasManager : MonoBehaviour
     [SerializeField] private Toggle RopaToggle;
     [SerializeField] private Toggle PlatosToggle;
     [SerializeField] private Toggle TareaToggle;
-
-    private bool ropaCompletada = false;
-    private bool platosCompletados = false;
-    private bool tareaCompletada = false;
+    [SerializeField] private Toggle CamaToggle;
 
     private int ropaContador = 0;
     private int platosContador = 0;
     private int tareaContador = 0;
     private const int tareasNecesarias = 2;
 
+    private bool camaCompletada = false;
+
+
     void Start()
     {
-        if (RopaToggle != null) RopaToggle.interactable = false;
-        if (PlatosToggle != null) PlatosToggle.interactable = false;
-        if (TareaToggle != null) TareaToggle.interactable = false;
+        if (RopaToggle != null)
+        {
+            RopaToggle.interactable = false;
+            RopaToggle.isOn = false;
+        }
+        if (PlatosToggle != null)
+        {
+            PlatosToggle.interactable = false;
+            PlatosToggle.isOn = false;
+        }
+        if (TareaToggle != null)
+        {
+            TareaToggle.interactable = false;
+            TareaToggle.isOn = false;
+        }
     }
 
     void Update()
@@ -62,7 +75,7 @@ public class TareasManager : MonoBehaviour
         {
             case "Ropa":
                 ropaContador++;
-                Debug.Log($"👕 Ropa entregada: {ropaContador}/2");
+                Debug.Log($"👕 Ropa entregada: {ropaContador}/{tareasNecesarias}");
                 if (ropaContador >= tareasNecesarias)
                 {
                     if (RopaToggle != null) RopaToggle.isOn = true;
@@ -70,7 +83,7 @@ public class TareasManager : MonoBehaviour
                 break;
             case "Platos":
                 platosContador++;
-                Debug.Log($"🍽️ Platos entregados: {platosContador}/2");
+                Debug.Log($"🍽️ Platos entregados: {platosContador}/{tareasNecesarias}");
                 if (platosContador >= tareasNecesarias)
                 {
                     if (PlatosToggle != null) PlatosToggle.isOn = true;
@@ -78,15 +91,44 @@ public class TareasManager : MonoBehaviour
                 break;
             case "Tarea":
                 tareaContador++;
-                Debug.Log($"📚 Tareas entregadas: {tareaContador}/2");
+                Debug.Log($"📚 Tareas entregadas: {tareaContador}/{tareasNecesarias}");
                 if (tareaContador >= tareasNecesarias)
                 {
                     if (TareaToggle != null) TareaToggle.isOn = true;
                 }
                 break;
+
+            case "Cama":
+                camaCompletada = true;
+                if (CamaToggle != null)
+                {
+                    CamaToggle.isOn = true;
+                }
+                break;
         }
 
         VerificarVictoria();
+    }
+
+    private void VerificarVictoria()
+    {
+        if (ropaContador >= tareasNecesarias &&
+            platosContador >= tareasNecesarias &&
+            tareaContador >= tareasNecesarias)
+        {
+            if (panelWin != null)
+            {
+                panelWin.SetActive(true);
+                Time.timeScale = 0f;
+                Debug.Log("🎉 ¡Felicidades! Has completado todas las tareas!");
+            }
+        }
+    }
+
+    public void VolverAlMenu()
+    {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene("MenuPrincipal"); // Cambiar a tu nombre real de la escena de menú
     }
 
     public void ReiniciarTareas()
@@ -99,19 +141,4 @@ public class TareasManager : MonoBehaviour
         if (PlatosToggle != null) PlatosToggle.isOn = false;
         if (TareaToggle != null) TareaToggle.isOn = false;
     }
-
-
-    private void VerificarVictoria()
-    {
-        if (ropaContador >= tareasNecesarias && platosContador >= tareasNecesarias && tareaContador >= tareasNecesarias)
-        {
-            if (panelWin != null)
-            {
-                panelWin.SetActive(true);
-                Time.timeScale = 0f;
-                Debug.Log("🎉 ¡Felicidades! Has completado todas las tareas.");
-            }
-        }
-    }
-
 }
