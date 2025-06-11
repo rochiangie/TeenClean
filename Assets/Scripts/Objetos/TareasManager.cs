@@ -1,20 +1,45 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class TareasManager : MonoBehaviour
 {
     [Header("Panel de Tasks")]
-    [SerializeField] private GameObject panelTasks; // Panel de tareas (Canvas - tasks > panelTasks)
-    [SerializeField] private GameObject panelWin;   // Panel de victoria final
+    [SerializeField] private GameObject panelTasks;
+    [SerializeField] private GameObject panelWin;
 
     [Header("Toggles de Tasks")]
     [SerializeField] private Toggle RopaToggle;
     [SerializeField] private Toggle PlatosToggle;
     [SerializeField] private Toggle TareaToggle;
+    [SerializeField] private Toggle CamaToggle;
 
-    private bool ropaCompletada = false;
-    private bool platosCompletados = false;
-    private bool tareaCompletada = false;
+    private int ropaContador = 0;
+    private int platosContador = 0;
+    private int tareaContador = 0;
+    private const int tareasNecesarias = 2;
+
+    private bool camaCompletada = false;
+
+
+    void Start()
+    {
+        if (RopaToggle != null)
+        {
+            RopaToggle.interactable = false;
+            RopaToggle.isOn = false;
+        }
+        if (PlatosToggle != null)
+        {
+            PlatosToggle.interactable = false;
+            PlatosToggle.isOn = false;
+        }
+        if (TareaToggle != null)
+        {
+            TareaToggle.interactable = false;
+            TareaToggle.isOn = false;
+        }
+    }
 
     void Update()
     {
@@ -40,45 +65,45 @@ public class TareasManager : MonoBehaviour
             return;
         }
 
-        // Primero activa el panel
-        panelTasks.SetActive(true);
-
-        if (activar)
-        {
-            // Luego activa todos los hijos (incluidos los inactivos)
-            foreach (Transform child in panelTasks.GetComponentsInChildren<Transform>(true))
-            {
-                if (child != panelTasks.transform)
-                {
-                    child.gameObject.SetActive(true);
-                }
-            }
-            Debug.Log("✅ Panel de tasks activado.");
-        }
-        else
-        {
-            panelTasks.SetActive(false);
-            Debug.Log("❌ Panel de tasks desactivado.");
-        }
+        panelTasks.SetActive(activar);
+        Debug.Log(activar ? "✅ Panel de tasks activado." : "❌ Panel de tasks desactivado.");
     }
 
-
-    // Método para marcar la tarea como completada
     public void CompletarTarea(string tarea)
     {
         switch (tarea)
         {
             case "Ropa":
-                ropaCompletada = true;
-                if (RopaToggle != null) RopaToggle.isOn = true;
+                ropaContador++;
+                Debug.Log($"👕 Ropa entregada: {ropaContador}/{tareasNecesarias}");
+                if (ropaContador >= tareasNecesarias)
+                {
+                    if (RopaToggle != null) RopaToggle.isOn = true;
+                }
                 break;
             case "Platos":
-                platosCompletados = true;
-                if (PlatosToggle != null) PlatosToggle.isOn = true;
+                platosContador++;
+                Debug.Log($"🍽️ Platos entregados: {platosContador}/{tareasNecesarias}");
+                if (platosContador >= tareasNecesarias)
+                {
+                    if (PlatosToggle != null) PlatosToggle.isOn = true;
+                }
                 break;
             case "Tarea":
-                tareaCompletada = true;
-                if (TareaToggle != null) TareaToggle.isOn = true;
+                tareaContador++;
+                Debug.Log($"📚 Tareas entregadas: {tareaContador}/{tareasNecesarias}");
+                if (tareaContador >= tareasNecesarias)
+                {
+                    if (TareaToggle != null) TareaToggle.isOn = true;
+                }
+                break;
+
+            case "Cama":
+                camaCompletada = true;
+                if (CamaToggle != null)
+                {
+                    CamaToggle.isOn = true;
+                }
                 break;
         }
 
@@ -87,14 +112,33 @@ public class TareasManager : MonoBehaviour
 
     private void VerificarVictoria()
     {
-        if (ropaCompletada && platosCompletados && tareaCompletada)
+        if (ropaContador >= tareasNecesarias &&
+            platosContador >= tareasNecesarias &&
+            tareaContador >= tareasNecesarias)
         {
             if (panelWin != null)
             {
                 panelWin.SetActive(true);
-                Time.timeScale = 0f; // Pausar el juego
-                Debug.Log("🎉 ¡Felicidades! Has completado todas las tareas.");
+                Time.timeScale = 0f;
+                Debug.Log("🎉 ¡Felicidades! Has completado todas las tareas!");
             }
         }
+    }
+
+    public void VolverAlMenu()
+    {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene("MenuPrincipal"); // Cambiar a tu nombre real de la escena de menú
+    }
+
+    public void ReiniciarTareas()
+    {
+        ropaContador = 0;
+        platosContador = 0;
+        tareaContador = 0;
+
+        if (RopaToggle != null) RopaToggle.isOn = false;
+        if (PlatosToggle != null) PlatosToggle.isOn = false;
+        if (TareaToggle != null) TareaToggle.isOn = false;
     }
 }
