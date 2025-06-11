@@ -111,6 +111,7 @@ public class InteraccionJugador : MonoBehaviour
 
         input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
 
+        // Abrir/cerrar panel de tareas
         if (Input.GetKeyDown(KeyCode.T))
         {
             if (panelTasks != null)
@@ -120,20 +121,7 @@ public class InteraccionJugador : MonoBehaviour
             }
         }
 
-        if (objetoInteractuableCercano != null)
-        {
-            objetoInteractuableCercano.AlternarEstado();
-
-            // Revisar si es la cama para completar la tarea
-            if (objetoInteractuableCercano.CompareTag("Cama") && tareasManager != null)
-            {
-                tareasManager.CompletarTarea("Cama");
-            }
-
-            return;
-        }
-
-
+        // Movimiento y animaciones
         bool corriendo = Input.GetKey(teclaCorrer);
         animator.SetBool("isRunning", corriendo && input != Vector2.zero);
         animator.SetBool("isWalking", !corriendo && input != Vector2.zero);
@@ -154,25 +142,34 @@ public class InteraccionJugador : MonoBehaviour
 
         DetectarObjetosCercanos();
 
+        // Ataque
         if (Input.GetKeyDown(teclaAtaque))
         {
             EjecutarAtaque();
         }
 
+        // === INTERACCIONES ===
         if (Input.GetKeyDown(teclaInteraccion))
         {
-            if (Input.GetKeyDown(KeyCode.Q) && llevaObjeto)
-            {
-                SoltarObjeto();
-                return;
-            }
+            // 🔒 Cooldown: ¡evita spam! (opcional)
+                //if (Time.time - tiempoUltimaInteraccion < cooldownInteraccion) return;
+                //tiempoUltimaInteraccion = Time.time;
 
+            // Prioridad: objeto interactuable
             if (objetoInteractuableCercano != null)
             {
                 objetoInteractuableCercano.AlternarEstado();
+
+                // Revisar si es la cama para completar la tarea
+                if (objetoInteractuableCercano.gameObject.CompareTag("Cama") && tareasManager != null)
+                {
+                    tareasManager.CompletarTarea("Cama");
+                }
+
                 return;
             }
 
+            // Gabinete para guardar/sacar
             if (gabinetePlatosCercano != null)
             {
                 if (!gabinetePlatosCercano.EstaLleno() && objetoTransportado != null &&
@@ -185,17 +182,11 @@ public class InteraccionJugador : MonoBehaviour
                     if (tareasManager != null)
                     {
                         if (gabinetePlatosCercano.TagObjetoRequerido == "Ropa")
-                        {
                             tareasManager.CompletarTarea("Ropa");
-                        }
-                        if (gabinetePlatosCercano.TagObjetoRequerido == "PlatosLimpios")
-                        {
+                        else if (gabinetePlatosCercano.TagObjetoRequerido == "PlatosLimpios")
                             tareasManager.CompletarTarea("Platos");
-                        }
                         else if (gabinetePlatosCercano.TagObjetoRequerido == "Tarea")
-                        {
                             tareasManager.CompletarTarea("Tarea");
-                        }
                     }
                     return;
                 }
@@ -206,7 +197,8 @@ public class InteraccionJugador : MonoBehaviour
                 }
             }
 
-            if (objetoRecogibleCercano != null)
+            // Recoger objeto
+            if (objetoRecogibleCercano != null && !llevaObjeto)
             {
                 objetoTransportado = objetoRecogibleCercano;
                 llevaObjeto = true;
@@ -223,30 +215,16 @@ public class InteraccionJugador : MonoBehaviour
                 objetoRecogibleCercano = null;
                 return;
             }
+
+            // Soltar objeto si llevamos algo
+            if (llevaObjeto)
+            {
+                SoltarObjeto();
+                return;
+            }
         }
 
-        if (Input.GetKeyDown(teclaInteraccion) && objetoRecogibleCercano != null && !llevaObjeto)
-        {
-            objetoTransportado = objetoRecogibleCercano;
-            llevaObjeto = true;
-
-            objetoTransportado.transform.SetParent(puntoDeCarga);
-            objetoTransportado.transform.localPosition = Vector3.zero;
-
-            Rigidbody2D rb = objetoTransportado.GetComponent<Rigidbody2D>();
-            if (rb != null) rb.isKinematic = true;
-
-            Collider2D col = objetoTransportado.GetComponent<Collider2D>();
-            if (col != null) col.enabled = false;
-
-            objetoRecogibleCercano = null;
-        }
-
-        if (Input.GetKeyDown(KeyCode.E) && llevaObjeto)
-        {
-            SoltarObjeto();
-        }
-
+        // Platos en fregadero
         if (cercaDelSink && objetoTransportado != null && objetoTransportado.CompareTag("Platos"))
         {
             if (Input.GetKeyDown(teclaInteraccion))
@@ -264,13 +242,9 @@ public class InteraccionJugador : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(teclaAtaque))
-        {
-            EjecutarAtaque();
-        }
-
         ActualizarUI();
     }
+
 
     void FixedUpdate()
     {
