@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 4075607317342698398}
   - component: {fileID: 1385908350445996391}
   - component: {fileID: 315977312086009321}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Lavarropas
-  m_TagString: Untagged
+  m_TagString: Lavarropas
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -128,8 +128,10 @@ MonoBehaviour:
   estadoConAgua: {fileID: 5023720876188578992}
   estadoFinal: {fileID: 4462845197504552740}
   tagRopaSucia: RopaSucia
-  prefabRopaLimpia: {fileID: 0}
+  prefabRopaLimpia: {fileID: 3474649480941468609, guid: 25e6c55c29e13d14997876aae03d0838, type: 3}
   puntoInstanciaRopaLimpia: {fileID: 4451516000103078307}
+  panelPopUp: {fileID: 0}
+  textoPopUp: {fileID: 0}
 --- !u!1 &4332275083124686691
 GameObject:
   m_ObjectHideFlags: 0
@@ -139,7 +141,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4451516000103078307}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: PuntoSpawnLavarropas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -171,7 +173,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5530112605829159694}
   - component: {fileID: 4197431287796749783}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: LavarropasFInal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -255,7 +257,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4553930931730838632}
   - component: {fileID: 3860660493291375913}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Inicial-lavarropas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -339,7 +341,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5875480868921011242}
   - component: {fileID: 527791715625728298}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: AguaLavarropas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -423,7 +425,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5263040339275703638}
   - component: {fileID: 6721053134598059828}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: LavarropasConRopa
   m_TagString: Untagged
   m_Icon: {fileID: 0}

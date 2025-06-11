@@ -19,6 +19,8 @@ public class LavarropasController : MonoBehaviour
 
     [Header("Configuración")]
     [SerializeField] private string tagRopaSucia = "RopaSucia";
+    [SerializeField] private string tagRopaLimpia = "RopaLimpia";
+
     [SerializeField] private GameObject prefabRopaLimpia;
     [SerializeField] private Transform puntoInstanciaRopaLimpia;
 

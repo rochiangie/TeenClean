@@ -35,6 +35,7 @@ TagManager:
   - Humo
   - RopaLimpia
   - RopaSucia
+  - Lavarropas
   layers:
   - Default
   - TransparentFX
