@@ -22,7 +22,8 @@ public class InteraccionJugador : MonoBehaviour
     [Header("Transporte Objetos")]
     public Transform puntoDeCarga;
     public Transform puntoCarga;
-    [SerializeField] private string[] tagsRecogibles = { "Platos", "Ropa", "Tarea" };
+    [SerializeField] private string[] tagsRecogibles = { "Platos", "RopaSucia", "RopaLimpia", "Tarea" };
+
 
     private Rigidbody2D rb;
     private Animator animator;
@@ -40,12 +41,12 @@ public class InteraccionJugador : MonoBehaviour
 
     [Header("Prefabs")]
     public GameObject prefabPlatosDefinitivo;
-    //public GameObject PrefabPlatosDefinitivo;
-    public GameObject prefabRopa;
+    public GameObject prefabRopaLimpia;
     public GameObject prefabBookOpen;
     public GameObject prefabTarea;
     public GameObject platosLimpiosPrefab;
-    //public GameObject prefabEnemigo;
+    public GameObject prefabRopaSucia;
+
 
     public Transform puntoSpawnLimpios;
 
@@ -90,11 +91,11 @@ public class InteraccionJugador : MonoBehaviour
 
         if (tagsRecogibles == null || tagsRecogibles.Length == 0)
         {
-            tagsRecogibles = new string[] { "Platos", "Ropa", "PlatosLimpios", "Tarea" };
+            tagsRecogibles = new string[] { "Platos", "RopaSucia", "PlatosLimpios", "Tarea" };
         }
 
         prefabsPorTag.Add("Platos", prefabPlatosDefinitivo);
-        prefabsPorTag.Add("Ropa", prefabRopa);
+        prefabsPorTag.Add("RopaSucia", prefabRopaSucia);
         prefabsPorTag.Add("Tarea", prefabTarea);
 
         tareasManager = FindObjectOfType<TareasManager>();
@@ -181,8 +182,8 @@ public class InteraccionJugador : MonoBehaviour
 
                     if (tareasManager != null)
                     {
-                        if (gabinetePlatosCercano.TagObjetoRequerido == "Ropa")
-                            tareasManager.CompletarTarea("Ropa");
+                        if (gabinetePlatosCercano.TagObjetoRequerido == "RopaSucia")
+                            tareasManager.CompletarTarea("RopaSucia");
                         else if (gabinetePlatosCercano.TagObjetoRequerido == "PlatosLimpios")
                             tareasManager.CompletarTarea("Platos");
                         else if (gabinetePlatosCercano.TagObjetoRequerido == "Tarea")
@@ -645,9 +646,9 @@ public class InteraccionJugador : MonoBehaviour
 
     public void InstanciarRopa()
     {
-        if (prefabRopa == null || puntoDeCarga == null) return;
+        if (prefabRopaSucia == null || puntoDeCarga == null) return;
 
-        GameObject ropa = Instantiate(prefabRopa);
+        GameObject ropa = Instantiate(prefabRopaSucia);
         ropa.transform.SetParent(puntoDeCarga);
         ropa.transform.localPosition = Vector3.zero;
         ropa.transform.localRotation = Quaternion.identity;
