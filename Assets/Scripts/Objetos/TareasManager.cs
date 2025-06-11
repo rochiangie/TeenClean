@@ -73,7 +73,7 @@ public class TareasManager : MonoBehaviour
     {
         switch (tarea)
         {
-            case "Ropa":
+            case "RopaLimpia":
                 ropaContador++;
                 Debug.Log($"👕 Ropa entregada: {ropaContador}/{tareasNecesarias}");
                 if (ropaContador >= tareasNecesarias)

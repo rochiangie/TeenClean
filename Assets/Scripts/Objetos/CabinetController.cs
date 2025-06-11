@@ -9,6 +9,7 @@ public class CabinetController : MonoBehaviour
     [Header("Configuración")]
     [SerializeField] private KeyCode teclaInteraccion = KeyCode.E;
     [SerializeField] private string tagObjetoRequerido = "PlatosLimpios"; // o "Tarea"
+
     [SerializeField] private GameObject prefabObjetoLleno;
     [SerializeField] private AudioClip sonidoGuardar;
 

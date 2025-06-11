@@ -182,8 +182,8 @@ public class InteraccionJugador : MonoBehaviour
 
                     if (tareasManager != null)
                     {
-                        if (gabinetePlatosCercano.TagObjetoRequerido == "RopaSucia")
-                            tareasManager.CompletarTarea("RopaSucia");
+                        if (gabinetePlatosCercano.TagObjetoRequerido == "RopaLimpia")
+                            tareasManager.CompletarTarea("Ropa");
                         else if (gabinetePlatosCercano.TagObjetoRequerido == "PlatosLimpios")
                             tareasManager.CompletarTarea("Platos");
                         else if (gabinetePlatosCercano.TagObjetoRequerido == "Tarea")
