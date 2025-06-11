@@ -60,12 +60,11 @@ public class Enemigo : MonoBehaviour
 
     void Update()
     {
+        if (jugador == null || estaMuerto)
+            return;
+
         float distancia = Vector3.Distance(transform.position, jugador.position);
         //Debug.Log($"📏 Distancia al jugador: {distancia}");
-
-        if (jugador == null || estaMuerto) return;
-
-        //float distancia = Vector3.Distance(transform.position, jugador.position);
 
         if (distancia <= distanciaDeteccion && distancia > distanciaAtaque)
         {
@@ -77,7 +76,6 @@ public class Enemigo : MonoBehaviour
         {
             if (!atacando && Time.time > tiempoUltimoAtaque + tiempoEntreAtaques)
             {
-                Debug.Log("👊 Enemigo intenta atacar al jugador.");
                 Atacar();
             }
             jugadorEnRango = true;
@@ -91,6 +89,7 @@ public class Enemigo : MonoBehaviour
         animator.SetBool("JugadorEnRango", jugadorEnRango);
         animator.SetBool("Atacando", atacando);
     }
+
 
     void PerseguirJugador()
     {

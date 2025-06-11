@@ -33,6 +33,9 @@ TagManager:
   - Enemy
   - Escudo
   - Humo
+  - RopaLimpia
+  - RopaSucia
+  - Lavarropas
   layers:
   - Default
   - TransparentFX
