@@ -16,6 +16,11 @@ public class TareasManager : MonoBehaviour
     private bool platosCompletados = false;
     private bool tareaCompletada = false;
 
+    private int ropaContador = 0;
+    private int platosContador = 0;
+    private int tareaContador = 0;
+    private const int tareasNecesarias = 2;
+
     void Start()
     {
         if (RopaToggle != null) RopaToggle.interactable = false;
@@ -56,25 +61,49 @@ public class TareasManager : MonoBehaviour
         switch (tarea)
         {
             case "Ropa":
-                ropaCompletada = true;
-                if (RopaToggle != null) RopaToggle.isOn = true;
+                ropaContador++;
+                Debug.Log($"👕 Ropa entregada: {ropaContador}/2");
+                if (ropaContador >= tareasNecesarias)
+                {
+                    if (RopaToggle != null) RopaToggle.isOn = true;
+                }
                 break;
             case "Platos":
-                platosCompletados = true;
-                if (PlatosToggle != null) PlatosToggle.isOn = true;
+                platosContador++;
+                Debug.Log($"🍽️ Platos entregados: {platosContador}/2");
+                if (platosContador >= tareasNecesarias)
+                {
+                    if (PlatosToggle != null) PlatosToggle.isOn = true;
+                }
                 break;
             case "Tarea":
-                tareaCompletada = true;
-                if (TareaToggle != null) TareaToggle.isOn = true;
+                tareaContador++;
+                Debug.Log($"📚 Tareas entregadas: {tareaContador}/2");
+                if (tareaContador >= tareasNecesarias)
+                {
+                    if (TareaToggle != null) TareaToggle.isOn = true;
+                }
                 break;
         }
 
         VerificarVictoria();
     }
 
+    public void ReiniciarTareas()
+    {
+        ropaContador = 0;
+        platosContador = 0;
+        tareaContador = 0;
+
+        if (RopaToggle != null) RopaToggle.isOn = false;
+        if (PlatosToggle != null) PlatosToggle.isOn = false;
+        if (TareaToggle != null) TareaToggle.isOn = false;
+    }
+
+
     private void VerificarVictoria()
     {
-        if (ropaCompletada && platosCompletados && tareaCompletada)
+        if (ropaContador >= tareasNecesarias && platosContador >= tareasNecesarias && tareaContador >= tareasNecesarias)
         {
             if (panelWin != null)
             {
@@ -84,4 +113,5 @@ public class TareasManager : MonoBehaviour
             }
         }
     }
+
 }
