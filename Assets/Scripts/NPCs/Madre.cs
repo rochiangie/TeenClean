@@ -13,27 +13,17 @@ public class Madre : MonoBehaviour
     [SerializeField] private GameObject panelDialogo;
     [SerializeField] private TextMeshProUGUI textoDialogo;
     [SerializeField] private string[] dialogos;
-    [SerializeField] private KeyCode teclaContinuar = KeyCode.Space;
+    [SerializeField] private KeyCode teclaInteraccion = KeyCode.E;
 
     [Header("Penalizacion")]
     [SerializeField] private int danoAlFallar = 10;
 
-    private int indiceDialogo = 0;
-    private bool enDialogo = false;
-    private Animator animator;
-    private bool isWalking = false;
+    public int indiceDialogo = 0;
+    public bool enDialogo = false;
+    private Transform jugador;
 
     void Start()
     {
-        transform.position = new Vector3(0, 0, 0);
-        transform.localScale = Vector3.one;
-
-        SpriteRenderer sr = GetComponentInChildren<SpriteRenderer>();
-        if (sr != null)
-        {
-            sr.color = Color.white;
-            sr.sortingOrder = 10;
-        }
         if (agente == null)
             agente = GetComponent<NavMeshAgent>();
 
@@ -41,17 +31,12 @@ public class Madre : MonoBehaviour
         {
             agente.updateRotation = false;
             agente.updateUpAxis = false;
-
-            // Forzar posición Y y Z por si está fuera del plano
-            Vector3 pos = transform.position;
-            pos.z = 0f; // si tu escena es 2D, asegurate de estar en el mismo plano
-            transform.position = pos;
         }
-
-        animator = GetComponent<Animator>();
 
         if (panelDialogo != null)
             panelDialogo.SetActive(false);
+
+        jugador = GameObject.FindGameObjectWithTag("Player")?.transform;
 
         IrAlSiguientePunto();
     }
@@ -60,51 +45,44 @@ public class Madre : MonoBehaviour
     {
         if (agente != null && !enDialogo && !agente.pathPending)
         {
-            Debug.Log("📍 Distancia restante: " + agente.remainingDistance);
-
-            isWalking = agente.velocity.sqrMagnitude > 0.01f;
-            if (animator != null)
-                animator.SetBool("isWalking", isWalking);
-
             if (agente.remainingDistance <= agente.stoppingDistance &&
                 (!agente.hasPath || agente.velocity.sqrMagnitude == 0f))
             {
-                Debug.Log("✅ Llegó al punto. Pasando al siguiente.");
                 IrAlSiguientePunto();
             }
         }
-        else if (animator != null)
+
+        // Chequeo de interacción con tecla E
+        if (!enDialogo && jugador != null && Input.GetKeyDown(teclaInteraccion))
         {
-            isWalking = false;
-            animator.SetBool("isWalking", false);
+            float distancia = Vector2.Distance(jugador.position, transform.position);
+            if (distancia < 2f) // distancia de interacción
+            {
+                IniciarDialogo();
+            }
         }
 
-        if (enDialogo && Input.GetKeyDown(teclaContinuar))
+        if (enDialogo && Input.GetKeyDown(KeyCode.Space))
         {
             SiguienteLinea();
         }
     }
 
-
     private void IrAlSiguientePunto()
     {
-        if (puntosRuta == null || puntosRuta.Length == 0)
-        {
-            Debug.LogWarning("🚨 No hay puntos de ruta asignados.");
-            return;
-        }
+        if (puntosRuta == null || puntosRuta.Length == 0) return;
 
-        Debug.Log("🚶‍♀️ Yendo al punto " + indiceRuta + ": " + puntosRuta[indiceRuta].name);
         agente.SetDestination(puntosRuta[indiceRuta].position);
         indiceRuta = (indiceRuta + 1) % puntosRuta.Length;
     }
 
-
-    private void IniciarDialogo()
+    public void IniciarDialogo()
     {
         if (dialogos == null || dialogos.Length == 0) return;
+
         indiceDialogo = 0;
         enDialogo = true;
+
         if (panelDialogo != null)
         {
             panelDialogo.SetActive(true);
@@ -140,14 +118,6 @@ public class Madre : MonoBehaviour
         if (salud != null)
         {
             salud.RecibirDaño(danoAlFallar);
-        }
-    }
-
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            IniciarDialogo();
         }
     }
 }

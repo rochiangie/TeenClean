@@ -18,7 +18,7 @@ GameObject:
   - component: {fileID: 8924705947090756789}
   m_Layer: 3
   m_Name: Mom
-  m_TagString: Enemy
+  m_TagString: Madre
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -549,8 +549,10 @@ MonoBehaviour:
   textoDialogo: {fileID: 0}
   dialogos:
   - Test
-  teclaContinuar: 32
+  teclaInteraccion: 101
   danoAlFallar: 10
+  indiceDialogo: 0
+  enDialogo: 0
 --- !u!195 &8924705947090756789
 NavMeshAgent:
   m_ObjectHideFlags: 0
