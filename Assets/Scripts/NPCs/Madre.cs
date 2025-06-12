@@ -40,9 +40,16 @@ public class Madre : MonoBehaviour
 
     void Update()
     {
-        if (agente != null && !enDialogo && !agente.pathPending && agente.remainingDistance <= agente.stoppingDistance)
+        if (agente != null && !enDialogo && !agente.pathPending)
         {
-            IrAlSiguientePunto();
+            Debug.Log("📍 Distancia restante: " + agente.remainingDistance);
+
+            if (agente.remainingDistance <= agente.stoppingDistance &&
+                (!agente.hasPath || agente.velocity.sqrMagnitude == 0f))
+            {
+                Debug.Log("✅ Llegó al punto. Pasando al siguiente.");
+                IrAlSiguientePunto();
+            }
         }
 
         if (enDialogo && Input.GetKeyDown(teclaContinuar))
@@ -51,13 +58,20 @@ public class Madre : MonoBehaviour
         }
     }
 
+
     private void IrAlSiguientePunto()
     {
-        if (puntosRuta == null || puntosRuta.Length == 0) return;
+        if (puntosRuta == null || puntosRuta.Length == 0)
+        {
+            Debug.LogWarning("🚨 No hay puntos de ruta asignados.");
+            return;
+        }
 
+        Debug.Log("🚶‍♀️ Yendo al punto " + indiceRuta + ": " + puntosRuta[indiceRuta].name);
         agente.SetDestination(puntosRuta[indiceRuta].position);
         indiceRuta = (indiceRuta + 1) % puntosRuta.Length;
     }
+
 
     private void IniciarDialogo()
     {
