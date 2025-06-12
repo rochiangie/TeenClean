@@ -23,13 +23,27 @@ public class Madre : MonoBehaviour
 
     void Start()
     {
+        transform.position = new Vector3(0, 0, 0);
+        transform.localScale = Vector3.one;
+
+        SpriteRenderer sr = GetComponentInChildren<SpriteRenderer>();
+        if (sr != null)
+        {
+            sr.color = Color.white;
+            sr.sortingOrder = 10;
+        }
         if (agente == null)
             agente = GetComponent<NavMeshAgent>();
 
         if (agente != null)
         {
-            agente.updateRotation = false; // NavMesh 2D
+            agente.updateRotation = false;
             agente.updateUpAxis = false;
+
+            // Forzar posición Y y Z por si está fuera del plano
+            Vector3 pos = transform.position;
+            pos.z = 0f; // si tu escena es 2D, asegurate de estar en el mismo plano
+            transform.position = pos;
         }
 
         if (panelDialogo != null)

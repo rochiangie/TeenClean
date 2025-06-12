@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: c64f3237197b0ea4b8c9c2e1f436bc42
+guid: 228ecb66262131e4eacf2d72045fca4b
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -48,7 +48,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 50
+  spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -123,13 +123,97 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: madreIdle3_0
+      name: madreWalking_0
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 490
+        width: 287
+        height: 513
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 533af2a45ed5f674c9309748c9ecb0b0
+      internalID: -1570277916
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: madreWalking_1
+      rect:
+        serializedVersion: 2
+        x: 301
+        y: 497
+        width: 244
+        height: 510
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a416f3edea8ecf14ebfae5bc3c1189e3
+      internalID: 1418818585
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: madreWalking_2
+      rect:
+        serializedVersion: 2
+        x: 551
+        y: 494
+        width: 243
+        height: 512
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 49ee67fa598154845a85fb2595cde81a
+      internalID: 802748865
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: madreWalking_3
+      rect:
+        serializedVersion: 2
+        x: 798
+        y: 500
+        width: 226
+        height: 496
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 36b4212d419d8db4780f7d2d507bb624
+      internalID: 795462325
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: madreWalking_4
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 512
-        height: 1024
+        width: 286
+        height: 477
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -137,20 +221,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 88c4943be9c4bfd43a65b23fce23bdf7
-      internalID: 1825148117
+      spriteID: 9658f651db5eaf641a5ae9b6623dc01d
+      internalID: 508491891
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: madreIdle3_1
+      name: madreWalking_5
       rect:
         serializedVersion: 2
-        x: 512
+        x: 297
         y: 0
-        width: 512
-        height: 1024
+        width: 228
+        height: 480
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -158,20 +242,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 13de1559bf42ece48b598127a43950b2
-      internalID: -9459148
+      spriteID: ebbdfbc17734eb24591f013642831192
+      internalID: 509600204
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: madreIdle3_2
+      name: madreWalking_6
       rect:
         serializedVersion: 2
-        x: 1024
+        x: 539
         y: 0
-        width: 512
-        height: 1024
+        width: 229
+        height: 481
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -179,8 +263,29 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8e59dfe729ea8314d9283d10dbcdcb29
-      internalID: -1080403202
+      spriteID: 2c7232e2f337c304b9a7ea14ac40d056
+      internalID: -148873800
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: madreWalking_7
+      rect:
+        serializedVersion: 2
+        x: 783
+        y: 0
+        width: 241
+        height: 481
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 68ee2fa89f208d1489d36497253a6251
+      internalID: -15060123
       vertices: []
       indices: 
       edges: []
@@ -196,9 +301,14 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      madreIdle3_0: 1825148117
-      madreIdle3_1: -9459148
-      madreIdle3_2: -1080403202
+      madreWalking_0: -1570277916
+      madreWalking_1: 1418818585
+      madreWalking_2: 802748865
+      madreWalking_3: 795462325
+      madreWalking_4: 508491891
+      madreWalking_5: 509600204
+      madreWalking_6: -148873800
+      madreWalking_7: -15060123
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
