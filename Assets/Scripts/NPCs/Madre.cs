@@ -20,6 +20,8 @@ public class Madre : MonoBehaviour
 
     private int indiceDialogo = 0;
     private bool enDialogo = false;
+    private Animator animator;
+    private bool isWalking = false;
 
     void Start()
     {
@@ -46,6 +48,8 @@ public class Madre : MonoBehaviour
             transform.position = pos;
         }
 
+        animator = GetComponent<Animator>();
+
         if (panelDialogo != null)
             panelDialogo.SetActive(false);
 
@@ -58,12 +62,21 @@ public class Madre : MonoBehaviour
         {
             Debug.Log("📍 Distancia restante: " + agente.remainingDistance);
 
+            isWalking = agente.velocity.sqrMagnitude > 0.01f;
+            if (animator != null)
+                animator.SetBool("isWalking", isWalking);
+
             if (agente.remainingDistance <= agente.stoppingDistance &&
                 (!agente.hasPath || agente.velocity.sqrMagnitude == 0f))
             {
                 Debug.Log("✅ Llegó al punto. Pasando al siguiente.");
                 IrAlSiguientePunto();
             }
+        }
+        else if (animator != null)
+        {
+            isWalking = false;
+            animator.SetBool("isWalking", false);
         }
 
         if (enDialogo && Input.GetKeyDown(teclaContinuar))
