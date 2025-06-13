@@ -36,6 +36,7 @@ TagManager:
   - RopaLimpia
   - RopaSucia
   - Lavarropas
+  - Madre
   layers:
   - Default
   - TransparentFX

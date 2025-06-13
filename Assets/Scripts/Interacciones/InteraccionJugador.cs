@@ -79,6 +79,7 @@ public class InteraccionJugador : MonoBehaviour
 
     private bool isAlive = true;
     private TareasManager tareasManager;
+    private Madre madreCercana;
 
 
     void Awake()
@@ -152,14 +153,51 @@ public class InteraccionJugador : MonoBehaviour
         // === INTERACCIONES ===
         if (Input.GetKeyDown(teclaInteraccion))
         {
-            // 🔒 Cooldown: ¡evita spam! (opcional)
-                //if (Time.time - tiempoUltimaInteraccion < cooldownInteraccion) return;
-                //tiempoUltimaInteraccion = Time.time;
 
-            // Prioridad: objeto interactuable
+
             if (objetoInteractuableCercano != null)
             {
-                objetoInteractuableCercano.AlternarEstado();
+                if (panelPopUp != null)
+                {
+                    panelPopUp.SetActive(true);
+                    foreach (Transform child in panelPopUp.transform)
+                    {
+                        child.gameObject.SetActive(true);
+                    }
+
+                    TextMeshProUGUI textoTMP = panelPopUp.GetComponentInChildren<TextMeshProUGUI>(true);
+                    if (textoTMP != null)
+                    {
+                        if (objetoInteractuableCercano.CompareTag("Madre"))
+                            textoTMP.text = $"Presiona {teclaInteraccion} para hablar con Mamá";
+                        else
+                            textoTMP.text = $"Presiona {teclaInteraccion} para usar {objetoInteractuableCercano.ObtenerNombreEstado()}";
+                    }
+                }
+
+                GameObject obj = objetoInteractuableCercano.gameObject;
+
+                if (obj.CompareTag("Madre"))
+                {
+                    Madre madre = obj.GetComponent<Madre>();
+                    if (madre != null)
+                    {
+                        madre.IniciarDialogo();
+                        return;
+                    }
+                }
+                else if (obj.TryGetComponent(out ControladorEstados estado))
+                {
+                    estado.AlternarEstado();
+
+                    if (obj.CompareTag("Cama") && tareasManager != null)
+                    {
+                        tareasManager.CompletarTarea("Cama");
+                    }
+
+                    return;
+                }
+
 
                 // Revisar si es la cama para completar la tarea
                 if (objetoInteractuableCercano.gameObject.CompareTag("Cama") && tareasManager != null)
@@ -278,7 +316,13 @@ public class InteraccionJugador : MonoBehaviour
                 objetoInteractuableCercano = interactuable;
                 Debug.Log("Asignando objeto interactiable");
             }
-                
+            if (col.CompareTag("Madre") && objetoInteractuableCercano == null)
+            {
+                objetoInteractuableCercano = col.GetComponent<ControladorEstados>(); // Solo para mostrar el UI
+                madreCercana = col.GetComponent<Madre>(); // Para tener acceso real a la lógica
+            }
+
+
 
             if (col.TryGetComponent(out CabinetController gabinete))
                 gabinetePlatosCercano = gabinete;
@@ -298,39 +342,52 @@ public class InteraccionJugador : MonoBehaviour
 
             if (col.TryGetComponent(out InteraccionSilla silla))
                 sillaCercana = silla;
+
+            if (col.CompareTag("Madre"))
+            {
+                objetoInteractuableCercano = col.GetComponent<ControladorEstados>(); // para que aparezca el mensaje
+            }
+
         }
+
+
     }
 
 
     void ActualizarUI()
     {
+        
+        
         // Mostrar el panel de interacción solo si hay objetos interactuables cerca
         if (objetoInteractuableCercano != null)
         {
-            //Debug.Log("Me acerque...");
             if (panelPopUp != null)
-            
-
             {
-                //Debug.Log("Panel pop up...");
                 panelPopUp.SetActive(true);
 
-                // Activar todos los hijos del panel (imagen y texto)
                 foreach (Transform child in panelPopUp.transform)
                 {
                     child.gameObject.SetActive(true);
                 }
 
-                // Actualizar el texto TMP
                 TextMeshProUGUI textoTMP = panelPopUp.GetComponentInChildren<TextMeshProUGUI>(true);
                 if (textoTMP != null)
                 {
-                    textoTMP.text = $"Presiona {teclaInteraccion} para usar {objetoInteractuableCercano.ObtenerNombreEstado()}";
+                    string texto = $"Presiona {teclaInteraccion} para interactuar";
+
+                    if (madreCercana != null)
+                    {
+                        texto = $"Presiona {teclaInteraccion} para hablar con Mamá";
+                    }
+                    else if (objetoInteractuableCercano != null && objetoInteractuableCercano.TryGetComponent(out ControladorEstados estado))
+                    {
+                        texto = $"Presiona {teclaInteraccion} para usar {estado.ObtenerNombreEstado()}";
+                    }
+
+                    textoTMP.text = texto;
                 }
-                else
-                {
-                    Debug.LogError("🚨 No se encontró un TextMeshProUGUI en panelPopUp.");
-                }
+
+
             }
 
 
