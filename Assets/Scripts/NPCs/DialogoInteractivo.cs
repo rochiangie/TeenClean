@@ -26,7 +26,7 @@ public class DialogoInteractivo : MonoBehaviour
 
     public void MostrarDialogo1()
     {
-        textoDialogo.text = "¡Hija! ¿Cómo estás? ¿Hiciste los quehaceres de la casa?";
+        textoDialogo.text = "Hola hija! Espero estés bien\n¿Hiciste tus tasks de hoy?";
 
         botonSi.gameObject.SetActive(true);
         botonNo.gameObject.SetActive(true);
@@ -37,7 +37,7 @@ public class DialogoInteractivo : MonoBehaviour
 
     public void MostrarDialogo2()
     {
-        textoDialogo.text = "Tenés que limpiar tu cuarto, lavar los platos y hacer la tarea.";
+        textoDialogo.text = "Tienes que lavar la ropa y los platos para luego guardarlos en su lugar, hacé la tarea y guardala.\nTerminá haciendo la cama.";
 
         botonSi.gameObject.SetActive(false);
         botonNo.gameObject.SetActive(false);
@@ -48,7 +48,7 @@ public class DialogoInteractivo : MonoBehaviour
 
     public void MostrarDialogo3()
     {
-        textoDialogo.text = "Primero levantá tu ropa, después lavá los platos y por último hacé la tarea. ¿Ahora sí?";
+        textoDialogo.text = "Placeholder: más detalles de las tareas que debe hacer.";
 
         botonSi.gameObject.SetActive(false);
         botonNo.gameObject.SetActive(false);

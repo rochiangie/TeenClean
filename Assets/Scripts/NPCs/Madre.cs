@@ -56,7 +56,7 @@ public class Madre : MonoBehaviour
 
     void Update()
     {
-        if (agente != null && !enDialogo && !agente.pathPending)
+        if (agente != null && agente.isOnNavMesh && !enDialogo && !agente.pathPending)
         {
             if (agente.remainingDistance <= agente.stoppingDistance &&
                 (!agente.hasPath || agente.velocity.sqrMagnitude == 0f))
@@ -65,6 +65,7 @@ public class Madre : MonoBehaviour
             }
         }
     }
+
 
     private void OnTriggerEnter2D(Collider2D other)
     {
