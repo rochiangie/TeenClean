@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEngine.AI;
 using TMPro;
+using System.Collections;
+
 
 public class Madre : MonoBehaviour
 {
@@ -45,19 +47,20 @@ public class Madre : MonoBehaviour
 
         jugador = GameObject.FindGameObjectWithTag("Player")?.transform;
 
-        // Carga un diálogo de test si no hay ninguno
+        // Cargar diálogo de prueba si no hay ninguno asignado
         if (dialogos == null || dialogos.Length == 0)
         {
             dialogos = new string[]
             {
-            "¡Hola! Soy mamá.",
-            "Recordá limpiar tu habitación.",
-            "¡Y no te olvides de la tarea!"
+            "Test",
+            "¿Hiciste la tarea?",
+            "No olvides lavar los platos."
             };
         }
 
         IrAlSiguientePunto();
     }
+
 
 
     void Update()
@@ -71,19 +74,7 @@ public class Madre : MonoBehaviour
             }
         }
 
-        if (jugador != null)
-        {
-            float distancia = Vector2.Distance(jugador.position, transform.position); // ✅ definida acá
 
-            if (!enDialogo && distancia < rango)
-            {
-                IniciarDialogo();
-            }
-            else if (enDialogo && distancia >= rango + 0.5f) // margen para no cerrarlo al toque
-            {
-                FinalizarDialogo();
-            }
-        }
     }
 
 
@@ -134,12 +125,62 @@ public class Madre : MonoBehaviour
     {
         enDialogo = false;
 
-        if (agente != null)
-            agente.isStopped = false; // 🟢 Retoma el movimiento
-
         if (panelDialogo != null)
             panelDialogo.SetActive(false);
     }
+
+    private IEnumerator EsperarYReanudar()
+    {
+        if (agente != null)
+        {
+            agente.isStopped = true;
+            agente.velocity = Vector3.zero;
+        }
+
+        enDialogo = true;
+        int intentos = 0;
+        // Mostrar diálogo visual
+        if (panelDialogo != null)
+        {
+            Debug.Log("📣 Mostrando diálogo de mamá");
+            panelDialogo.SetActive(true);
+            textoDialogo.text = dialogos.Length > 0 ? dialogos[0] : "Test";
+        }
+        else
+        {
+            Debug.LogWarning("🚨 No se asignó el panel de diálogo en el Inspector");
+        }
+
+        while (intentos < 2) // espera dos veces como máximo
+        {
+            yield return new WaitForSeconds(3f);
+
+            if (jugador != null)
+            {
+                float distancia = Vector2.Distance(jugador.position, transform.position);
+                Debug.Log($"📏 Intento {intentos + 1} - Distancia al jugador: {distancia}");
+
+                if (distancia > rango)
+                {
+                    break; // se alejó, ya podemos continuar
+                }
+            }
+
+            intentos++;
+        }
+
+        Debug.Log("▶️ Reanudando camino de la madre");
+        FinalizarDialogo();
+
+        if (agente != null)
+        {
+            agente.isStopped = false;
+            IrAlSiguientePunto();
+        }
+    }
+
+
+
 
 
     public void PenalizarJugador(GameObject jugador)
@@ -155,22 +196,42 @@ public class Madre : MonoBehaviour
 
     private void IniciarDialogoConTemporizador()
     {
-        IniciarDialogo();
-        Invoke(nameof(FinalizarDialogo), 5f); // Cierra el diálogo a los 5 segundos
+        indiceDialogo = 0;
+        enDialogo = true;
+
+        if (agente != null)
+        {
+            Debug.Log("🛑 Agente detenido");
+            agente.isStopped = true;
+            agente.velocity = Vector3.zero;
+            //agente.ResetPath(); 
+        }
+
+        if (panelDialogo != null)
+        {
+            panelDialogo.SetActive(true);
+            textoDialogo.text = dialogos.Length > 0 ? dialogos[0] : "Test";
+        }
+
+        Invoke(nameof(FinalizarDialogo), 5f);
     }
+
+
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Player") && !enDialogo && !esperando)
+        if (other.CompareTag("Player"))
         {
             jugador = other.transform;
-            IniciarDialogoConTemporizador();
-            esperando = true;
-            Invoke(nameof(ResetEsperando), 6f); // Evita repetir diálogo en 6 segundos
+            CancelInvoke(nameof(FinalizarDialogo)); // cancela cualquier cierre anterior en cola
+            StartCoroutine(EsperarYReanudar()); // usamos la lógica de espera y reanudación real
         }
     }
+
+
     private void ResetEsperando()
     {
         esperando = false;
     }
+
 }
