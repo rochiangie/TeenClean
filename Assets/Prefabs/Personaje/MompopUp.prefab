@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1011153804280156015}
   - component: {fileID: 159579111597402003}
   m_Layer: 0
-  m_Name: Mom
+  m_Name: MompopUp
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
