@@ -13,7 +13,7 @@ public class Madre : MonoBehaviour
     [SerializeField] private GameObject panelDialogo;
     [SerializeField] private TextMeshProUGUI textoDialogo;
     [SerializeField] private string[] dialogos;
-    [SerializeField] private KeyCode teclaInteraccion = KeyCode.E;
+    [SerializeField] private KeyCode teclaInteraccion = KeyCode.Space;
 
     [Header("Penalizacion")]
     [SerializeField] private int danoAlFallar = 10;
@@ -21,6 +21,13 @@ public class Madre : MonoBehaviour
     public int indiceDialogo = 0;
     public bool enDialogo = false;
     private Transform jugador;
+
+    [Header("Interacción")]
+    public float rango = 7f; // rango ajustable desde el Inspector
+
+
+    private bool esperando = false;
+
 
     void Start()
     {
@@ -38,8 +45,20 @@ public class Madre : MonoBehaviour
 
         jugador = GameObject.FindGameObjectWithTag("Player")?.transform;
 
+        // Carga un diálogo de test si no hay ninguno
+        if (dialogos == null || dialogos.Length == 0)
+        {
+            dialogos = new string[]
+            {
+            "¡Hola! Soy mamá.",
+            "Recordá limpiar tu habitación.",
+            "¡Y no te olvides de la tarea!"
+            };
+        }
+
         IrAlSiguientePunto();
     }
+
 
     void Update()
     {
@@ -52,21 +71,22 @@ public class Madre : MonoBehaviour
             }
         }
 
-        // Chequeo de interacción con tecla E
-        if (!enDialogo && jugador != null && Input.GetKeyDown(teclaInteraccion))
+        if (jugador != null)
         {
-            float distancia = Vector2.Distance(jugador.position, transform.position);
-            if (distancia < 2f) // distancia de interacción
+            float distancia = Vector2.Distance(jugador.position, transform.position); // ✅ definida acá
+
+            if (!enDialogo && distancia < rango)
             {
                 IniciarDialogo();
             }
-        }
-
-        if (enDialogo && Input.GetKeyDown(KeyCode.Space))
-        {
-            SiguienteLinea();
+            else if (enDialogo && distancia >= rango + 0.5f) // margen para no cerrarlo al toque
+            {
+                FinalizarDialogo();
+            }
         }
     }
+
+
 
     private void IrAlSiguientePunto()
     {
@@ -83,12 +103,18 @@ public class Madre : MonoBehaviour
         indiceDialogo = 0;
         enDialogo = true;
 
+        if (agente != null)
+            agente.isStopped = true;
+
         if (panelDialogo != null)
         {
             panelDialogo.SetActive(true);
             textoDialogo.text = dialogos[indiceDialogo];
         }
     }
+
+
+
 
     private void SiguienteLinea()
     {
@@ -107,9 +133,14 @@ public class Madre : MonoBehaviour
     private void FinalizarDialogo()
     {
         enDialogo = false;
+
+        if (agente != null)
+            agente.isStopped = false; // 🟢 Retoma el movimiento
+
         if (panelDialogo != null)
             panelDialogo.SetActive(false);
     }
+
 
     public void PenalizarJugador(GameObject jugador)
     {
@@ -119,5 +150,27 @@ public class Madre : MonoBehaviour
         {
             salud.RecibirDaño(danoAlFallar);
         }
+    }
+
+
+    private void IniciarDialogoConTemporizador()
+    {
+        IniciarDialogo();
+        Invoke(nameof(FinalizarDialogo), 5f); // Cierra el diálogo a los 5 segundos
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Player") && !enDialogo && !esperando)
+        {
+            jugador = other.transform;
+            IniciarDialogoConTemporizador();
+            esperando = true;
+            Invoke(nameof(ResetEsperando), 6f); // Evita repetir diálogo en 6 segundos
+        }
+    }
+    private void ResetEsperando()
+    {
+        esperando = false;
     }
 }
