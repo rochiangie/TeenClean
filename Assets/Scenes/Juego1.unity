@@ -4321,7 +4321,7 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2208231527681543724, guid: 35ed95e6f14a50a4b86ea03e30a14961, type: 3}
   m_PrefabInstance: {fileID: 4906145515156708188}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &583565103
+--- !u!114 &583565105
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4330,15 +4330,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 583565100}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ea91f6dd23a1f1047879545aad17c05f, type: 3}
+  m_Script: {fileID: 11500000, guid: bf25dc330b9f7e64ebd06a0f87289b1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   estadoVacio: {fileID: 820048549}
   estadoLleno: {fileID: 361159726}
-  teclaInteraccion: 101
-  tagObjetoRequerido: RopaLimpia
   prefabObjetoLleno: {fileID: 3474649480941468609, guid: 25e6c55c29e13d14997876aae03d0838, type: 3}
-  sonidoGuardar: {fileID: 0}
 --- !u!1 &591346793
 GameObject:
   m_ObjectHideFlags: 0
@@ -9191,6 +9188,11 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 3203926654744874234, guid: 6c2aa9f04e0697b499ff7bfefd15d0c2, type: 3}
   m_PrefabInstance: {fileID: 1076779391}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1076985012 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2512872479426731146, guid: 908866529aef51a42bde28b5b0e307ce, type: 3}
+  m_PrefabInstance: {fileID: 1500283090}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1079204199
 PrefabInstance:
@@ -14991,6 +14993,14 @@ PrefabInstance:
       propertyPath: m_Offset.y
       value: 31.3
       objectReference: {fileID: 0}
+    - target: {fileID: 686610572293357601, guid: 908866529aef51a42bde28b5b0e307ce, type: 3}
+      propertyPath: estadoLleno
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 686610572293357601, guid: 908866529aef51a42bde28b5b0e307ce, type: 3}
+      propertyPath: estadoVacio
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 1156256389057792994, guid: 908866529aef51a42bde28b5b0e307ce, type: 3}
       propertyPath: prefabRopa
       value: 
@@ -15026,6 +15036,14 @@ PrefabInstance:
     - target: {fileID: 1510435853967445698, guid: 908866529aef51a42bde28b5b0e307ce, type: 3}
       propertyPath: nombreMostrado
       value: Guardaropas
+      objectReference: {fileID: 0}
+    - target: {fileID: 1847157994824465917, guid: 908866529aef51a42bde28b5b0e307ce, type: 3}
+      propertyPath: estadoLleno
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1847157994824465917, guid: 908866529aef51a42bde28b5b0e307ce, type: 3}
+      propertyPath: estadoVacio
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 2512872479426731146, guid: 908866529aef51a42bde28b5b0e307ce, type: 3}
       propertyPath: m_Name
@@ -15073,6 +15091,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 1510435853967445698, guid: 908866529aef51a42bde28b5b0e307ce, type: 3}
+    - {fileID: 686610572293357601, guid: 908866529aef51a42bde28b5b0e307ce, type: 3}
+    - {fileID: 3240869461952040871, guid: 908866529aef51a42bde28b5b0e307ce, type: 3}
+    - {fileID: 1847157994824465917, guid: 908866529aef51a42bde28b5b0e307ce, type: 3}
     m_RemovedGameObjects:
     - {fileID: 941855796034353215, guid: 908866529aef51a42bde28b5b0e307ce, type: 3}
     - {fileID: 5513591663989636413, guid: 908866529aef51a42bde28b5b0e307ce, type: 3}
@@ -15083,7 +15104,10 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4626920157283591810, guid: 908866529aef51a42bde28b5b0e307ce, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1811389697}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2512872479426731146, guid: 908866529aef51a42bde28b5b0e307ce, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1509766261}
   m_SourcePrefab: {fileID: 100100000, guid: 908866529aef51a42bde28b5b0e307ce, type: 3}
 --- !u!1 &1506987538
 GameObject:
@@ -15165,6 +15189,21 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4626920157283591810, guid: 908866529aef51a42bde28b5b0e307ce, type: 3}
   m_PrefabInstance: {fileID: 1500283090}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1509766261
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1076985012}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf25dc330b9f7e64ebd06a0f87289b1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  estadoVacio: {fileID: 1202513066}
+  estadoLleno: {fileID: 1811389696}
+  prefabObjetoLleno: {fileID: 3474649480941468609, guid: 25e6c55c29e13d14997876aae03d0838, type: 3}
 --- !u!1 &1529790084 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 9162304587956990708, guid: 8b3cb8913fad1bd4ca888d33b1ea57fa, type: 3}
@@ -21117,7 +21156,7 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 691618954842265117, guid: 35ed95e6f14a50a4b86ea03e30a14961, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 583565103}
+      addedObject: {fileID: 583565105}
   m_SourcePrefab: {fileID: 100100000, guid: 35ed95e6f14a50a4b86ea03e30a14961, type: 3}
 --- !u!1001 &5448179908816633411
 PrefabInstance:
