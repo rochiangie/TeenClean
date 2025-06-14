@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System.Collections.Generic;
 
 public class TareasManager : MonoBehaviour
 {
@@ -73,7 +74,7 @@ public class TareasManager : MonoBehaviour
     {
         switch (tarea)
         {
-            case "RopaLimpia":
+            case "Ropa":
                 ropaContador++;
                 Debug.Log($"👕 Ropa entregada: {ropaContador}/{tareasNecesarias}");
                 if (ropaContador >= tareasNecesarias)
@@ -124,6 +125,24 @@ public class TareasManager : MonoBehaviour
             }
         }
     }
+
+    private HashSet<GabineteRopa> gabinetesConRopa = new HashSet<GabineteRopa>();
+
+    public void RegistrarGabineteRopa(GabineteRopa gabinete)
+    {
+        if (!gabinetesConRopa.Contains(gabinete))
+        {
+            gabinetesConRopa.Add(gabinete);
+            Debug.Log($"👕 Gabinete registrado ({gabinetesConRopa.Count}/2)");
+
+            if (gabinetesConRopa.Count >= 2)
+            {
+                CompletarTarea("Ropa");
+                Debug.Log("✅ Tarea de ropa completada por llenar 2 gabinetes distintos");
+            }
+        }
+    }
+
 
     public void VolverAlMenu()
     {

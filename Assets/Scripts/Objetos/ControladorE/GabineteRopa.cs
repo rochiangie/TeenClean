@@ -2,63 +2,91 @@
 
 public class GabineteRopa : MonoBehaviour
 {
+    [Header("Estados Visuales")]
     public GameObject estadoVacio;
     public GameObject estadoLleno;
-    public string tagRequerido = "RopaLimpia";
-    private int ropaGuardada = 0;
-    public int cantidadParaCompletar = 2;
+    public GameObject prefabObjetoLleno;
 
-    private TareasManager tareasManager;
     private bool estaLleno = false;
+    private TareasManager tareasManager;
 
-    [SerializeField] private GameObject prefabObjetoLleno;
-
-    private void Awake()
+    void Awake()
     {
         tareasManager = FindObjectOfType<TareasManager>();
-        if (estadoVacio) estadoVacio.SetActive(true);
-        if (estadoLleno) estadoLleno.SetActive(false);
+        if (tareasManager == null)
+            Debug.LogError("🚨 No se encontró el TareasManager en la escena.");
+
+        estadoVacio?.SetActive(true);
+        estadoLleno?.SetActive(false);
     }
 
     public bool IntentarGuardar(GameObject objeto)
     {
-        if (!objeto.CompareTag(tagRequerido)) return false;
+        Debug.Log("🧪 Intentando guardar objeto...");
 
-        ropaGuardada++;
+        if (estaLleno)
+        {
+            Debug.Log("❌ No se puede guardar: gabinete lleno.");
+            return false;
+        }
+
+        if (!objeto.CompareTag("RopaLimpia"))
+        {
+            Debug.Log($"❌ Tag incorrecto: {objeto.tag} (esperado: RopaLimpia)");
+            return false;
+        }
+
         Destroy(objeto);
-        if (ropaGuardada >= cantidadParaCompletar && tareasManager != null)
+        estaLleno = true;
+
+        if (estadoVacio != null && estadoLleno != null)
+        {
+            estadoVacio.SetActive(false);
+            estadoLleno.SetActive(true);
+            Debug.Log("✅ Estado del gabinete cambiado a 'Lleno'");
+        }
+        else
+        {
+            Debug.LogWarning("⚠️ No se asignaron estadoVacio o estadoLleno en el Inspector.");
+        }
+
+        if (tareasManager != null)
         {
             tareasManager.CompletarTarea("Ropa");
+            Debug.Log("🎯 Tarea de ropa completada");
         }
 
         return true;
     }
 
+
     public void SacarObjeto(Transform puntoDeCarga, InteraccionJugador jugador)
     {
-        if (!estaLleno || prefabObjetoLleno == null || puntoDeCarga == null || jugador == null)
+        if (!estaLleno || prefabObjetoLleno == null || jugador == null)
         {
-            Debug.LogWarning("❌ No se puede sacar objeto del gabinete de ropa: faltan referencias.");
+            Debug.LogWarning("⚠️ No se puede sacar objeto: condiciones inválidas.");
             return;
         }
 
-        Vector3 posicionDelante = puntoDeCarga.position + puntoDeCarga.right * (jugador.transform.localScale.x > 0 ? 1f : -1f);
+        GameObject nuevo = Instantiate(prefabObjetoLleno, puntoDeCarga.position, Quaternion.identity);
+        nuevo.transform.SetParent(puntoDeCarga);
+        nuevo.transform.localPosition = Vector3.zero;
+        nuevo.transform.localRotation = Quaternion.identity;
+        nuevo.transform.localScale = Vector3.one * 0.5f;
+        nuevo.tag = "RopaLimpia";
 
-        GameObject objeto = Instantiate(prefabObjetoLleno, posicionDelante, Quaternion.identity);
-        objeto.transform.SetParent(puntoDeCarga);
-        objeto.transform.localPosition = Vector3.zero;
-        objeto.transform.localRotation = Quaternion.identity;
-
-        objeto.transform.localScale = Vector3.one; // escala normal
-        objeto.tag = "RopaLimpia";
-
-        jugador.RecogerObjeto(objeto);
+        jugador.RecogerObjeto(nuevo);
 
         estaLleno = false;
-        estadoVacio.SetActive(true);
-        estadoLleno.SetActive(false);
+        estadoVacio?.SetActive(true);
+        estadoLleno?.SetActive(false);
 
-        Debug.Log($"✅ Ropa entregada al jugador desde el gabinete.");
+        Debug.Log("🧺 Ropa sacada del gabinete");
+    }
+
+    public bool EstaLleno()
+    {
+        return estaLleno;
     }
 
 }

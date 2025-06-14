@@ -226,8 +226,9 @@ public class InteraccionJugador : MonoBehaviour
             // Gabinete para guardar/sacar
             if (Input.GetKeyDown(teclaInteraccion))
             {
-                if (llevaObjeto)
+                if (Input.GetKeyDown(teclaInteraccion) && llevaObjeto)
                 {
+                    // ROPA
                     if (gabineteRopaCercano != null && objetoTransportado.CompareTag("RopaLimpia"))
                     {
                         if (gabineteRopaCercano.IntentarGuardar(objetoTransportado))
@@ -237,7 +238,9 @@ public class InteraccionJugador : MonoBehaviour
                             return;
                         }
                     }
-                    else if (gabinetePlatosNuevoCercano != null && objetoTransportado.CompareTag("PlatosLimpios"))
+
+                    // PLATOS
+                    if (gabinetePlatosNuevoCercano != null && objetoTransportado.CompareTag("PlatosLimpios"))
                     {
                         if (gabinetePlatosNuevoCercano.IntentarGuardar(objetoTransportado))
                         {
@@ -246,7 +249,9 @@ public class InteraccionJugador : MonoBehaviour
                             return;
                         }
                     }
-                    else if (gabineteTareaCercano != null && objetoTransportado.CompareTag("Tarea"))
+
+                    // TAREA
+                    if (gabineteTareaCercano != null && objetoTransportado.CompareTag("Tarea"))
                     {
                         if (gabineteTareaCercano.IntentarGuardar(objetoTransportado))
                         {
@@ -256,6 +261,29 @@ public class InteraccionJugador : MonoBehaviour
                         }
                     }
                 }
+
+                if (!llevaObjeto)
+                {
+                    if (gabineteRopaCercano != null && gabineteRopaCercano.EstaLleno())
+                    {
+                        gabineteRopaCercano.SacarObjeto(puntoDeCarga, this);
+                        llevaObjeto = true;
+                        return;
+                    }
+                    else if (gabinetePlatosNuevoCercano != null && gabinetePlatosNuevoCercano.EstaLleno())
+                    {
+                        gabinetePlatosNuevoCercano.SacarObjeto(puntoDeCarga, this);
+                        llevaObjeto = true;
+                        return;
+                    }
+                    else if (gabineteTareaCercano != null && gabineteTareaCercano.EstaLleno())
+                    {
+                        gabineteTareaCercano.SacarObjeto(puntoDeCarga, this);
+                        llevaObjeto = true;
+                        return;
+                    }
+                }
+
             }
 
 
