@@ -168,11 +168,20 @@ public class InteraccionJugador : MonoBehaviour
                     TextMeshProUGUI textoTMP = panelPopUp.GetComponentInChildren<TextMeshProUGUI>(true);
                     if (textoTMP != null)
                     {
-                        if (objetoInteractuableCercano.CompareTag("Madre"))
+                        if (objetoInteractuableCercano != null && objetoInteractuableCercano.CompareTag("Madre"))
+                        {
                             textoTMP.text = $"Presiona {teclaInteraccion} para hablar con Mamá";
-                        else
+                        }
+                        else if (objetoInteractuableCercano != null)
+                        {
                             textoTMP.text = $"Presiona {teclaInteraccion} para usar {objetoInteractuableCercano.ObtenerNombreEstado()}";
+                        }
+                        else
+                        {
+                            textoTMP.text = "";
+                        }
                     }
+
                 }
 
                 GameObject obj = objetoInteractuableCercano.gameObject;
@@ -182,7 +191,7 @@ public class InteraccionJugador : MonoBehaviour
                     Madre madre = obj.GetComponent<Madre>();
                     if (madre != null)
                     {
-                        madre.IniciarDialogo();
+                        madre.IniciarInteraccionConJugador();
                         return;
                     }
                 }

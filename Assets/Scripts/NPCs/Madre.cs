@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.AI;
 using TMPro;
+using System.Collections;
 
 public class Madre : MonoBehaviour
 {
@@ -13,13 +14,15 @@ public class Madre : MonoBehaviour
     [SerializeField] private GameObject panelDialogo;
     [SerializeField] private TextMeshProUGUI textoDialogo;
     [SerializeField] private string[] dialogos;
-    [SerializeField] private KeyCode teclaInteraccion = KeyCode.E;
 
     [Header("Penalizacion")]
     [SerializeField] private int danoAlFallar = 10;
 
-    public int indiceDialogo = 0;
-    public bool enDialogo = false;
+    [Header("Interacción")]
+    public float rango = 5f;
+
+    private int indiceDialogo = 0;
+    private bool enDialogo = false;
     private Transform jugador;
 
     void Start()
@@ -38,12 +41,22 @@ public class Madre : MonoBehaviour
 
         jugador = GameObject.FindGameObjectWithTag("Player")?.transform;
 
+        if (dialogos == null || dialogos.Length == 0)
+        {
+            dialogos = new string[]
+            {
+                "Test",
+                "¿Hiciste la tarea?",
+                "No olvides lavar los platos."
+            };
+        }
+
         IrAlSiguientePunto();
     }
 
     void Update()
     {
-        if (agente != null && !enDialogo && !agente.pathPending)
+        if (agente != null && agente.isOnNavMesh && !enDialogo && !agente.pathPending)
         {
             if (agente.remainingDistance <= agente.stoppingDistance &&
                 (!agente.hasPath || agente.velocity.sqrMagnitude == 0f))
@@ -51,21 +64,76 @@ public class Madre : MonoBehaviour
                 IrAlSiguientePunto();
             }
         }
+    }
 
-        // Chequeo de interacción con tecla E
-        if (!enDialogo && jugador != null && Input.GetKeyDown(teclaInteraccion))
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Player"))
         {
-            float distancia = Vector2.Distance(jugador.position, transform.position);
-            if (distancia < 2f) // distancia de interacción
+            jugador = other.transform;
+
+            if (!enDialogo)
             {
-                IniciarDialogo();
+                StartCoroutine(EsperarYReanudar());
+            }
+        }
+    }
+
+    private IEnumerator EsperarYReanudar()
+    {
+        enDialogo = true;
+
+        if (agente != null)
+        {
+            agente.isStopped = true;
+            agente.velocity = Vector3.zero;
+        }
+
+        if (panelDialogo != null)
+        {
+            panelDialogo.SetActive(true);
+            textoDialogo.text = dialogos.Length > 0 ? dialogos[0] : "Test";
+        }
+
+        while (true)
+        {
+            yield return new WaitForSeconds(10.5f);
+
+            if (jugador == null) break;
+
+            float distancia = Vector2.Distance(jugador.position, transform.position);
+            Debug.Log($"📏 Distancia actual: {distancia}");
+
+            if (distancia > rango)
+            {
+                Debug.Log("👋 Jugador se alejó. Reanudando movimiento.");
+                break;
             }
         }
 
-        if (enDialogo && Input.GetKeyDown(KeyCode.Space))
+        FinalizarDialogo();
+
+        if (agente != null)
         {
-            SiguienteLinea();
+            agente.isStopped = false;
+            IrAlSiguientePunto();
         }
+    }
+
+    public void IniciarInteraccionConJugador()
+    {
+        if (!enDialogo)
+            StartCoroutine(EsperarYReanudar());
+    }
+
+
+    private void FinalizarDialogo()
+    {
+        enDialogo = false;
+
+        if (panelDialogo != null)
+            panelDialogo.SetActive(false);
     }
 
     private void IrAlSiguientePunto()
@@ -76,44 +144,10 @@ public class Madre : MonoBehaviour
         indiceRuta = (indiceRuta + 1) % puntosRuta.Length;
     }
 
-    public void IniciarDialogo()
-    {
-        if (dialogos == null || dialogos.Length == 0) return;
-
-        indiceDialogo = 0;
-        enDialogo = true;
-
-        if (panelDialogo != null)
-        {
-            panelDialogo.SetActive(true);
-            textoDialogo.text = dialogos[indiceDialogo];
-        }
-    }
-
-    private void SiguienteLinea()
-    {
-        indiceDialogo++;
-        if (indiceDialogo < dialogos.Length)
-        {
-            if (textoDialogo != null)
-                textoDialogo.text = dialogos[indiceDialogo];
-        }
-        else
-        {
-            FinalizarDialogo();
-        }
-    }
-
-    private void FinalizarDialogo()
-    {
-        enDialogo = false;
-        if (panelDialogo != null)
-            panelDialogo.SetActive(false);
-    }
-
     public void PenalizarJugador(GameObject jugador)
     {
         if (jugador == null) return;
+
         var salud = jugador.GetComponent<SaludJugador>();
         if (salud != null)
         {
