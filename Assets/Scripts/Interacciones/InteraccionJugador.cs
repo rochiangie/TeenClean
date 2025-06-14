@@ -416,7 +416,7 @@ public class InteraccionJugador : MonoBehaviour
             if (col.TryGetComponent(out ControladorEstados interactuable))
             {
                 objetoInteractuableCercano = interactuable;
-                Debug.Log("Asignando objeto interactuable");
+                //Debug.Log("Asignando objeto interactuable");
             }
 
             // Detectar madre

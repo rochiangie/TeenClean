@@ -79,27 +79,44 @@ public class TareasManager : MonoBehaviour
         {
             case "Ropa":
                 ropaContador++;
-                if (ropaContador >= tareasNecesarias) ropaCompletada = true;
-                if (RopaToggle != null) RopaToggle.isOn = true;
+                if (ropaContador >= tareasNecesarias && !ropaCompletada)
+                {
+                    ropaCompletada = true;
+                    if (RopaToggle != null) RopaToggle.isOn = true;
+                    Debug.Log("✅ Tarea de ropa completada");
+                }
                 break;
             case "Platos":
                 platosContador++;
-                if (platosContador >= tareasNecesarias) platosCompletados = true;
-                if (PlatosToggle != null) PlatosToggle.isOn = true;
+                if (platosContador >= tareasNecesarias && !platosCompletados)
+                {
+                    platosCompletados = true;
+                    if (PlatosToggle != null) PlatosToggle.isOn = true;
+                    Debug.Log("✅ Tarea de platos completada");
+                }
                 break;
             case "Tarea":
                 tareaContador++;
-                if (tareaContador >= tareasNecesarias) tareaCompletada = true;
-                if (TareaToggle != null) TareaToggle.isOn = true;
+                if (tareaContador >= tareasNecesarias && !tareaCompletada)
+                {
+                    tareaCompletada = true;
+                    if (TareaToggle != null) TareaToggle.isOn = true;
+                    Debug.Log("✅ Tarea de tareas completada");
+                }
                 break;
             case "Cama":
-                camaCompletada = true;
-                if (CamaToggle != null) CamaToggle.isOn = true;
+                if (!camaCompletada)
+                {
+                    camaCompletada = true;
+                    if (CamaToggle != null) CamaToggle.isOn = true;
+                    Debug.Log("✅ Cama hecha");
+                }
                 break;
         }
 
         VerificarVictoria();
     }
+
 
 
     private void VerificarVictoria()
