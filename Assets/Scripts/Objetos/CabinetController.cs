@@ -28,7 +28,7 @@ public class CabinetController : MonoBehaviour
     {
         if (estaLleno || objeto.tag != tagObjetoRequerido)
         {
-            Debug.Log($"❌ No se pudo guardar: {objeto.name} no coincide con el tag requerido ({tagObjetoRequerido}).");
+            //Debug.Log($"❌ No se pudo guardar: {objeto.name} no coincide con el tag requerido ({tagObjetoRequerido}).");
             return false;
         }
 
