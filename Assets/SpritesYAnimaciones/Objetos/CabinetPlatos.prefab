@@ -10,10 +10,11 @@ GameObject:
   m_Component:
   - component: {fileID: 8553793295571746092}
   - component: {fileID: 3967441397314044447}
-  - component: {fileID: 7859557252829479869}
-  m_Layer: 0
+  - component: {fileID: 1023322481888589772}
+  - component: {fileID: 4781822936484039209}
+  m_Layer: 3
   m_Name: CabinetPlatos
-  m_TagString: Untagged
+  m_TagString: Cabinete
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -65,7 +66,7 @@ BoxCollider2D:
     serializedVersion: 2
     m_Bits: 4294967295
   m_IsTrigger: 1
-  m_UsedByEffector: 1
+  m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0.18, y: -2.41}
   m_SpriteTilingProperty:
@@ -78,9 +79,9 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 15.7, y: 8.59}
+  m_Size: {x: 19.84, y: 12.3}
   m_EdgeRadius: 0
---- !u!114 &7859557252829479869
+--- !u!114 &1023322481888589772
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -89,14 +90,28 @@ MonoBehaviour:
   m_GameObject: {fileID: 3519262602946432501}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ea91f6dd23a1f1047879545aad17c05f, type: 3}
+  m_Script: {fileID: 11500000, guid: 9809bf1345abc5648af68b3a82653f08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_OverrideArea: 1
+  m_Area: 1
+  m_IgnoreFromBuild: 0
+  m_AffectedAgents: ffffffff
+--- !u!114 &4781822936484039209
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3519262602946432501}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63d9fdaf1bef96e41bb92c47593dde1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   estadoVacio: {fileID: 5478951491569222526}
   estadoLleno: {fileID: 4424221234056931357}
-  prefabPlatos: {fileID: 0}
-  teclaInteraccion: 101
-  tagObjetoRequerido: Platos
+  tagRequerido: PlatosLimpios
   sonidoGuardar: {fileID: 0}
 --- !u!1 &4424221234056931357
 GameObject:
@@ -125,7 +140,7 @@ Transform:
   m_GameObject: {fileID: 4424221234056931357}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.57, y: 0.08, z: -0.29494554}
+  m_LocalPosition: {x: 3.84, y: -0.05, z: -0.29494554}
   m_LocalScale: {x: 15, y: 15, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -255,7 +270,7 @@ Transform:
   m_GameObject: {fileID: 5478951491569222526}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.5, y: 0.5, z: -0.29494554}
+  m_LocalPosition: {x: 4, y: -0.2, z: -0.29494554}
   m_LocalScale: {x: 15, y: 15, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

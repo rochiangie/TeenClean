@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System.Collections.Generic;
 
 public class TareasManager : MonoBehaviour
 {
@@ -19,6 +20,9 @@ public class TareasManager : MonoBehaviour
     private int tareaContador = 0;
     private const int tareasNecesarias = 2;
 
+    private bool ropaCompletada = false;
+    private bool platosCompletados = false;
+    private bool tareaCompletada = false;
     private bool camaCompletada = false;
 
 
@@ -73,36 +77,39 @@ public class TareasManager : MonoBehaviour
     {
         switch (tarea)
         {
-            case "RopaLimpia":
+            case "Ropa":
                 ropaContador++;
-                Debug.Log($"👕 Ropa entregada: {ropaContador}/{tareasNecesarias}");
-                if (ropaContador >= tareasNecesarias)
+                if (ropaContador >= tareasNecesarias && !ropaCompletada)
                 {
+                    ropaCompletada = true;
                     if (RopaToggle != null) RopaToggle.isOn = true;
+                    Debug.Log("✅ Tarea de ropa completada");
                 }
                 break;
             case "Platos":
                 platosContador++;
-                Debug.Log($"🍽️ Platos entregados: {platosContador}/{tareasNecesarias}");
-                if (platosContador >= tareasNecesarias)
+                if (platosContador >= tareasNecesarias && !platosCompletados)
                 {
+                    platosCompletados = true;
                     if (PlatosToggle != null) PlatosToggle.isOn = true;
+                    Debug.Log("✅ Tarea de platos completada");
                 }
                 break;
             case "Tarea":
                 tareaContador++;
-                Debug.Log($"📚 Tareas entregadas: {tareaContador}/{tareasNecesarias}");
-                if (tareaContador >= tareasNecesarias)
+                if (tareaContador >= tareasNecesarias && !tareaCompletada)
                 {
+                    tareaCompletada = true;
                     if (TareaToggle != null) TareaToggle.isOn = true;
+                    Debug.Log("✅ Tarea de tareas completada");
                 }
                 break;
-
             case "Cama":
-                camaCompletada = true;
-                if (CamaToggle != null)
+                if (!camaCompletada)
                 {
-                    CamaToggle.isOn = true;
+                    camaCompletada = true;
+                    if (CamaToggle != null) CamaToggle.isOn = true;
+                    Debug.Log("✅ Cama hecha");
                 }
                 break;
         }
@@ -110,11 +117,11 @@ public class TareasManager : MonoBehaviour
         VerificarVictoria();
     }
 
+
+
     private void VerificarVictoria()
     {
-        if (ropaContador >= tareasNecesarias &&
-            platosContador >= tareasNecesarias &&
-            tareaContador >= tareasNecesarias)
+        if (ropaCompletada && platosCompletados && tareaCompletada && camaCompletada)
         {
             if (panelWin != null)
             {
@@ -124,6 +131,25 @@ public class TareasManager : MonoBehaviour
             }
         }
     }
+
+
+    private HashSet<GabineteRopa> gabinetesConRopa = new HashSet<GabineteRopa>();
+
+    public void RegistrarGabineteRopa(GabineteRopa gabinete)
+    {
+        if (!gabinetesConRopa.Contains(gabinete))
+        {
+            gabinetesConRopa.Add(gabinete);
+            Debug.Log($"👕 Gabinete registrado ({gabinetesConRopa.Count}/2)");
+
+            if (gabinetesConRopa.Count >= 2)
+            {
+                CompletarTarea("Ropa");
+                Debug.Log("✅ Tarea de ropa completada por llenar 2 gabinetes distintos");
+            }
+        }
+    }
+
 
     public void VolverAlMenu()
     {

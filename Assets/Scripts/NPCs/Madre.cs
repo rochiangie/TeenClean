@@ -68,7 +68,7 @@ public class Madre : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Player") && !enDialogo)
+        if (other.CompareTag("Player") /*&& !enDialogo*/)
         {
             Debug.Log("🚶‍♀️ Madre: jugador entró en el trigger");
 
@@ -78,7 +78,7 @@ public class Madre : MonoBehaviour
             GameObject panel = GameObject.Find("Panel-Mom");
             if (panel != null)
             {
-                Debug.Log("📢 Madre: panel encontrado y activado");
+                //Debug.Log("📢 Madre: panel encontrado y activado");
                 panel.SetActive(true);
 
                 DialogoInteractivo dialogo = panel.GetComponent<DialogoInteractivo>();

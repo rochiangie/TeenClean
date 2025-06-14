@@ -47,6 +47,10 @@ public class InteraccionJugador : MonoBehaviour
     public GameObject platosLimpiosPrefab;
     public GameObject prefabRopaSucia;
 
+    private GabineteRopa gabineteRopaCercano;
+    private GabinetePlatos gabinetePlatosNuevoCercano;
+    private GabineteTarea gabineteTareaCercano;
+
 
     public Transform puntoSpawnLimpios;
 
@@ -213,37 +217,75 @@ public class InteraccionJugador : MonoBehaviour
                 {
                     tareasManager.CompletarTarea("Cama");
                 }
+                if (Input.GetKeyDown(teclaInteraccion))
 
-                return;
+
+                    return;
             }
 
             // Gabinete para guardar/sacar
-            if (gabinetePlatosCercano != null)
+            if (Input.GetKeyDown(teclaInteraccion))
             {
-                if (!gabinetePlatosCercano.EstaLleno() && objetoTransportado != null &&
-                    objetoTransportado.CompareTag(gabinetePlatosCercano.TagObjetoRequerido))
+                if (Input.GetKeyDown(teclaInteraccion) && llevaObjeto)
                 {
-                    gabinetePlatosCercano.IntentarGuardar(objetoTransportado);
-                    objetoTransportado = null;
-                    llevaObjeto = false;
-
-                    if (tareasManager != null)
+                    // ROPA
+                    if (gabineteRopaCercano != null && objetoTransportado.CompareTag("RopaLimpia"))
                     {
-                        if (gabinetePlatosCercano.TagObjetoRequerido == "RopaLimpia")
-                            tareasManager.CompletarTarea("Ropa");
-                        else if (gabinetePlatosCercano.TagObjetoRequerido == "PlatosLimpios")
-                            tareasManager.CompletarTarea("Platos");
-                        else if (gabinetePlatosCercano.TagObjetoRequerido == "Tarea")
-                            tareasManager.CompletarTarea("Tarea");
+                        if (gabineteRopaCercano.IntentarGuardar(objetoTransportado))
+                        {
+                            objetoTransportado = null;
+                            llevaObjeto = false;
+                            return;
+                        }
                     }
-                    return;
+
+                    // PLATOS
+                    if (gabinetePlatosNuevoCercano != null && objetoTransportado.CompareTag("PlatosLimpios"))
+                    {
+                        if (gabinetePlatosNuevoCercano.IntentarGuardar(objetoTransportado))
+                        {
+                            objetoTransportado = null;
+                            llevaObjeto = false;
+                            return;
+                        }
+                    }
+
+                    // TAREA
+                    if (gabineteTareaCercano != null && objetoTransportado.CompareTag("Tarea"))
+                    {
+                        if (gabineteTareaCercano.IntentarGuardar(objetoTransportado))
+                        {
+                            objetoTransportado = null;
+                            llevaObjeto = false;
+                            return;
+                        }
+                    }
                 }
-                else if (gabinetePlatosCercano.EstaLleno() && !llevaObjeto)
+
+               /* if (!llevaObjeto)
                 {
-                    gabinetePlatosCercano.SacarObjeto(puntoDeCarga, this);
-                    return;
-                }
+                    if (gabineteRopaCercano != null && gabineteRopaCercano.EstaLleno())
+                    {
+                        gabineteRopaCercano.SacarObjeto(puntoDeCarga, this);
+                        llevaObjeto = true;
+                        return;
+                    }
+                    else if (gabinetePlatosNuevoCercano != null && gabinetePlatosNuevoCercano.EstaLleno())
+                    {
+                        gabinetePlatosNuevoCercano.SacarObjeto(puntoDeCarga, this);
+                        llevaObjeto = true;
+                        return;
+                    }
+                    else if (gabineteTareaCercano != null && gabineteTareaCercano.EstaLleno())
+                    {
+                        gabineteTareaCercano.SacarObjeto(puntoDeCarga, this);
+                        llevaObjeto = true;
+                        return;
+                    }
+                }*/
+
             }
+
 
             // Recoger objeto
             if (objetoRecogibleCercano != null && !llevaObjeto)
@@ -288,6 +330,45 @@ public class InteraccionJugador : MonoBehaviour
                     tareasManager.CompletarTarea("Platos");
                 }
             }
+            if (Input.GetKeyDown(teclaInteraccion))
+            {
+                if (gabineteRopaCercano != null && llevaObjeto && objetoTransportado.CompareTag("RopaLimpia"))
+                {
+                    if (gabineteRopaCercano.IntentarGuardar(objetoTransportado))
+                    {
+                        objetoTransportado = null;
+                        llevaObjeto = false;
+                    }
+                    return;
+                }
+            }
+            if (Input.GetKeyDown(teclaInteraccion))
+            {
+                if (gabinetePlatosCercano != null && llevaObjeto && objetoTransportado.CompareTag("RopaLimpia"))
+                {
+                    if (gabinetePlatosCercano.IntentarGuardar(objetoTransportado))
+                    {
+                        objetoTransportado = null;
+                        llevaObjeto = false;
+                    }
+                    return;
+                }
+            }
+            if (Input.GetKeyDown(teclaInteraccion))
+            {
+                if (gabineteTareaCercano != null && llevaObjeto && objetoTransportado.CompareTag("RopaLimpia"))
+                {
+                    if (gabineteTareaCercano.IntentarGuardar(objetoTransportado))
+                    {
+                        objetoTransportado = null;
+                        llevaObjeto = false;
+                    }
+                    return;
+                }
+            }
+
+
+
         }
 
         ActualizarUI();
@@ -309,6 +390,9 @@ public class InteraccionJugador : MonoBehaviour
     {
         objetoInteractuableCercano = null;
         gabinetePlatosCercano = null;
+        gabineteRopaCercano = null;
+        gabineteTareaCercano = null;
+        gabinetePlatosNuevoCercano = null;
         objetoCercanoRecogible = null;
         sillaCercana = null;
 
@@ -318,24 +402,37 @@ public class InteraccionJugador : MonoBehaviour
 
         foreach (var col in objetos)
         {
-            //Debug.Log("🔍 Detectado: " + col.name + " | Tag: " + col.tag);
+            // Detectar gabinetes nuevos
+            if (col.TryGetComponent(out GabineteRopa gRopa))
+                gabineteRopaCercano = gRopa;
 
+            if (col.TryGetComponent(out GabinetePlatos gPlatos))
+                gabinetePlatosNuevoCercano = gPlatos;
+
+            if (col.TryGetComponent(out GabineteTarea gTarea))
+                gabineteTareaCercano = gTarea;
+
+            // Detectar objeto interactuable (ej. inodoro, cama, etc.)
             if (col.TryGetComponent(out ControladorEstados interactuable))
             {
                 objetoInteractuableCercano = interactuable;
-                Debug.Log("Asignando objeto interactiable");
+                //Debug.Log("Asignando objeto interactuable");
             }
-            if (col.CompareTag("Madre") && objetoInteractuableCercano == null)
+
+            // Detectar madre
+            if (col.CompareTag("Madre"))
             {
-                objetoInteractuableCercano = col.GetComponent<ControladorEstados>(); // Solo para mostrar el UI
-                madreCercana = col.GetComponent<Madre>(); // Para tener acceso real a la lógica
+                if (objetoInteractuableCercano == null)
+                    objetoInteractuableCercano = col.GetComponent<ControladorEstados>();
+
+                madreCercana = col.GetComponent<Madre>();
             }
 
-
-
+            // Gabinete viejo (por compatibilidad si lo estás usando aún)
             if (col.TryGetComponent(out CabinetController gabinete))
                 gabinetePlatosCercano = gabinete;
 
+            // Detectar objetos recogibles
             if (EsRecogible(col.tag) && !llevaObjeto)
             {
                 float distancia = Vector2.Distance(transform.position, col.transform.position);
@@ -343,24 +440,15 @@ public class InteraccionJugador : MonoBehaviour
                 {
                     objetoCercanoRecogible = col.gameObject;
                     distanciaMinima = distancia;
-
-                    //Debug.Log("🧺 Ropa asignada como objeto cercano recogible: " + col.name);
                 }
             }
 
-
+            // Detectar silla
             if (col.TryGetComponent(out InteraccionSilla silla))
                 sillaCercana = silla;
-
-            if (col.CompareTag("Madre"))
-            {
-                objetoInteractuableCercano = col.GetComponent<ControladorEstados>(); // para que aparezca el mensaje
-            }
-
         }
-
-
     }
+
 
 
     void ActualizarUI()
@@ -454,6 +542,7 @@ public class InteraccionJugador : MonoBehaviour
         }
         return false;
     }
+
 
     public void RecogerObjeto(GameObject objeto)
     {
