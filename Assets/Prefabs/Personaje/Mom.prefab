@@ -351,16 +351,22 @@ MonoBehaviour:
   - {fileID: 4914616329344252233, guid: 8ea2e349adf530a418a5523a1c440bfa, type: 3}
   - {fileID: 1911747549745493623, guid: 1fefbcfd66f2b1240bab7cc9c1de6cc1, type: 3}
   - {fileID: 6378346265162783328, guid: 4a1f47a7cf0c7ac4c888660096b2104c, type: 3}
-  panelDialogo: {fileID: 6683576631073101152, guid: 197c974a1d2bfd3459ec06168971896a, type: 3}
-  textoDialogo: {fileID: 5168811512538484088, guid: 4b4895fe374022d468444a361dc00e0f, type: 3}
-  dialogos:
-  - "Hola hija! Espero est\xE9s bien Hiciste tus tasks de hoy?"
-  - Tienes que lavar la ropa y los platos para luego guardarlso en su lugar, has
-    la tarea y guardala. Termina hacindo la cama
-  - Mas detalles de lo que tiene que hacer / poner un chiste
-  - Test
+  panelDialogoPrincipal: {fileID: 6683576631073101152, guid: 197c974a1d2bfd3459ec06168971896a, type: 3}
+  textoDialogoPrincipal: {fileID: 5168811512538484088, guid: 4b4895fe374022d468444a361dc00e0f, type: 3}
+  panelDialogoRespuestaSi: {fileID: 8133887271115258626, guid: 37b3104a538dd3545b77a837fc2cbea0, type: 3}
+  textoDialogoRespuestaSi: {fileID: 6655150151872419224, guid: cdfc2ed45eb7452439568a229157d886, type: 3}
+  panelDialogoRespuestaNo: {fileID: 5423670501905999197, guid: 4c337f8506c492d4a8e9b47a70b38c75, type: 3}
+  textoDialogoRespuestaNo: {fileID: 3819256930584212909, guid: 08b1b09ad5210ff4aa9e767d47423cd1, type: 3}
+  dialogosNormales: []
+  dialogoMolesto: 
+  dialogoPreguntaTareas: 
+  dialogoVerdadTareas: 
+  dialogoMentiraTareas: 
+  maxInteraccionesNormales: 3
+  danoPorMentir: 20
   danoAlFallar: 10
   rango: 7
+  panelDialogoPadre: {fileID: 4563488223138204324, guid: 14b9ce39cfb93db4585c4aba668a016f, type: 3}
 --- !u!195 &8924705947090756789
 NavMeshAgent:
   m_ObjectHideFlags: 0

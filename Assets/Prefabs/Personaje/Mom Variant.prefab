@@ -81,9 +81,21 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 5168811512538484088, guid: 4b4895fe374022d468444a361dc00e0f, type: 3}
     - target: {fileID: 4548497680473467120, guid: c52ae203d4d695e4292ddfe50409a0af, type: 3}
+      propertyPath: panelDialogoPadre
+      value: 
+      objectReference: {fileID: 4563488223138204324, guid: 14b9ce39cfb93db4585c4aba668a016f, type: 3}
+    - target: {fileID: 4548497680473467120, guid: c52ae203d4d695e4292ddfe50409a0af, type: 3}
       propertyPath: dialogos.Array.size
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 4548497680473467120, guid: c52ae203d4d695e4292ddfe50409a0af, type: 3}
+      propertyPath: panelDialogoPrincipal
+      value: 
+      objectReference: {fileID: 6683576631073101152, guid: 197c974a1d2bfd3459ec06168971896a, type: 3}
+    - target: {fileID: 4548497680473467120, guid: c52ae203d4d695e4292ddfe50409a0af, type: 3}
+      propertyPath: textoDialogoPrincipal
+      value: 
+      objectReference: {fileID: 5168811512538484088, guid: 4b4895fe374022d468444a361dc00e0f, type: 3}
     - target: {fileID: 4548497680473467120, guid: c52ae203d4d695e4292ddfe50409a0af, type: 3}
       propertyPath: dialogos.Array.data[0]
       value: "Hola hija! Espero est\xE9s bien Hiciste tus tasks de hoy?"
@@ -97,6 +109,14 @@ PrefabInstance:
       propertyPath: dialogos.Array.data[2]
       value: Mas detalles de lo que tiene que hacer / poner un chiste
       objectReference: {fileID: 0}
+    - target: {fileID: 4548497680473467120, guid: c52ae203d4d695e4292ddfe50409a0af, type: 3}
+      propertyPath: panelDialogoRespuestaSi
+      value: 
+      objectReference: {fileID: 8133887271115258626, guid: 37b3104a538dd3545b77a837fc2cbea0, type: 3}
+    - target: {fileID: 4548497680473467120, guid: c52ae203d4d695e4292ddfe50409a0af, type: 3}
+      propertyPath: textoDialogoRespuestaSi
+      value: 
+      objectReference: {fileID: 5152556105877657856, guid: 3a20aaa3b1df205499b9f8a6abc848bf, type: 3}
     - target: {fileID: 5884503025035175198, guid: c52ae203d4d695e4292ddfe50409a0af, type: 3}
       propertyPath: m_SortingOrder
       value: 1

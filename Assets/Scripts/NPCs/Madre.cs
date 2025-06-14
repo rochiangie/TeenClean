@@ -12,16 +12,14 @@ public class Madre : MonoBehaviour
     private int indiceRuta = 0;
 
     [Header("Dialogo")]
-    [SerializeField] private GameObject panelDialogoPrincipal; // Panel principal para la mayoría de los diálogos (antes 'panelDialogo')
-    [SerializeField] private TextMeshProUGUI textoDialogoPrincipal; // Texto principal para la mayoría de los diálogos (antes 'textoDialogo')
+    [SerializeField] private GameObject panelDialogoPrincipal;
+    [SerializeField] private TextMeshProUGUI textoDialogoPrincipal;
 
-    // --- NUEVOS CAMPOS PARA DIÁLOGOS ESPECÍFICOS DE RESPUESTA DE TAREAS ---
-    [SerializeField] private GameObject panelDialogoRespuestaSi;   // Panel para cuando el jugador dice SÍ
+    [SerializeField] private GameObject panelDialogoRespuestaSi;
     [SerializeField] private TextMeshProUGUI textoDialogoRespuestaSi;
 
-    [SerializeField] private GameObject panelDialogoRespuestaNo;    // Panel para cuando el jugador dice NO
+    [SerializeField] private GameObject panelDialogoRespuestaNo;
     [SerializeField] private TextMeshProUGUI textoDialogoRespuestaNo;
-    // ---------------------------------------------------------------------
 
     [SerializeField] private string[] dialogosNormales;
     [SerializeField] private string dialogoMolesto;
@@ -43,7 +41,7 @@ public class Madre : MonoBehaviour
     private bool esperandoRespuestaTareas = false;
 
     [Header("UI Control")]
-    [SerializeField] private GameObject panelDialogoPadre; // Padre que contiene todos los paneles de diálogo
+    [SerializeField] private GameObject panelDialogoPadre;
 
     void Start()
     {
@@ -56,11 +54,22 @@ public class Madre : MonoBehaviour
             agente.updateUpAxis = false;
         }
 
-        // Asegúrate de que todos los paneles estén inicialmente desactivados
+        // --- LOGS DE DEPURACIÓN EN START (Muestra si están asignados o son null) ---
+        Debug.Log($"[Madre START] panelDialogoPadre ASIGNADO: {(panelDialogoPadre != null ? panelDialogoPadre.name : "NULL")}");
+        Debug.Log($"[Madre START] panelDialogoPrincipal ASIGNADO: {(panelDialogoPrincipal != null ? panelDialogoPrincipal.name : "NULL")}");
+        Debug.Log($"[Madre START] textoDialogoPrincipal ASIGNADO: {(textoDialogoPrincipal != null ? textoDialogoPrincipal.name : "NULL")}");
+        Debug.Log($"[Madre START] panelDialogoRespuestaSi ASIGNADO: {(panelDialogoRespuestaSi != null ? panelDialogoRespuestaSi.name : "NULL")}");
+        Debug.Log($"[Madre START] textoDialogoRespuestaSi ASIGNADO: {(textoDialogoRespuestaSi != null ? textoDialogoRespuestaSi.name : "NULL")}");
+        Debug.Log($"[Madre START] panelDialogoRespuestaNo ASIGNADO: {(panelDialogoRespuestaNo != null ? panelDialogoRespuestaNo.name : "NULL")}");
+        Debug.Log($"[Madre START] textoDialogoRespuestaNo ASIGNADO: {(textoDialogoRespuestaNo != null ? textoDialogoRespuestaNo.name : "NULL")}");
+        // --- FIN LOGS DE DEPURACIÓN EN START ---
+
+        // Asegúrate de que todos los paneles estén inicialmente desactivados al iniciar el juego
         if (panelDialogoPrincipal != null) panelDialogoPrincipal.SetActive(false);
         if (panelDialogoRespuestaSi != null) panelDialogoRespuestaSi.SetActive(false);
         if (panelDialogoRespuestaNo != null) panelDialogoRespuestaNo.SetActive(false);
 
+        // Desactiva también el padre de los paneles si está asignado
         if (panelDialogoPadre != null)
             panelDialogoPadre.SetActive(false);
 
@@ -72,8 +81,7 @@ public class Madre : MonoBehaviour
         }
 
 
-        // ** ADVERTENCIAS para que asignes en el Inspector **
-        // Se han actualizado los nombres de las referencias para las advertencias
+        // ** ADVERTENCIAS para que asignes en el Inspector ** (Estas se mantienen para recordatorio)
         if (panelDialogoPrincipal == null) Debug.LogWarning("⚠️ Madre: 'panelDialogoPrincipal' no está asignado en el Inspector.");
         if (textoDialogoPrincipal == null) Debug.LogWarning("⚠️ Madre: 'textoDialogoPrincipal' no está asignado en el Inspector.");
         if (panelDialogoRespuestaSi == null) Debug.LogWarning("⚠️ Madre: 'panelDialogoRespuestaSi' no está asignado en el Inspector.");
@@ -127,13 +135,11 @@ public class Madre : MonoBehaviour
             {
                 Debug.Log("➡️ Jugador responde: ¡Sí, las tareas están hechas!");
                 EvaluarRespuestaTareas(true);
-                // No resetear esperandoRespuestaTareas aquí, lo hace EvaluarRespuestaTareas
             }
             else if (Input.GetKeyDown(KeyCode.N))
             {
                 Debug.Log("➡️ Jugador responde: No, aún no he hecho las tareas.");
                 EvaluarRespuestaTareas(false);
-                // No resetear esperandoRespuestaTareas aquí, lo hace EvaluarRespuestaTareas
             }
         }
     }
@@ -164,31 +170,39 @@ public class Madre : MonoBehaviour
         TextMeshProUGUI textoAMostrarEn = null;
         GameObject panelAMostrar = null;
 
-        // Activa el padre del panelDialogo si está asignado
+        // --- LOGS DE DEPURACIÓN ANTES DE ACTIVAR ---
+        Debug.Log($"[Madre INICIAR_DIALOGO] Padre ANTES: {(panelDialogoPadre != null ? panelDialogoPadre.name : "NULL")}, ActiveSelf: {(panelDialogoPadre != null ? panelDialogoPadre.activeSelf.ToString() : "N/A")}, ActiveInHierarchy: {(panelDialogoPadre != null ? panelDialogoPadre.activeInHierarchy.ToString() : "N/A")}");
+        Debug.Log($"[Madre INICIAR_DIALOGO] Principal ANTES: {(panelDialogoPrincipal != null ? panelDialogoPrincipal.name : "NULL")}, ActiveSelf: {(panelDialogoPrincipal != null ? panelDialogoPrincipal.activeSelf.ToString() : "N/A")}, ActiveInHierarchy: {(panelDialogoPrincipal != null ? panelDialogoPrincipal.activeInHierarchy.ToString() : "N/A")}");
+        // --- FIN LOGS DE DEPURACIÓN ANTES DE ACTIVAR ---
+
+
+        // Primero, activa el GameObject padre que contiene todos los paneles de diálogo.
         if (panelDialogoPadre != null)
         {
             panelDialogoPadre.SetActive(true);
-            Debug.Log($"✅ Madre: Activando panelDialogoPadre: {panelDialogoPadre.name}");
+            Debug.Log($"✅ Madre: Activando panelDialogoPadre: {panelDialogoPadre.name}. ActiveSelf DESPUES: {panelDialogoPadre.activeSelf}, ActiveInHierarchy DESPUES: {panelDialogoPadre.activeInHierarchy}");
+        }
+        else
+        {
+            Debug.LogWarning("❌ Madre: 'panelDialogoPadre' es NULL. No se puede activar.");
         }
 
 
         if (interaccionesConJugador == 0 || interaccionesConJugador >= maxInteraccionesNormales)
         {
-            // --- Pregunta de tareas ---
             dialogoAMostrar = dialogoPreguntaTareas;
-            panelAMostrar = panelDialogoPrincipal; // Usamos el panel principal para la pregunta
+            panelAMostrar = panelDialogoPrincipal;
             textoAMostrarEn = textoDialogoPrincipal;
             esperandoRespuestaTareas = true;
             Debug.Log("❓ Madre: Preguntando por las tareas.");
         }
         else
         {
-            // --- Diálogos normales ---
             if (dialogosNormales != null && dialogosNormales.Length > 0)
             {
                 dialogoAMostrar = dialogosNormales[interaccionesConJugador % dialogosNormales.Length];
                 interaccionesConJugador++;
-                panelAMostrar = panelDialogoPrincipal; // Usamos el panel principal para diálogos normales
+                panelAMostrar = panelDialogoPrincipal;
                 textoAMostrarEn = textoDialogoPrincipal;
                 Debug.Log($"🗨️ Madre: Mostrando diálogo normal. Interacciones: {interaccionesConJugador}");
             }
@@ -199,19 +213,18 @@ public class Madre : MonoBehaviour
                 textoAMostrarEn = textoDialogoPrincipal;
                 Debug.LogWarning("⚠️ Madre: No hay diálogos normales en el Inspector. Mostrando mensaje por defecto.");
             }
-            StartCoroutine(EsperarYReanudar()); // Para diálogos normales, la madre no espera respuesta explícita
+            StartCoroutine(EsperarYReanudar());
         }
 
 
         // MOSTRAR EL DIÁLOGO SELECCIONADO
         if (panelAMostrar != null)
         {
-            // Desactivar otros paneles de respuesta para asegurar que solo uno esté activo
             if (panelDialogoRespuestaSi != null) panelDialogoRespuestaSi.SetActive(false);
             if (panelDialogoRespuestaNo != null) panelDialogoRespuestaNo.SetActive(false);
 
             panelAMostrar.SetActive(true);
-            Debug.Log($"✅ Madre: Activando panel de diálogo: {panelAMostrar.name}. Ahora debería ser visible.");
+            Debug.Log($"✅ Madre: Activando panel de diálogo: {panelAMostrar.name}. ActiveSelf DESPUES: {panelAMostrar.activeSelf}, ActiveInHierarchy DESPUES: {panelAMostrar.activeInHierarchy}");
             if (textoAMostrarEn != null)
             {
                 textoAMostrarEn.text = dialogoAMostrar;
@@ -239,56 +252,51 @@ public class Madre : MonoBehaviour
 
         bool todasLasTareasHechas = TareasManager.Instance != null && TareasManager.Instance.TodasLasTareasCompletadasParaMadre();
 
-        if (jugadorDiceSi) // El jugador afirma haber hecho las tareas
+        if (jugadorDiceSi)
         {
             if (todasLasTareasHechas)
             {
                 dialogoFinal = dialogoVerdadTareas;
-                panelAMostrar = panelDialogoRespuestaSi; // Usar panel de SI
+                panelAMostrar = panelDialogoRespuestaSi;
                 textoAMostrarEn = textoDialogoRespuestaSi;
                 Debug.Log("😊 Madre: Jugador dijo la verdad. ¡Bien hecho!");
             }
             else
             {
-                // El jugador miente: las tareas NO están completadas, pero el jugador dice que SÍ.
                 dialogoFinal = dialogoMentiraTareas;
-                panelAMostrar = panelDialogoRespuestaNo; // Usar panel de NO para la mentira
+                panelAMostrar = panelDialogoRespuestaNo;
                 textoAMostrarEn = textoDialogoRespuestaNo;
                 Debug.Log("😡 Madre: ¡Jugador mintió sobre las tareas!");
-                PenalizarJugador(jugador.gameObject, danoPorMentir); // Penalización por mentir
+                PenalizarJugador(jugador.gameObject, danoPorMentir);
             }
         }
-        else // El jugador admite no haber hecho las tareas
+        else
         {
             if (todasLasTareasHechas)
             {
-                // Jugador dice 'no' pero sí hizo las tareas (caso extraño pero posible)
                 dialogoFinal = "Pero... ¿por qué dices que no si ya las hiciste? ¡Qué raro eres!";
-                panelAMostrar = panelDialogoRespuestaNo; // Podrías usar este o uno específico para "verdad-raro"
+                panelAMostrar = panelDialogoRespuestaNo;
                 textoAMostrarEn = textoDialogoRespuestaNo;
                 Debug.Log("🤔 Madre: Jugador dijo 'no' pero las tareas están hechas.");
             }
             else
             {
-                // Jugador dice la verdad: las tareas NO están completadas y lo admite.
                 dialogoFinal = "Bueno, al menos eres honesto. ¡Ve a hacerlas ahora mismo!";
-                panelAMostrar = panelDialogoRespuestaNo; // Usar panel de NO
+                panelAMostrar = panelDialogoRespuestaNo;
                 textoAMostrarEn = textoDialogoRespuestaNo;
                 Debug.Log("😐 Madre: Jugador dijo la verdad, las tareas no están hechas.");
-                PenalizarJugador(jugador.gameObject, danoAlFallar); // Penalización por no haberlas hecho y admitirlo
+                PenalizarJugador(jugador.gameObject, danoAlFallar);
             }
         }
 
-        // MOSTRAR EL DIÁLOGO DE RESPUESTA
         if (panelAMostrar != null)
         {
-            // Desactivar el panel principal y el de la otra respuesta
             if (panelDialogoPrincipal != null) panelDialogoPrincipal.SetActive(false);
             if (panelDialogoRespuestaSi != null && panelAMostrar != panelDialogoRespuestaSi) panelDialogoRespuestaSi.SetActive(false);
             if (panelDialogoRespuestaNo != null && panelAMostrar != panelDialogoRespuestaNo) panelDialogoRespuestaNo.SetActive(false);
 
             panelAMostrar.SetActive(true);
-            Debug.Log($"✅ Madre: Activando panel de respuesta: {panelAMostrar.name}");
+            Debug.Log($"✅ Madre: Activando panel de respuesta: {panelAMostrar.name}. ActiveSelf DESPUES: {panelAMostrar.activeSelf}, ActiveInHierarchy DESPUES: {panelAMostrar.activeInHierarchy}");
             if (textoAMostrarEn != null)
             {
                 textoAMostrarEn.text = dialogoFinal;
@@ -312,8 +320,13 @@ public class Madre : MonoBehaviour
         Debug.Log("⏳ Madre: EsperarYReanudar iniciado.");
         yield return new WaitForSeconds(3.0f);
 
-        // Ya no verificamos esperandoRespuestaTareas aquí, el StartCoroutine se encarga
-        // de reanudar el flujo general de la Madre después de un diálogo.
+        if (!esperandoRespuestaTareas)
+        {
+            while (jugador != null && Vector2.Distance(jugador.position, transform.position) <= rango)
+            {
+                yield return null;
+            }
+        }
 
         Debug.Log("👋 Madre: Jugador se alejó o diálogo terminó.");
         FinalizarDialogo();
@@ -330,18 +343,16 @@ public class Madre : MonoBehaviour
     {
         Debug.Log("🔚 Madre: Finaliza diálogo.");
         enDialogo = false;
-        esperandoRespuestaTareas = false; // Resetear este estado aquí al final del diálogo.
+        esperandoRespuestaTareas = false;
 
-        // Desactiva todos los paneles de diálogo
         if (panelDialogoPrincipal != null) panelDialogoPrincipal.SetActive(false);
         if (panelDialogoRespuestaSi != null) panelDialogoRespuestaSi.SetActive(false);
         if (panelDialogoRespuestaNo != null) panelDialogoRespuestaNo.SetActive(false);
 
-        // Desactiva el padre de los paneles de diálogo si está asignado
         if (panelDialogoPadre != null)
         {
             panelDialogoPadre.SetActive(false);
-            Debug.Log($"✅ Madre: Desactivando panelDialogoPadre: {panelDialogoPadre.name}");
+            Debug.Log($"✅ Madre: Desactivando panelDialogoPadre: {panelDialogoPadre.name}. ActiveSelf DESPUES: {panelDialogoPadre.activeSelf}, ActiveInHierarchy DESPUES: {panelDialogoPadre.activeInHierarchy}");
         }
     }
 
