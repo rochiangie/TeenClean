@@ -543,6 +543,7 @@ public class InteraccionJugador : MonoBehaviour
         return false;
     }
 
+
     public void RecogerObjeto(GameObject objeto)
     {
         if (llevaObjeto || objeto == null) return;
