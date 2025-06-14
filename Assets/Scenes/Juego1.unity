@@ -3092,7 +3092,7 @@ Transform:
   m_GameObject: {fileID: 357489272}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 25, y: -70.2, z: -0.6859235}
+  m_LocalPosition: {x: 53.8, y: 48.8, z: -0.6859235}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -12336,95 +12336,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1605886367420149064, guid: 463a40e980ee5f743b4e0c5ee3fdb343, type: 3}
   m_PrefabInstance: {fileID: 325392689083140251}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &1170136481
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 928359879860350727, guid: c52ae203d4d695e4292ddfe50409a0af, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -10.9
-      objectReference: {fileID: 0}
-    - target: {fileID: 928359879860350727, guid: c52ae203d4d695e4292ddfe50409a0af, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -79.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 928359879860350727, guid: c52ae203d4d695e4292ddfe50409a0af, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 928359879860350727, guid: c52ae203d4d695e4292ddfe50409a0af, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 928359879860350727, guid: c52ae203d4d695e4292ddfe50409a0af, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 928359879860350727, guid: c52ae203d4d695e4292ddfe50409a0af, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 928359879860350727, guid: c52ae203d4d695e4292ddfe50409a0af, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 928359879860350727, guid: c52ae203d4d695e4292ddfe50409a0af, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 928359879860350727, guid: c52ae203d4d695e4292ddfe50409a0af, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 928359879860350727, guid: c52ae203d4d695e4292ddfe50409a0af, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1724530510200036034, guid: c52ae203d4d695e4292ddfe50409a0af, type: 3}
-      propertyPath: m_BodyType
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4548497680473467120, guid: c52ae203d4d695e4292ddfe50409a0af, type: 3}
-      propertyPath: panelDialogo
-      value: 
-      objectReference: {fileID: 505317794}
-    - target: {fileID: 4548497680473467120, guid: c52ae203d4d695e4292ddfe50409a0af, type: 3}
-      propertyPath: textoDialogo
-      value: 
-      objectReference: {fileID: 1067310554}
-    - target: {fileID: 4548497680473467120, guid: c52ae203d4d695e4292ddfe50409a0af, type: 3}
-      propertyPath: puntosRuta.Array.data[0]
-      value: 
-      objectReference: {fileID: 5972095373736573986, guid: 9920962caf8c0a546ae23d1f93dc267f, type: 3}
-    - target: {fileID: 4548497680473467120, guid: c52ae203d4d695e4292ddfe50409a0af, type: 3}
-      propertyPath: puntosRuta.Array.data[1]
-      value: 
-      objectReference: {fileID: 9191147184284157796, guid: e488cc3b336bdc444b27712ca8d12611, type: 3}
-    - target: {fileID: 4548497680473467120, guid: c52ae203d4d695e4292ddfe50409a0af, type: 3}
-      propertyPath: puntosRuta.Array.data[2]
-      value: 
-      objectReference: {fileID: 4914616329344252233, guid: 8ea2e349adf530a418a5523a1c440bfa, type: 3}
-    - target: {fileID: 4548497680473467120, guid: c52ae203d4d695e4292ddfe50409a0af, type: 3}
-      propertyPath: puntosRuta.Array.data[3]
-      value: 
-      objectReference: {fileID: 1911747549745493623, guid: 1fefbcfd66f2b1240bab7cc9c1de6cc1, type: 3}
-    - target: {fileID: 4548497680473467120, guid: c52ae203d4d695e4292ddfe50409a0af, type: 3}
-      propertyPath: puntosRuta.Array.data[4]
-      value: 
-      objectReference: {fileID: 6378346265162783328, guid: 4a1f47a7cf0c7ac4c888660096b2104c, type: 3}
-    - target: {fileID: 7006979756728810386, guid: c52ae203d4d695e4292ddfe50409a0af, type: 3}
-      propertyPath: m_Name
-      value: Mom (1)
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: c52ae203d4d695e4292ddfe50409a0af, type: 3}
 --- !u!1 &1193191326 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8988786418309249223, guid: ed52dcb83f03ca0419d0e2cbb4f5b908, type: 3}
@@ -22173,4 +22084,3 @@ SceneRoots:
   - {fileID: 6224536847751206364}
   - {fileID: 3024843601901858453}
   - {fileID: 8736167418408789778}
-  - {fileID: 1170136481}
