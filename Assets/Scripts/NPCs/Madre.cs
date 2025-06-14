@@ -66,28 +66,49 @@ public class Madre : MonoBehaviour
         }
     }
 
-
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && !enDialogo)
         {
-            jugador = other.transform;
+            Debug.Log("🚶‍♀️ Madre: jugador entró en el trigger");
 
-            if (!enDialogo)
+            jugador = other.transform;
+            StartCoroutine(EsperarYReanudar()); // usamos la lógica completa
+
+            GameObject panel = GameObject.Find("Panel-Mom");
+            if (panel != null)
             {
-                StartCoroutine(EsperarYReanudar());
+                Debug.Log("📢 Madre: panel encontrado y activado");
+                panel.SetActive(true);
+
+                DialogoInteractivo dialogo = panel.GetComponent<DialogoInteractivo>();
+                if (dialogo != null)
+                {
+                    Debug.Log("🗨️ Madre: se llama MostrarDialogo1()");
+                    dialogo.MostrarDialogo1();
+                }
+                else
+                {
+                    Debug.LogWarning("⚠️ Madre: No se encontró componente DialogoInteractivo");
+                }
+            }
+            else
+            {
+                Debug.LogWarning("❌ Madre: No se encontró el panel con nombre Panel-Mom");
             }
         }
     }
 
     private IEnumerator EsperarYReanudar()
     {
+        Debug.Log("⏳ Madre: EsperarYReanudar iniciado");
         enDialogo = true;
 
         if (agente != null)
         {
             agente.isStopped = true;
             agente.velocity = Vector3.zero;
+            Debug.Log("🛑 Madre: agente detenido");
         }
 
         if (panelDialogo != null)
@@ -100,14 +121,18 @@ public class Madre : MonoBehaviour
         {
             yield return new WaitForSeconds(10.5f);
 
-            if (jugador == null) break;
+            if (jugador == null)
+            {
+                Debug.Log("❌ Madre: jugador null, abortando espera");
+                break;
+            }
 
             float distancia = Vector2.Distance(jugador.position, transform.position);
             Debug.Log($"📏 Distancia actual: {distancia}");
 
             if (distancia > rango)
             {
-                Debug.Log("👋 Jugador se alejó. Reanudando movimiento.");
+                Debug.Log("👋 Madre: jugador se alejó, reanudando movimiento");
                 break;
             }
         }
@@ -117,6 +142,7 @@ public class Madre : MonoBehaviour
         if (agente != null)
         {
             agente.isStopped = false;
+            Debug.Log("🏃‍♀️ Madre: retoma movimiento");
             IrAlSiguientePunto();
         }
     }
@@ -124,12 +150,19 @@ public class Madre : MonoBehaviour
     public void IniciarInteraccionConJugador()
     {
         if (!enDialogo)
+        {
+            Debug.Log("📞 Madre: IniciarInteraccionConJugador llamado");
             StartCoroutine(EsperarYReanudar());
+        }
+        else
+        {
+            Debug.Log("⚠️ Madre: interacción ignorada, ya en diálogo");
+        }
     }
-
 
     private void FinalizarDialogo()
     {
+        Debug.Log("🔚 Madre: finaliza diálogo");
         enDialogo = false;
 
         if (panelDialogo != null)
@@ -141,6 +174,7 @@ public class Madre : MonoBehaviour
         if (puntosRuta == null || puntosRuta.Length == 0) return;
 
         agente.SetDestination(puntosRuta[indiceRuta].position);
+        Debug.Log($"📍 Madre: moviéndose a punto {indiceRuta}");
         indiceRuta = (indiceRuta + 1) % puntosRuta.Length;
     }
 
@@ -153,5 +187,17 @@ public class Madre : MonoBehaviour
         {
             salud.RecibirDaño(danoAlFallar);
         }
+    }
+
+    public void ReanudarMovimiento()
+    {
+        Debug.Log("🟢 Madre: ReanudarMovimiento manual");
+        if (agente != null)
+        {
+            agente.isStopped = false;
+            IrAlSiguientePunto();
+        }
+
+        enDialogo = false;
     }
 }

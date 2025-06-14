@@ -18,11 +18,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 928359879860350727, guid: c52ae203d4d695e4292ddfe50409a0af, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -31.1716
+      value: -64.9
       objectReference: {fileID: 0}
     - target: {fileID: 928359879860350727, guid: c52ae203d4d695e4292ddfe50409a0af, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 13.0479
+      value: -80.4
       objectReference: {fileID: 0}
     - target: {fileID: 928359879860350727, guid: c52ae203d4d695e4292ddfe50409a0af, type: 3}
       propertyPath: m_LocalPosition.z
@@ -57,8 +57,45 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1724530510200036034, guid: c52ae203d4d695e4292ddfe50409a0af, type: 3}
+      propertyPath: m_BodyType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1724530510200036034, guid: c52ae203d4d695e4292ddfe50409a0af, type: 3}
       propertyPath: m_GravityScale
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4017444187599425579, guid: c52ae203d4d695e4292ddfe50409a0af, type: 3}
+      propertyPath: m_Size.x
+      value: 15.89
+      objectReference: {fileID: 0}
+    - target: {fileID: 4017444187599425579, guid: c52ae203d4d695e4292ddfe50409a0af, type: 3}
+      propertyPath: m_Size.y
+      value: 24.93
+      objectReference: {fileID: 0}
+    - target: {fileID: 4548497680473467120, guid: c52ae203d4d695e4292ddfe50409a0af, type: 3}
+      propertyPath: panelDialogo
+      value: 
+      objectReference: {fileID: 6683576631073101152, guid: 197c974a1d2bfd3459ec06168971896a, type: 3}
+    - target: {fileID: 4548497680473467120, guid: c52ae203d4d695e4292ddfe50409a0af, type: 3}
+      propertyPath: textoDialogo
+      value: 
+      objectReference: {fileID: 5168811512538484088, guid: 4b4895fe374022d468444a361dc00e0f, type: 3}
+    - target: {fileID: 4548497680473467120, guid: c52ae203d4d695e4292ddfe50409a0af, type: 3}
+      propertyPath: dialogos.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4548497680473467120, guid: c52ae203d4d695e4292ddfe50409a0af, type: 3}
+      propertyPath: dialogos.Array.data[0]
+      value: "Hola hija! Espero est\xE9s bien Hiciste tus tasks de hoy?"
+      objectReference: {fileID: 0}
+    - target: {fileID: 4548497680473467120, guid: c52ae203d4d695e4292ddfe50409a0af, type: 3}
+      propertyPath: dialogos.Array.data[1]
+      value: Tienes que lavar la ropa y los platos para luego guardarlso en su lugar,
+        has la tarea y guardala. Termina hacindo la cama
+      objectReference: {fileID: 0}
+    - target: {fileID: 4548497680473467120, guid: c52ae203d4d695e4292ddfe50409a0af, type: 3}
+      propertyPath: dialogos.Array.data[2]
+      value: Mas detalles de lo que tiene que hacer / poner un chiste
       objectReference: {fileID: 0}
     - target: {fileID: 5884503025035175198, guid: c52ae203d4d695e4292ddfe50409a0af, type: 3}
       propertyPath: m_SortingOrder

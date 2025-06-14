@@ -24,14 +24,14 @@ public class ControladorEstados : MonoBehaviour
     {
         if (estadoVacio == null || estadoLleno == null)
         {
-            Debug.LogError($"[ControladorEstados] Error en {gameObject.name}: Ambos estados deben ser asignados.");
+            //Debug.LogError($"[ControladorEstados] Error en {gameObject.name}: Ambos estados deben ser asignados.");
             enabled = false;
             return;
         }
 
         if (estadoVacio == estadoLleno)
         {
-            Debug.LogError($"[ControladorEstados] Error en {gameObject.name}: Los estados no pueden ser el mismo objeto.");
+            //Debug.LogError($"[ControladorEstados] Error en {gameObject.name}: Los estados no pueden ser el mismo objeto.");
             enabled = false;
         }
     }
@@ -41,8 +41,8 @@ public class ControladorEstados : MonoBehaviour
         estadoVacio.SetActive(!estaLleno);
         estadoLleno.SetActive(estaLleno);
 
-        if (debugLogs)
-            Debug.Log($"[ControladorEstados] {nombreMostrado} inicializado como {(estaLleno ? "Lleno" : "Vacío")}");
+        /*if (debugLogs)
+            Debug.Log($"[ControladorEstados] {nombreMostrado} inicializado como {(estaLleno ? "Lleno" : "Vacío")}");*/
     }
 
     public void AlternarEstado()
@@ -52,8 +52,8 @@ public class ControladorEstados : MonoBehaviour
         estaLleno = !estaLleno;
         ActualizarEstados();
 
-        if (debugLogs)
-            Debug.Log($"[ControladorEstados] {nombreMostrado} ahora está {(estaLleno ? "Lleno" : "Vacío")}");
+        /*if (debugLogs)
+            Debug.Log($"[ControladorEstados] {nombreMostrado} ahora está {(estaLleno ? "Lleno" : "Vacío")}");*/
     }
 
     private void ActualizarEstados()

@@ -12,6 +12,12 @@ public class DialogoInteractivo : MonoBehaviour
     public Button botonNoEntendi;
     public Button botonCerrar;
 
+    [Header("Paneles de texto")]
+    public GameObject dialogo1;
+    public GameObject dialogo2;
+    public GameObject dialogo3;
+
+
     private void Start()
     {
         // Asignamos eventos a botones
@@ -59,6 +65,18 @@ public class DialogoInteractivo : MonoBehaviour
 
     public void CerrarDialogo()
     {
+        dialogo1.SetActive(false);
+        dialogo2.SetActive(false);
+        dialogo3.SetActive(false);
+
         gameObject.SetActive(false);
+
+        // Reanudar movimiento de la madre si está cerca
+        Madre madre = FindObjectOfType<Madre>();
+        if (madre != null)
+        {
+            madre.ReanudarMovimiento();
+        }
     }
+
 }
