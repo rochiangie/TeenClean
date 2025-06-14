@@ -3,6 +3,8 @@
 public class SaludJugador : MonoBehaviour
 {
     [Header("Salud del Jugador")]
+    [SerializeField] private int vidaMaxima = 100;
+    private int vidaActual;
     public int saludMaxima = 100;
     public int saludActual;
 
@@ -37,7 +39,10 @@ public class SaludJugador : MonoBehaviour
         }
     }
 
-
+    public int GetVidaActual()
+    {
+        return vidaActual;
+    }
     // Llamar cuando toma una poción u objeto de curación
     public void Curar(int cantidad)
     {

@@ -3092,7 +3092,7 @@ Transform:
   m_GameObject: {fileID: 357489272}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 53.8, y: 48.8, z: -0.6859235}
+  m_LocalPosition: {x: 32.3, y: -72.4, z: -0.6859235}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -12360,6 +12360,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76437e783d0cc054984b061317861429, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  vidaMaxima: 100
   saludMaxima: 100
   saludActual: 100
   animator: {fileID: 1193191332}
@@ -17431,11 +17432,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1026670638609441223, guid: 197c974a1d2bfd3459ec06168971896a, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 27
+      value: 70.899994
       objectReference: {fileID: 0}
     - target: {fileID: 1026670638609441223, guid: 197c974a1d2bfd3459ec06168971896a, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -7.8
+      value: -1.8999939
       objectReference: {fileID: 0}
     - target: {fileID: 1026670638609441223, guid: 197c974a1d2bfd3459ec06168971896a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -17452,6 +17453,10 @@ PrefabInstance:
     - target: {fileID: 6683576631073101152, guid: 197c974a1d2bfd3459ec06168971896a, type: 3}
       propertyPath: m_Name
       value: Panel-Mom
+      objectReference: {fileID: 0}
+    - target: {fileID: 6683576631073101152, guid: 197c974a1d2bfd3459ec06168971896a, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -21538,6 +21543,34 @@ PrefabInstance:
       propertyPath: textoDialogo
       value: 
       objectReference: {fileID: 1067310554}
+    - target: {fileID: 2243413227595325634, guid: eb80ced7d331bd04aa7d6054eda09912, type: 3}
+      propertyPath: dialogoMolesto
+      value: Ya dejame tranquila
+      objectReference: {fileID: 0}
+    - target: {fileID: 2243413227595325634, guid: eb80ced7d331bd04aa7d6054eda09912, type: 3}
+      propertyPath: dialogoVerdadTareas
+      value: verad
+      objectReference: {fileID: 0}
+    - target: {fileID: 2243413227595325634, guid: eb80ced7d331bd04aa7d6054eda09912, type: 3}
+      propertyPath: dialogoMentiraTareas
+      value: mentira
+      objectReference: {fileID: 0}
+    - target: {fileID: 2243413227595325634, guid: eb80ced7d331bd04aa7d6054eda09912, type: 3}
+      propertyPath: dialogoPreguntaTareas
+      value: preguntando cosas
+      objectReference: {fileID: 0}
+    - target: {fileID: 2243413227595325634, guid: eb80ced7d331bd04aa7d6054eda09912, type: 3}
+      propertyPath: dialogosNormales.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2243413227595325634, guid: eb80ced7d331bd04aa7d6054eda09912, type: 3}
+      propertyPath: dialogosNormales.Array.data[0]
+      value: test1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2243413227595325634, guid: eb80ced7d331bd04aa7d6054eda09912, type: 3}
+      propertyPath: dialogosNormales.Array.data[1]
+      value: test2
+      objectReference: {fileID: 0}
     - target: {fileID: 3233448876039513909, guid: eb80ced7d331bd04aa7d6054eda09912, type: 3}
       propertyPath: m_LocalPosition.x
       value: -64.9

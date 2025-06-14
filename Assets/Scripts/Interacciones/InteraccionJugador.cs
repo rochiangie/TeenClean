@@ -195,7 +195,7 @@ public class InteraccionJugador : MonoBehaviour
                     Madre madre = obj.GetComponent<Madre>();
                     if (madre != null)
                     {
-                        madre.IniciarInteraccionConJugador();
+                        madre.IniciarDialogoConMadre(); 
                         return;
                     }
                 }
