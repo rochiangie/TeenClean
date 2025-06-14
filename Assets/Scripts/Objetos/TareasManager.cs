@@ -20,6 +20,9 @@ public class TareasManager : MonoBehaviour
     private int tareaContador = 0;
     private const int tareasNecesarias = 2;
 
+    private bool ropaCompletada = false;
+    private bool platosCompletados = false;
+    private bool tareaCompletada = false;
     private bool camaCompletada = false;
 
 
@@ -76,46 +79,32 @@ public class TareasManager : MonoBehaviour
         {
             case "Ropa":
                 ropaContador++;
-                Debug.Log($"👕 Ropa entregada: {ropaContador}/{tareasNecesarias}");
-                if (ropaContador >= tareasNecesarias)
-                {
-                    if (RopaToggle != null) RopaToggle.isOn = true;
-                }
+                if (ropaContador >= tareasNecesarias) ropaCompletada = true;
+                if (RopaToggle != null) RopaToggle.isOn = true;
                 break;
             case "Platos":
                 platosContador++;
-                Debug.Log($"🍽️ Platos entregados: {platosContador}/{tareasNecesarias}");
-                if (platosContador >= tareasNecesarias)
-                {
-                    if (PlatosToggle != null) PlatosToggle.isOn = true;
-                }
+                if (platosContador >= tareasNecesarias) platosCompletados = true;
+                if (PlatosToggle != null) PlatosToggle.isOn = true;
                 break;
             case "Tarea":
                 tareaContador++;
-                Debug.Log($"📚 Tareas entregadas: {tareaContador}/{tareasNecesarias}");
-                if (tareaContador >= tareasNecesarias)
-                {
-                    if (TareaToggle != null) TareaToggle.isOn = true;
-                }
+                if (tareaContador >= tareasNecesarias) tareaCompletada = true;
+                if (TareaToggle != null) TareaToggle.isOn = true;
                 break;
-
             case "Cama":
                 camaCompletada = true;
-                if (CamaToggle != null)
-                {
-                    CamaToggle.isOn = true;
-                }
+                if (CamaToggle != null) CamaToggle.isOn = true;
                 break;
         }
 
         VerificarVictoria();
     }
 
+
     private void VerificarVictoria()
     {
-        if (ropaContador >= tareasNecesarias &&
-            platosContador >= tareasNecesarias &&
-            tareaContador >= tareasNecesarias)
+        if (ropaCompletada && platosCompletados && tareaCompletada && camaCompletada)
         {
             if (panelWin != null)
             {
@@ -125,6 +114,7 @@ public class TareasManager : MonoBehaviour
             }
         }
     }
+
 
     private HashSet<GabineteRopa> gabinetesConRopa = new HashSet<GabineteRopa>();
 

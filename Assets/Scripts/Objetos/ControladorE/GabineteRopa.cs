@@ -60,7 +60,7 @@ public class GabineteRopa : MonoBehaviour
     }
 
 
-    public void SacarObjeto(Transform puntoDeCarga, InteraccionJugador jugador)
+    /*public void SacarObjeto(Transform puntoDeCarga, InteraccionJugador jugador)
     {
         if (!estaLleno || prefabObjetoLleno == null || jugador == null)
         {
@@ -87,6 +87,6 @@ public class GabineteRopa : MonoBehaviour
     public bool EstaLleno()
     {
         return estaLleno;
-    }
+    }*/
 
 }

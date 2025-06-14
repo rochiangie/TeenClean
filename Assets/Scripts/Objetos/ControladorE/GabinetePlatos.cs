@@ -31,7 +31,7 @@ public class GabinetePlatos : MonoBehaviour
         return true;
     }
 
-    public void SacarObjeto(Transform puntoDeCarga, InteraccionJugador jugador)
+    /*public void SacarObjeto(Transform puntoDeCarga, InteraccionJugador jugador)
     {
         if (!estaLleno || prefabObjetoLleno == null) return;
 
@@ -53,5 +53,5 @@ public class GabinetePlatos : MonoBehaviour
     {
         return estaLleno;
     }
-
+    */
 }

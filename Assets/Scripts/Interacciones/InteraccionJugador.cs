@@ -262,7 +262,7 @@ public class InteraccionJugador : MonoBehaviour
                     }
                 }
 
-                if (!llevaObjeto)
+               /* if (!llevaObjeto)
                 {
                     if (gabineteRopaCercano != null && gabineteRopaCercano.EstaLleno())
                     {
@@ -282,7 +282,7 @@ public class InteraccionJugador : MonoBehaviour
                         llevaObjeto = true;
                         return;
                     }
-                }
+                }*/
 
             }
 
