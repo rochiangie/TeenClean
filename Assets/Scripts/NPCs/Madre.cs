@@ -1,203 +1,153 @@
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 using TMPro;
-using System.Collections;
 
 public class Madre : MonoBehaviour
 {
-    [Header("Navegacion")]
+    [Header("Navegación")]
     public NavMeshAgent agente;
     public Transform[] puntosRuta;
     private int indiceRuta = 0;
 
-    [Header("Dialogo")]
-    [SerializeField] private GameObject panelDialogo;
+    [Header("Diálogo UI")]
+    [SerializeField] private GameObject panelDialogoMadre;
     [SerializeField] private TextMeshProUGUI textoDialogo;
-    [SerializeField] private string[] dialogos;
+    [SerializeField] private Button botonSi;
+    [SerializeField] private Button botonNo;
+    [SerializeField] private Button botonCerrar;
 
-    [Header("Penalizacion")]
-    [SerializeField] private int danoAlFallar = 10;
+    [Header("Configuración")]
+    public float rangoInteraccion = 3f;
+    public int danoPorMentir = 20;
+    public int danoAlFallar = 10;
 
-    [Header("Interacción")]
-    public float rango = 5f;
-
-    private int indiceDialogo = 0;
     private bool enDialogo = false;
     private Transform jugador;
 
     void Start()
     {
-        if (agente == null)
-            agente = GetComponent<NavMeshAgent>();
-
+        if (agente == null) agente = GetComponent<NavMeshAgent>();
         if (agente != null)
         {
             agente.updateRotation = false;
             agente.updateUpAxis = false;
         }
 
-        if (panelDialogo != null)
-            panelDialogo.SetActive(false);
-
         jugador = GameObject.FindGameObjectWithTag("Player")?.transform;
+        if (jugador == null) Debug.LogError("❌ No se encontró al jugador");
 
-        if (dialogos == null || dialogos.Length == 0)
-        {
-            dialogos = new string[]
-            {
-                "Test",
-                "¿Hiciste la tarea?",
-                "No olvides lavar los platos."
-            };
-        }
+        if (panelDialogoMadre != null)
+            panelDialogoMadre.SetActive(false);
+
+        // Configurar eventos de botones
+        if (botonSi != null) botonSi.onClick.AddListener(RespuestaSi);
+        if (botonNo != null) botonNo.onClick.AddListener(RespuestaNo);
+        if (botonCerrar != null) botonCerrar.onClick.AddListener(CerrarDialogo);
 
         IrAlSiguientePunto();
     }
 
     void Update()
     {
-        if (agente != null && agente.isOnNavMesh && !enDialogo && !agente.pathPending)
+        if (agente != null && agente.isOnNavMesh && !enDialogo && !agente.pathPending &&
+            agente.remainingDistance <= agente.stoppingDistance)
         {
-            if (agente.remainingDistance <= agente.stoppingDistance &&
-                (!agente.hasPath || agente.velocity.sqrMagnitude == 0f))
-            {
-                IrAlSiguientePunto();
-            }
+            IrAlSiguientePunto();
         }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Player") /*&& !enDialogo*/)
+        if (other.CompareTag("Player") && !enDialogo)
         {
-            Debug.Log("🚶‍♀️ Madre: jugador entró en el trigger");
-
-            jugador = other.transform;
-            StartCoroutine(EsperarYReanudar()); // usamos la lógica completa
-
-            GameObject panel = GameObject.Find("Panel-Mom");
-            if (panel != null)
-            {
-                //Debug.Log("📢 Madre: panel encontrado y activado");
-                panel.SetActive(true);
-
-                DialogoInteractivo dialogo = panel.GetComponent<DialogoInteractivo>();
-                if (dialogo != null)
-                {
-                    Debug.Log("🗨️ Madre: se llama MostrarDialogo1()");
-                    dialogo.MostrarDialogo1();
-                }
-                else
-                {
-                    Debug.LogWarning("⚠️ Madre: No se encontró componente DialogoInteractivo");
-                }
-            }
-            else
-            {
-                Debug.LogWarning("❌ Madre: No se encontró el panel con nombre Panel-Mom");
-            }
+            DetenerMovimiento();
+            IniciarDialogoConMadre();
         }
     }
 
-    private IEnumerator EsperarYReanudar()
+    private void DetenerMovimiento()
     {
-        Debug.Log("⏳ Madre: EsperarYReanudar iniciado");
-        enDialogo = true;
-
-        if (agente != null)
+        if (agente != null && agente.isOnNavMesh)
         {
             agente.isStopped = true;
             agente.velocity = Vector3.zero;
-            Debug.Log("🛑 Madre: agente detenido");
         }
+    }
 
-        if (panelDialogo != null)
-        {
-            panelDialogo.SetActive(true);
-            textoDialogo.text = dialogos.Length > 0 ? dialogos[0] : "Test";
-        }
-
-        while (true)
-        {
-            yield return new WaitForSeconds(10.5f);
-
-            if (jugador == null)
-            {
-                Debug.Log("❌ Madre: jugador null, abortando espera");
-                break;
-            }
-
-            float distancia = Vector2.Distance(jugador.position, transform.position);
-            Debug.Log($"📏 Distancia actual: {distancia}");
-
-            if (distancia > rango)
-            {
-                Debug.Log("👋 Madre: jugador se alejó, reanudando movimiento");
-                break;
-            }
-        }
-
-        FinalizarDialogo();
-
-        if (agente != null)
+    private void ReanudarMovimiento()
+    {
+        if (agente != null && agente.isOnNavMesh)
         {
             agente.isStopped = false;
-            Debug.Log("🏃‍♀️ Madre: retoma movimiento");
             IrAlSiguientePunto();
         }
-    }
-
-    public void IniciarInteraccionConJugador()
-    {
-        if (!enDialogo)
-        {
-            Debug.Log("📞 Madre: IniciarInteraccionConJugador llamado");
-            StartCoroutine(EsperarYReanudar());
-        }
-        else
-        {
-            Debug.Log("⚠️ Madre: interacción ignorada, ya en diálogo");
-        }
-    }
-
-    private void FinalizarDialogo()
-    {
-        Debug.Log("🔚 Madre: finaliza diálogo");
-        enDialogo = false;
-
-        if (panelDialogo != null)
-            panelDialogo.SetActive(false);
     }
 
     private void IrAlSiguientePunto()
     {
-        if (puntosRuta == null || puntosRuta.Length == 0) return;
-
-        agente.SetDestination(puntosRuta[indiceRuta].position);
-        Debug.Log($"📍 Madre: moviéndose a punto {indiceRuta}");
-        indiceRuta = (indiceRuta + 1) % puntosRuta.Length;
+        if (puntosRuta != null && puntosRuta.Length > 0 && agente != null && agente.isOnNavMesh)
+        {
+            agente.SetDestination(puntosRuta[indiceRuta].position);
+            indiceRuta = (indiceRuta + 1) % puntosRuta.Length;
+        }
     }
 
-    public void PenalizarJugador(GameObject jugador)
+    public void IniciarDialogoConMadre()
     {
-        if (jugador == null) return;
+        enDialogo = true;
 
-        var salud = jugador.GetComponent<SaludJugador>();
+        if (panelDialogoMadre != null && textoDialogo != null)
+        {
+            panelDialogoMadre.SetActive(true);
+            textoDialogo.text = "Hola hija! Espero estés bien. ¿Hiciste tus tasks de hoy?";
+        }
+    }
+
+    private void RespuestaSi()
+    {
+        bool tareasHechas = TareasManager.Instance?.TodasLasTareasCompletadasParaMadre() ?? false;
+
+        if (tareasHechas)
+        {
+            textoDialogo.text = "¡Muy bien! Estoy orgullosa de ti.";
+
+            // 🔥 ACTIVAR PANEL DE VICTORIA Y CAMBIAR DE ESCENA
+            if (TareasManager.Instance != null)
+            {
+                TareasManager.Instance.PanelVictoria.SetActive(true);
+                StartCoroutine(TareasManager.Instance.CargarMenuPrincipalTrasDelay());
+            }
+        }
+        else
+        {
+            textoDialogo.text = "Me has dicho una mentira, entonces hay castigo!";
+            PenalizarJugador(danoPorMentir);
+        }
+    }
+
+
+    private void RespuestaNo()
+    {
+        textoDialogo.text = "Debes lavar los platos y la ropa, luego guardar todo en su lugar y venir a chequear conmigo.";
+        PenalizarJugador(danoAlFallar);
+    }
+
+    private void PenalizarJugador(int daño)
+    {
+        var salud = jugador?.GetComponent<SaludJugador>();
         if (salud != null)
         {
-            salud.RecibirDaño(danoAlFallar);
+            salud.RecibirDaño(daño);
         }
     }
 
-    public void ReanudarMovimiento()
+    private void CerrarDialogo()
     {
-        Debug.Log("🟢 Madre: ReanudarMovimiento manual");
-        if (agente != null)
-        {
-            agente.isStopped = false;
-            IrAlSiguientePunto();
-        }
+        if (panelDialogoMadre != null)
+            panelDialogoMadre.SetActive(false);
 
         enDialogo = false;
+        ReanudarMovimiento();
     }
 }
