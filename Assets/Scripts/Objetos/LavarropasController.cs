@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using TMPro;
 
 public class LavarropasController : MonoBehaviour
@@ -17,7 +17,14 @@ public class LavarropasController : MonoBehaviour
     [SerializeField] private GameObject estadoConAgua;
     [SerializeField] private GameObject estadoFinal;
 
-    [Header("Configuraci�n")]
+    [Header("Sonidos")]
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip sonidoRopa;
+    [SerializeField] private AudioClip sonidoAgua;
+    [SerializeField] private AudioClip sonidoFinLavado;
+
+
+    [Header("Configuración")]
     [SerializeField] private string tagRopaSucia = "RopaSucia";
     [SerializeField] private string tagRopaLimpia = "RopaLimpia";
 
@@ -39,6 +46,8 @@ public class LavarropasController : MonoBehaviour
 
     private void Update()
     {
+        if (panelPopUp != null)
+            //Debug.Log("👀 Estado del panel: " + panelPopUp.activeSelf);
         if (jugadorEnRango && Input.GetKeyDown(KeyCode.E))
         {
             AvanzarEstado();
@@ -73,6 +82,8 @@ public class LavarropasController : MonoBehaviour
             {
                 estadoActual = EstadoLavarropas.ConRopa;
                 jugador.EliminarObjetoTransportado();
+                audioSource.PlayOneShot(sonidoRopa); 
+
             }
             else
             {
@@ -83,10 +94,12 @@ public class LavarropasController : MonoBehaviour
         else if (estadoActual == EstadoLavarropas.ConRopa)
         {
             estadoActual = EstadoLavarropas.ConAgua;
+            audioSource.PlayOneShot(sonidoAgua);
         }
         else if (estadoActual == EstadoLavarropas.ConAgua)
         {
             estadoActual = EstadoLavarropas.Final;
+            audioSource.PlayOneShot(sonidoFinLavado);
             InstanciarRopaLimpia();
         }
         else if (estadoActual == EstadoLavarropas.Final)
@@ -116,9 +129,17 @@ public class LavarropasController : MonoBehaviour
 
     private void MostrarMensaje()
     {
+        Debug.Log("💡 Intentando mostrar mensaje...");
+
+        if (panelPopUp == null)
+            Debug.LogWarning("⚠️ panelPopUp no asignado.");
+        if (textoPopUp == null)
+            Debug.LogWarning("⚠️ textoPopUp no asignado.");
+
         if (panelPopUp != null && textoPopUp != null)
         {
             panelPopUp.SetActive(true);
+
             switch (estadoActual)
             {
                 case EstadoLavarropas.Inicial:
@@ -134,8 +155,11 @@ public class LavarropasController : MonoBehaviour
                     textoPopUp.text = "Presiona E para reiniciar el ciclo.";
                     break;
             }
+
+            Debug.Log("✅ Mensaje mostrado: " + textoPopUp.text);
         }
     }
+
 
     private void OcultarMensaje()
     {
