@@ -787,7 +787,7 @@ RectTransform:
   m_GameObject: {fileID: 243902057}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.8, y: 0.8, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 467808892}
@@ -801,7 +801,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 253.45564, y: -139.42705}
+  m_AnchoredPosition: {x: 211, y: -125.6}
   m_SizeDelta: {x: 506.9113, y: 278.8541}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &243902059
@@ -2372,7 +2372,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 157.5894, y: 6.9061}
+  m_AnchoredPosition: {x: 42.3, y: -39.4}
   m_SizeDelta: {x: -191.0755, y: -113.0653}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &323759217
@@ -2420,7 +2420,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 323759215}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8dc89a85c7e0443409f659a17c308c3a, type: 3}
   m_Name: 
@@ -4337,7 +4337,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 669, y: -396}
+  m_AnchoredPosition: {x: 702, y: -15}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &453678655
@@ -13292,6 +13292,7 @@ GameObject:
   - component: {fileID: 1127466406}
   - component: {fileID: 1127466408}
   - component: {fileID: 1127466407}
+  - component: {fileID: 1127466409}
   m_Layer: 5
   m_Name: panelTasks
   m_TagString: Untagged
@@ -13321,7 +13322,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -759, y: -12}
+  m_AnchoredPosition: {x: 15, y: -101}
   m_SizeDelta: {x: -848.821, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1127466407
@@ -13362,6 +13363,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1127466405}
   m_CullTransparentMesh: 1
+--- !u!225 &1127466409
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1127466405}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 1
 --- !u!1 &1145668035
 GameObject:
   m_ObjectHideFlags: 0
@@ -24571,7 +24584,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Presiona ENTER para acceder al men\xFA principal\nPresiona R para abrir
+  m_text: "Presiona ENTER para acceder al men\xFA principal\nPresiona T  para abrir
     el menu de tareas\nPresiona F para atacar\nPresiona G para actrivar el escudo"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2e498d1c8094910479dc3e1b768306a4, type: 2}
