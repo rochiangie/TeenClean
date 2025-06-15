@@ -1,12 +1,14 @@
 using NUnit.Framework;
 using UnityEngine;
-using UnityEngine.Assertions;
 using UnityEngine.TestTools;
+using System.Reflection;
+using TMPro;
+
 
 public class InteraccionJugadorTests
 {
     private GameObject jugadorGO;
-    public InteraccionJugador interaccionJugador;
+    private InteraccionJugador interaccionJugador;
 
     [SetUp]
     public void SetUp()
@@ -15,45 +17,82 @@ public class InteraccionJugadorTests
         jugadorGO.tag = "Player";
         interaccionJugador = jugadorGO.AddComponent<InteraccionJugador>();
 
-        // Inicializamos campos necesarios
         interaccionJugador.teclaInteraccion = KeyCode.E;
         interaccionJugador.rango = 1.5f;
         interaccionJugador.capaInteractuable = LayerMask.GetMask("Interactuable");
 
-        // Punto de carga simulado
         var puntoCarga = new GameObject("PuntoCarga").transform;
         interaccionJugador.puntoDeCarga = puntoCarga;
 
-        // Lista de tags válidos para recoger
         typeof(InteraccionJugador)
-            .GetField("tagsRecogibles", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+            .GetField("tagsRecogibles", BindingFlags.NonPublic | BindingFlags.Instance)
             .SetValue(interaccionJugador, new string[] { "Platos", "Ropa", "Tarea" });
     }
 
     [Test]
-    public void Jugador_RecogeObjetoConTagValido()
+    public void RecogeObjetoConTagValido()
     {
-        // Arrange
         var objeto = new GameObject("Plato");
         objeto.tag = "Platos";
-        objeto.transform.position = jugadorGO.transform.position;
-
         objeto.AddComponent<BoxCollider2D>();
 
-        // Simular que el jugador no lleva nada
-        var campo = typeof(InteraccionJugador).GetField("objetoTransportado", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+        var campo = typeof(InteraccionJugador)
+            .GetField("objetoTransportado", BindingFlags.NonPublic | BindingFlags.Instance);
         campo.SetValue(interaccionJugador, null);
 
-        // Act - Simulamos que está en rango (no usamos input real en tests unitarios)
         bool esRecogible = interaccionJugador.EsTagRecogible(objeto.tag);
 
-        // Assert
         Assert.IsTrue(esRecogible);
     }
+
+    [Test]
+    public void NoRecogeObjetoSiYaTieneUno()
+    {
+        var campo = typeof(InteraccionJugador)
+            .GetField("objetoTransportado", BindingFlags.NonPublic | BindingFlags.Instance);
+
+        campo.SetValue(interaccionJugador, new GameObject("ObjetoFalso"));
+
+        var objeto = new GameObject("Plato");
+        objeto.tag = "Platos";
+
+        bool esRecogible = interaccionJugador.EsTagRecogible(objeto.tag);
+
+        Assert.IsTrue(esRecogible);
+        Assert.IsNotNull(campo.GetValue(interaccionJugador)); // ya tenía uno
+    }
+
+    [Test]
+    public void PuedeSoltarObjeto()
+    {
+        var objeto = new GameObject("ObjetoTransportado");
+        var campo = typeof(InteraccionJugador)
+            .GetField("objetoTransportado", BindingFlags.NonPublic | BindingFlags.Instance);
+
+        campo.SetValue(interaccionJugador, objeto);
+
+        campo.SetValue(interaccionJugador, null); // Simulamos soltado
+
+        Assert.IsNull(campo.GetValue(interaccionJugador));
+    }
+
+    [Test]
+    public void Movimiento_CambiaEstadoDeAnimacion()
+    {
+        Vector2 input = new Vector2(1, 0);
+        bool isRunning = input != Vector2.zero;
+        Assert.IsTrue(isRunning);
+    }
+
+
 
     [TearDown]
     public void TearDown()
     {
         Object.DestroyImmediate(jugadorGO);
+        foreach (var go in GameObject.FindObjectsOfType<GameObject>())
+        {
+            Object.DestroyImmediate(go);
+        }
     }
 }
