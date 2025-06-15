@@ -141,9 +141,9 @@ GameObject:
   - component: {fileID: 4626920157283591810}
   - component: {fileID: 350005122233408080}
   - component: {fileID: 6267714152065029089}
-  - component: {fileID: 3682993414744191029}
+  - component: {fileID: 2323925600274183622}
   m_Layer: 3
-  m_Name: CabineteRopa
+  m_Name: CabineteLibros
   m_TagString: Cabinete
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -227,7 +227,7 @@ MonoBehaviour:
   m_Area: 1
   m_IgnoreFromBuild: 0
   m_AffectedAgents: ffffffff
---- !u!114 &3682993414744191029
+--- !u!114 &2323925600274183622
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -236,12 +236,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 2512872479426731146}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bf25dc330b9f7e64ebd06a0f87289b1d, type: 3}
+  m_Script: {fileID: 11500000, guid: c041b5a0ba3f10245a9b60761eaad85b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   estadoVacio: {fileID: 5513591663989636413}
-  estadoLleno: {fileID: 0}
-  prefabObjetoLleno: {fileID: 0}
+  estadoLleno: {fileID: 941855796034353215}
+  prefabObjetoLleno: {fileID: 3463493620268787513, guid: 134290439da50f64f84b35e83563dfd8, type: 3}
 --- !u!1 &5513591663989636413
 GameObject:
   m_ObjectHideFlags: 0
