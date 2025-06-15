@@ -9,6 +9,8 @@ public class TareasManager : MonoBehaviour
 {
     // === SINGLETON PATTERN ===
     public static TareasManager Instance { get; private set; }
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip sonidoTareaCompletada;
 
     private void Awake()
     {
@@ -83,6 +85,10 @@ public class TareasManager : MonoBehaviour
 
     public void CompletarTarea(string tarea)
     {
+        if (audioSource != null && sonidoTareaCompletada != null)
+        {
+            audioSource.PlayOneShot(sonidoTareaCompletada);
+        }
         switch (tarea)
         {
             case "Ropa":

@@ -64,8 +64,8 @@ public class InteraccionJugador : MonoBehaviour
 
     [SerializeField] private GameObject panelTasks; // Para R (tasks)
 
-    [SerializeField] private GameObject canvasTextoE;
-    [SerializeField] private TextMeshProUGUI textoE;  // El texto dentro del Canvas
+    //[SerializeField] private GameObject canvasTextoE;
+    //[SerializeField] private TextMeshProUGUI textoE;  // El texto dentro del Canvas
 
 
     [Header("Teleport")]

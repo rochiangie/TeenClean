@@ -14,11 +14,17 @@ public class ControladorEstados : MonoBehaviour
     [SerializeField] private bool estaLleno = false;
     [SerializeField] private bool debugLogs = true;
 
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip sonidoGuardar;
     void Start()
     {
+        if (audioSource == null)
+            audioSource = GetComponent<AudioSource>();
+
         ValidarReferencias();
         InicializarEstados();
     }
+
 
     private void ValidarReferencias()
     {
@@ -50,6 +56,7 @@ public class ControladorEstados : MonoBehaviour
         if (!enabled) return;
 
         estaLleno = !estaLleno;
+        audioSource.PlayOneShot(sonidoGuardar);
         ActualizarEstados();
 
         /*if (debugLogs)

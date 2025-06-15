@@ -176,3 +176,5 @@ MonoBehaviour:
   nombreMostrado: "Ba\xF1era"
   estaLleno: 0
   debugLogs: 1
+  audioSource: {fileID: 0}
+  sonidoGuardar: {fileID: 0}
