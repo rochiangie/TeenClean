@@ -6,7 +6,7 @@ using UnityEngine.TestTools;
 public class InteraccionJugadorTests
 {
     private GameObject jugadorGO;
-    private InteraccionJugador interaccionJugador;
+    public InteraccionJugador interaccionJugador;
 
     [SetUp]
     public void SetUp()
