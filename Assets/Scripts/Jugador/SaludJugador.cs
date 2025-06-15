@@ -8,13 +8,16 @@ public class SaludJugador : MonoBehaviour
     private int saludActual;
 
     [Header("Corazones UI (Sprites)")]
-    [SerializeField] private SpriteRenderer[] corazonesSprites; // Asegurate de usar SpriteRenderer, NO Image
+    //[SerializeField] private SpriteRenderer[] corazonesSprites; // Asegurate de usar SpriteRenderer, NO Image
 
     [Header("Panel de derrota")]
     [SerializeField] private GameObject panelDerrota;
 
     [Header("Animator")]
     [SerializeField] private Animator animator;
+
+    [SerializeField] private CorazonPorSprite corazonHUD;
+
 
     private bool yaMurio = false;
 
@@ -23,7 +26,7 @@ public class SaludJugador : MonoBehaviour
     void Start()
     {
         saludActual = saludMaxima;
-        ActualizarCorazones();
+        //ActualizarCorazones();
         if (panelDerrota != null) panelDerrota.SetActive(false);
     }
 
@@ -39,7 +42,11 @@ public class SaludJugador : MonoBehaviour
             animator.SetTrigger("Daño");
         }
 
-        ActualizarCorazones();
+        //ActualizarCorazones();
+        if (corazonHUD != null)
+        {
+            corazonHUD.RecibirDaño(cantidad); // ← actualiza el sprite de vida visual
+        }
 
         if (saludActual <= 0)
         {
@@ -48,7 +55,7 @@ public class SaludJugador : MonoBehaviour
         }
     }
 
-    private void ActualizarCorazones()
+    /*private void ActualizarCorazones()
     {
         int corazonesVisibles = Mathf.CeilToInt((float)saludActual / (saludMaxima / corazonesSprites.Length));
 
@@ -61,7 +68,7 @@ public class SaludJugador : MonoBehaviour
                 corazonesSprites[i].color = color;
             }
         }
-    }
+    }*/
 
     private void Morir()
     {
@@ -90,7 +97,12 @@ public class SaludJugador : MonoBehaviour
 
         saludActual += cantidad;
         saludActual = Mathf.Clamp(saludActual, 0, saludMaxima);
-        ActualizarCorazones();
+        //ActualizarCorazones();
+        if (corazonHUD != null)
+        {
+            corazonHUD.Curar(cantidad);
+        }
+
     }
 
     public int GetVidaActual()
