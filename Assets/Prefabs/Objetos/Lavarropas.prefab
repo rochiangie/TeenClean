@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4075607317342698398}
   - component: {fileID: 1385908350445996391}
   - component: {fileID: 315977312086009321}
+  - component: {fileID: 5414069056051807350}
   m_Layer: 3
   m_Name: Lavarropas
   m_TagString: Lavarropas
@@ -127,7 +128,7 @@ MonoBehaviour:
   estadoConRopa: {fileID: 6159136542072640647}
   estadoConAgua: {fileID: 5023720876188578992}
   estadoFinal: {fileID: 4462845197504552740}
-  audioSource: {fileID: 0}
+  audioSource: {fileID: 5414069056051807350}
   sonidoRopa: {fileID: 8300000, guid: 8e40a72c7d1ea60488073510944984e1, type: 3}
   sonidoAgua: {fileID: 8300000, guid: 6e27644cb48870745a8fb50a98d9f744, type: 3}
   sonidoFinLavado: {fileID: 8300000, guid: 681c00b5fbfb0db459d3de32525fd186, type: 3}
@@ -137,6 +138,102 @@ MonoBehaviour:
   puntoInstanciaRopaLimpia: {fileID: 4451516000103078307}
   panelPopUp: {fileID: 4456029927996470422, guid: 1b1dfdce1cdb2124bb9f51a74fbc34e2, type: 3}
   textoPopUp: {fileID: 850578696039804156, guid: 0a5a35c7f8c668a489837d8c7f02a9b0, type: 3}
+--- !u!82 &5414069056051807350
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2189811746200582122}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &4332275083124686691
 GameObject:
   m_ObjectHideFlags: 0
