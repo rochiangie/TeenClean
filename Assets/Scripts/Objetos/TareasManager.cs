@@ -37,7 +37,7 @@ public class TareasManager : MonoBehaviour
 
     private int ropaContador = 0;
     private int platosContador = 0;
-    private int tareaContador = 0;
+    public  int tareaContador = 0;
 
     private const int tareasNecesariasRopa = 2;
     private const int tareasNecesariasPlatos = 2;
