@@ -31,6 +31,13 @@ public class InteraccionJugador : MonoBehaviour
     private CabinetController gabinetePlatosCercano;
     private InteraccionSilla sillaCercana;
 
+    [Header("UI de interacción")]
+    public GameObject panelInteraccion;
+    public TextMeshProUGUI textoInteraccion;
+
+    private GameObject objetoEnMano;
+
+
     private GameObject objetoCercanoRecogible;
     private GameObject objetoTransportado;
     private bool llevaObjeto = false;
@@ -283,6 +290,26 @@ public class InteraccionJugador : MonoBehaviour
                 }*/
 
             }
+            if (Input.GetKeyDown(teclaInteraccion) && objetoCercano != null)
+            {
+                if (objetoCercano.TryGetComponent(out GabineteRopa ropa))
+                {
+                    ropa.IntentarGuardar(objetoEnMano);
+                }
+                else if (objetoCercano.TryGetComponent(out GabinetePlatos platos))
+                {
+                    platos.IntentarGuardar(objetoEnMano);
+                }
+                else if (objetoCercano.TryGetComponent(out GabineteTarea tarea))
+                {
+                    tarea.IntentarGuardar(objetoEnMano);
+                }
+                else if (objetoCercano.CompareTag("Sink") && sinkCercano != null)
+                {
+                    return;
+                    //sinkCercano.GetComponent<SinkController>().Lavar(objetoEnMano);
+                }
+            }
 
 
             // Recoger objeto
@@ -518,6 +545,44 @@ public class InteraccionJugador : MonoBehaviour
                 }
             }
         }
+        else if (objetoCercano != null)
+        {
+            if (panelPopUp != null)
+            {
+                panelPopUp.SetActive(true);
+
+                foreach (Transform child in panelPopUp.transform)
+                {
+                    child.gameObject.SetActive(true);
+                }
+
+                TextMeshProUGUI textoTMP = panelPopUp.GetComponentInChildren<TextMeshProUGUI>(true);
+                if (textoTMP != null)
+                {
+                    string texto = "";
+
+                    if (objetoCercano.CompareTag("Sink"))
+                    {
+                        texto = "Presioná E para lavar los platos";
+                    }
+                    else if (objetoCercano.TryGetComponent(out GabineteRopa _))
+                    {
+                        texto = "Presioná E para guardar la ropa limpia";
+                    }
+                    else if (objetoCercano.TryGetComponent(out GabinetePlatos _))
+                    {
+                        texto = "Presioná E para guardar los platos limpios";
+                    }
+                    else if (objetoCercano.TryGetComponent(out GabineteTarea _))
+                    {
+                        texto = "Presioná E para entregar la tarea";
+                    }
+
+                    textoTMP.text = texto;
+                }
+            }
+        }
+
         else
         {
             // Desactivar el panel de interacción si no hay objetos cerca
@@ -671,7 +736,7 @@ public class InteraccionJugador : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-
+        // Tapete
         if (other.CompareTag("Tapete"))
         {
             rb.velocity = new Vector2(rb.velocity.x, 10f);
@@ -679,61 +744,72 @@ public class InteraccionJugador : MonoBehaviour
             enSuelo = false;
         }
 
+        // Objetos interactuables varios
         if (other.CompareTag("Inodoro") || other.CompareTag("Lavamanos") || other.CompareTag("Bañera"))
         {
             objetoCercano = other.gameObject;
-            //Debug.Log("Objeto cercano: " + objetoCercano.name);
-
         }
 
+        // Teletransportes
         if (other.CompareTag("Misterio") && puntoSpawn1 != null)
-        {
             TeleportarAPunto(puntoSpawn1);
-        }
         else if (other.CompareTag("Misterio2") && puntoSpawn2 != null)
-        {
             TeleportarAPunto(puntoSpawn2);
-        }
         else if (other.CompareTag("Misterio3") && puntoInicial != null)
-        {
             TeleportarAPunto(puntoInicial);
-        }
         else if (other.CompareTag("Misterio4") && puntoInicial != null)
-        {
             TeleportarAPunto(puntoInicial);
-        }
 
-        //Debug.Log("🧍 Jugador tocó: " + other.name);
-
+        // Sink
         if (other.CompareTag("Sink"))
         {
-            //Debug.Log("✅ Jugador detectó el fregadero (Sink)");
             cercaDelSink = true;
             sinkCercano = other.gameObject;
         }
 
+        // Silla o sofá
         if (other.CompareTag("Silla") || other.CompareTag("Sofa"))
         {
-            //Debug.Log("🪑 Tocado: Silla");
             animator.SetBool("isTouchingObject", true);
             sillaCercana = other.GetComponent<InteraccionSilla>();
         }
 
-        if (other.CompareTag("Misterio") && puntoSpawn1 != null)
-        {
-            TeleportarAPunto(puntoSpawn1);
-        }
-        else if (other.CompareTag("Misterio2") && puntoSpawn2 != null)
-        {
-            TeleportarAPunto(puntoSpawn2);
-        }
-
+        // Objeto recogible
         if (tagsRecogibles.Contains(other.tag))
         {
             objetoRecogibleCercano = other.gameObject;
-            //Debug.Log("🎯 Objeto recogible detectado: " + other.name);
         }
 
+        // Gabinetes con lógica centralizada de panel
+        if (other.TryGetComponent(out GabineteRopa ropa) && !ropa.EstaLleno())
+        {
+            objetoCercano = other.gameObject;
+            MostrarInteraccion("Presioná E para guardar la ropa limpia");
+        }
+        else if (other.TryGetComponent(out GabinetePlatos platos) && !platos.EstaLleno())
+        {
+            objetoCercano = other.gameObject;
+            MostrarInteraccion("Presioná E para guardar los platos limpios");
+        }
+        else if (other.TryGetComponent(out GabineteTarea tarea) && !tarea.EstaLleno())
+        {
+            objetoCercano = other.gameObject;
+            MostrarInteraccion("Presioná E para entregar la tarea");
+        }
+    }
+    void MostrarInteraccion(string mensaje)
+    {
+        if (panelInteraccion != null && textoInteraccion != null)
+        {
+            textoInteraccion.text = mensaje;
+            panelInteraccion.SetActive(true);
+        }
+    }
+
+    void OcultarInteraccion()
+    {
+        if (panelInteraccion != null)
+            panelInteraccion.SetActive(false);
     }
 
     void OnTriggerExit2D(Collider2D other)
@@ -763,7 +839,11 @@ public class InteraccionJugador : MonoBehaviour
         {
             objetoRecogibleCercano = null;
         }
-
+        if (other.gameObject == objetoCercano)
+        {
+            OcultarInteraccion();
+            objetoCercano = null;
+        }
     }
 
     public void AsignarObjetoTransportado(GameObject objeto)
