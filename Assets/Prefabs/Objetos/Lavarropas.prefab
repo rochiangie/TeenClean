@@ -127,11 +127,16 @@ MonoBehaviour:
   estadoConRopa: {fileID: 6159136542072640647}
   estadoConAgua: {fileID: 5023720876188578992}
   estadoFinal: {fileID: 4462845197504552740}
+  audioSource: {fileID: 0}
+  sonidoRopa: {fileID: 8300000, guid: 8e40a72c7d1ea60488073510944984e1, type: 3}
+  sonidoAgua: {fileID: 8300000, guid: 6e27644cb48870745a8fb50a98d9f744, type: 3}
+  sonidoFinLavado: {fileID: 8300000, guid: 681c00b5fbfb0db459d3de32525fd186, type: 3}
   tagRopaSucia: RopaSucia
+  tagRopaLimpia: RopaLimpia
   prefabRopaLimpia: {fileID: 3474649480941468609, guid: 25e6c55c29e13d14997876aae03d0838, type: 3}
   puntoInstanciaRopaLimpia: {fileID: 4451516000103078307}
-  panelPopUp: {fileID: 0}
-  textoPopUp: {fileID: 0}
+  panelPopUp: {fileID: 4456029927996470422, guid: 1b1dfdce1cdb2124bb9f51a74fbc34e2, type: 3}
+  textoPopUp: {fileID: 850578696039804156, guid: 0a5a35c7f8c668a489837d8c7f02a9b0, type: 3}
 --- !u!1 &4332275083124686691
 GameObject:
   m_ObjectHideFlags: 0

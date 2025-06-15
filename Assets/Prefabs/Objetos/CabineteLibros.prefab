@@ -143,7 +143,6 @@ GameObject:
   - component: {fileID: 6267714152065029089}
   - component: {fileID: 686610572293357601}
   - component: {fileID: 3240869461952040871}
-  - component: {fileID: 1847157994824465917}
   m_Layer: 3
   m_Name: CabineteLibros
   m_TagString: Cabinete
@@ -243,8 +242,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   estadoVacio: {fileID: 5513591663989636413}
   estadoLleno: {fileID: 941855796034353215}
-  tagRequerido: Tarea
-  sonidoGuardar: {fileID: 0}
+  prefabObjetoLleno: {fileID: 3463493620268787513, guid: 134290439da50f64f84b35e83563dfd8, type: 3}
 --- !u!114 &3240869461952040871
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -261,22 +259,6 @@ MonoBehaviour:
   m_Area: 1
   m_IgnoreFromBuild: 0
   m_AffectedAgents: ffffffff
---- !u!114 &1847157994824465917
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2512872479426731146}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c041b5a0ba3f10245a9b60761eaad85b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  estadoVacio: {fileID: 5513591663989636413}
-  estadoLleno: {fileID: 941855796034353215}
-  tagRequerido: Tarea
-  sonidoGuardar: {fileID: 0}
 --- !u!1 &5513591663989636413
 GameObject:
   m_ObjectHideFlags: 0
