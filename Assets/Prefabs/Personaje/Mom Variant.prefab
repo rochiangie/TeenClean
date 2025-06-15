@@ -73,6 +73,18 @@ PrefabInstance:
       value: 24.93
       objectReference: {fileID: 0}
     - target: {fileID: 4548497680473467120, guid: c52ae203d4d695e4292ddfe50409a0af, type: 3}
+      propertyPath: botonNoUI
+      value: 
+      objectReference: {fileID: 8679379479244963847, guid: 2c23875e258d2354cb3c205f6b7e6bdf, type: 3}
+    - target: {fileID: 4548497680473467120, guid: c52ae203d4d695e4292ddfe50409a0af, type: 3}
+      propertyPath: botonSiUI
+      value: 
+      objectReference: {fileID: 1808775407514122656, guid: 5a1d07b0d96ac4b4c90a8ffeded29138, type: 3}
+    - target: {fileID: 4548497680473467120, guid: c52ae203d4d695e4292ddfe50409a0af, type: 3}
+      propertyPath: canvasMom
+      value: 
+      objectReference: {fileID: 3990517627513594880, guid: d8c5f69733bfb974288a05e3e451f97a, type: 3}
+    - target: {fileID: 4548497680473467120, guid: c52ae203d4d695e4292ddfe50409a0af, type: 3}
       propertyPath: panelDialogo
       value: 
       objectReference: {fileID: 6683576631073101152, guid: 197c974a1d2bfd3459ec06168971896a, type: 3}
@@ -81,12 +93,28 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 5168811512538484088, guid: 4b4895fe374022d468444a361dc00e0f, type: 3}
     - target: {fileID: 4548497680473467120, guid: c52ae203d4d695e4292ddfe50409a0af, type: 3}
+      propertyPath: botonCerrarUI
+      value: 
+      objectReference: {fileID: 3403858220961426886, guid: 3d1764fa779b8d6448870b847f2faf19, type: 3}
+    - target: {fileID: 4548497680473467120, guid: c52ae203d4d695e4292ddfe50409a0af, type: 3}
       propertyPath: panelDialogoPadre
       value: 
       objectReference: {fileID: 4563488223138204324, guid: 14b9ce39cfb93db4585c4aba668a016f, type: 3}
     - target: {fileID: 4548497680473467120, guid: c52ae203d4d695e4292ddfe50409a0af, type: 3}
+      propertyPath: dialogoVerdadTareas
+      value: verdad?
+      objectReference: {fileID: 0}
+    - target: {fileID: 4548497680473467120, guid: c52ae203d4d695e4292ddfe50409a0af, type: 3}
       propertyPath: dialogos.Array.size
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4548497680473467120, guid: c52ae203d4d695e4292ddfe50409a0af, type: 3}
+      propertyPath: dialogoMentiraTareas
+      value: me has mentido?
+      objectReference: {fileID: 0}
+    - target: {fileID: 4548497680473467120, guid: c52ae203d4d695e4292ddfe50409a0af, type: 3}
+      propertyPath: dialogoPreguntaTareas
+      value: algo por tarea
       objectReference: {fileID: 0}
     - target: {fileID: 4548497680473467120, guid: c52ae203d4d695e4292ddfe50409a0af, type: 3}
       propertyPath: panelDialogoPrincipal
