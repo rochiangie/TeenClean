@@ -111,8 +111,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   estadoVacio: {fileID: 5478951491569222526}
   estadoLleno: {fileID: 4424221234056931357}
-  tagRequerido: PlatosLimpios
-  sonidoGuardar: {fileID: 0}
+  prefabObjetoLleno: {fileID: 0}
+  panelUI: {fileID: 4456029927996470422, guid: 1b1dfdce1cdb2124bb9f51a74fbc34e2, type: 3}
+  textoUI: {fileID: 850578696039804156, guid: 0a5a35c7f8c668a489837d8c7f02a9b0, type: 3}
+  mensajeInteraccion: "Presion\xE1 E para guardar los platos limpios"
 --- !u!1 &4424221234056931357
 GameObject:
   m_ObjectHideFlags: 0

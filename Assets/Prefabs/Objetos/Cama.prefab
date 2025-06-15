@@ -311,7 +311,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   estadoVacio: {fileID: 8802699899409167586}
   estadoLleno: {fileID: 881067207353786216}
-  nombreMostrado: "Ba\xF1era"
+  nombreMostrado: Cama
   estaLleno: 0
   debugLogs: 1
   audioSource: {fileID: 6156407473395381057}

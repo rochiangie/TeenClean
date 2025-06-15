@@ -243,6 +243,9 @@ MonoBehaviour:
   estadoVacio: {fileID: 5513591663989636413}
   estadoLleno: {fileID: 941855796034353215}
   prefabObjetoLleno: {fileID: 3463493620268787513, guid: 134290439da50f64f84b35e83563dfd8, type: 3}
+  panelUI: {fileID: 4456029927996470422, guid: 1b1dfdce1cdb2124bb9f51a74fbc34e2, type: 3}
+  textoUI: {fileID: 1182757396174897816, guid: 637cf575cd18a3345a22250881b2f79c, type: 3}
+  mensajeInteraccion: "Presion\xE1 E para guardar la ropa limpia"
 --- !u!114 &3240869461952040871
 MonoBehaviour:
   m_ObjectHideFlags: 0

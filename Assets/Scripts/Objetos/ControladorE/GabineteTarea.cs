@@ -2,6 +2,7 @@
 
 public class GabineteTarea : MonoBehaviour
 {
+    [Header("Estados Visuales")]
     public GameObject estadoVacio;
     public GameObject estadoLleno;
     public GameObject prefabObjetoLleno;
@@ -12,44 +13,34 @@ public class GabineteTarea : MonoBehaviour
     void Awake()
     {
         tareasManager = FindObjectOfType<TareasManager>();
+        if (tareasManager == null)
+            Debug.LogError("🚨 No se encontró el TareasManager en la escena.");
+
         estadoVacio?.SetActive(true);
         estadoLleno?.SetActive(false);
     }
 
     public bool IntentarGuardar(GameObject objeto)
     {
-        if (estaLleno || !objeto.CompareTag("Tarea")) return false;
+        if (estaLleno || !objeto.CompareTag("Tarea"))
+        {
+            Debug.Log("❌ No se puede guardar: gabinete lleno o tag incorrecto.");
+            return false;
+        }
 
         Destroy(objeto);
         estaLleno = true;
-        estadoVacio.SetActive(false);
-        estadoLleno.SetActive(true);
+        estadoVacio?.SetActive(false);
+        estadoLleno?.SetActive(true);
 
         tareasManager?.CompletarTarea("Tarea");
+        Debug.Log("📚 Tarea entregada");
+
         return true;
-    }
-
-    /*public void SacarObjeto(Transform puntoDeCarga, InteraccionJugador jugador)
-    {
-        if (!estaLleno || prefabObjetoLleno == null) return;
-
-        GameObject nuevo = Instantiate(prefabObjetoLleno, puntoDeCarga.position, Quaternion.identity);
-        nuevo.transform.SetParent(puntoDeCarga);
-        nuevo.transform.localPosition = Vector3.zero;
-        nuevo.transform.localRotation = Quaternion.identity;
-        nuevo.transform.localScale = Vector3.one * 10f;
-        nuevo.tag = "Tarea";
-
-        jugador.RecogerObjeto(nuevo);
-
-        estaLleno = false;
-        estadoVacio.SetActive(true);
-        estadoLleno.SetActive(false);
     }
 
     public bool EstaLleno()
     {
         return estaLleno;
     }
-*/
 }
