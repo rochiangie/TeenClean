@@ -984,6 +984,10 @@ public class InteraccionJugador : MonoBehaviour
     }
 
 
+    public bool EsTagRecogible(string tag)
+    {
+        return tagsRecogibles.Contains(tag);
+    }
 
     void OcultarPopUp()
     {
