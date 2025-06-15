@@ -7673,7 +7673,7 @@ GameObject:
   - component: {fileID: 867702712}
   - component: {fileID: 867702711}
   m_Layer: 0
-  m_Name: Button-momSi
+  m_Name: botonSi
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8457,7 +8457,7 @@ GameObject:
   - component: {fileID: 916633452}
   - component: {fileID: 916633454}
   m_Layer: 0
-  m_Name: Button-x
+  m_Name: botonCerrar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11070,7 +11070,7 @@ GameObject:
   - component: {fileID: 1118780792}
   - component: {fileID: 1118780791}
   m_Layer: 0
-  m_Name: Button-MomNo
+  m_Name: botonNo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12497,7 +12497,7 @@ GameObject:
   - component: {fileID: 1147839685}
   - component: {fileID: 1147839684}
   m_Layer: 0
-  m_Name: Text (TMP)mom
+  m_Name: textoDialogo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -20215,7 +20215,7 @@ GameObject:
   - component: {fileID: 2086912686}
   - component: {fileID: 2086912685}
   m_Layer: 0
-  m_Name: Panel-momEdit
+  m_Name: PanelDialogoMadre
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
