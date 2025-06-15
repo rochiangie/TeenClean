@@ -66,7 +66,7 @@ public class InteraccionJugador : MonoBehaviour
     private Dictionary<string, GameObject> prefabsPorTag = new Dictionary<string, GameObject>();
 
     [SerializeField] private GameObject panelPopUp; // Para E
-    [SerializeField] private TextMeshProUGUI textoPopUp;
+    [SerializeField] public TextMeshProUGUI textoPopUp;
 
     [SerializeField] private GameObject panelTasks; // Para R (tasks)
 
