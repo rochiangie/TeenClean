@@ -545,6 +545,44 @@ public class InteraccionJugador : MonoBehaviour
                 }
             }
         }
+        else if (objetoCercano != null)
+        {
+            if (panelPopUp != null)
+            {
+                panelPopUp.SetActive(true);
+
+                foreach (Transform child in panelPopUp.transform)
+                {
+                    child.gameObject.SetActive(true);
+                }
+
+                TextMeshProUGUI textoTMP = panelPopUp.GetComponentInChildren<TextMeshProUGUI>(true);
+                if (textoTMP != null)
+                {
+                    string texto = "";
+
+                    if (objetoCercano.CompareTag("Sink"))
+                    {
+                        texto = "Presioná E para lavar los platos";
+                    }
+                    else if (objetoCercano.TryGetComponent(out GabineteRopa _))
+                    {
+                        texto = "Presioná E para guardar la ropa limpia";
+                    }
+                    else if (objetoCercano.TryGetComponent(out GabinetePlatos _))
+                    {
+                        texto = "Presioná E para guardar los platos limpios";
+                    }
+                    else if (objetoCercano.TryGetComponent(out GabineteTarea _))
+                    {
+                        texto = "Presioná E para entregar la tarea";
+                    }
+
+                    textoTMP.text = texto;
+                }
+            }
+        }
+
         else
         {
             // Desactivar el panel de interacción si no hay objetos cerca
