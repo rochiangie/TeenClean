@@ -11,13 +11,14 @@ public class SinkController : MonoBehaviour
     [Header("Configuración")]
     public KeyCode teclaInteraccion = KeyCode.E;
     public string tagPlatosSucios = "Platos";
-    public GameObject platoslimpios; // Este es el prefab que se instancia
+    public GameObject platoslimpios;
 
     [Header("UI")]
-    public TextMeshProUGUI mensajeUI;
+    [SerializeField] private GameObject panelPopUp;
+    [SerializeField] private TextMeshProUGUI textoPopUp;
 
     [Header("Punto de carga del jugador")]
-    public Transform puntoCarga; // Se asigna manualmente o desde el jugador
+    public Transform puntoCarga;
 
     private int estadoActual = 0; // 0: vacío, 1: sucio, 2: limpio
     private bool jugadorEnRango = false;
@@ -27,7 +28,7 @@ public class SinkController : MonoBehaviour
     private void Start()
     {
         ActualizarEstados();
-        OcultarMensaje();
+        OcultarPopUp();
     }
 
     private void Update()
@@ -38,7 +39,6 @@ public class SinkController : MonoBehaviour
 
             if (Input.GetKeyDown(teclaInteraccion))
             {
-                // Paso 1: dejar platos sucios
                 if (estadoActual == 0 && interaccionJugador.LlevaObjetoConTag(tagPlatosSucios))
                 {
                     interaccionJugador.EliminarObjetoTransportado();
@@ -46,14 +46,12 @@ public class SinkController : MonoBehaviour
                     ActualizarEstados();
                     Debug.Log("🧽 Platos sucios entregados. Estado: Sucio");
                 }
-                // Paso 2: limpiar fregadero
                 else if (estadoActual == 1 && !interaccionJugador.EstaLlevandoObjeto())
                 {
                     estadoActual = 2;
                     ActualizarEstados();
                     Debug.Log("🧼 Fregadero limpio. Listo para entregar platoslimpios.");
                 }
-                // Paso 3: entregar platoslimpios
                 else if (estadoActual == 2 && !interaccionJugador.EstaLlevandoObjeto())
                 {
                     InstanciarYAsignarPlatos(platoslimpios, puntoCarga, interaccionJugador);
@@ -74,35 +72,36 @@ public class SinkController : MonoBehaviour
 
     private void ActualizarMensaje()
     {
-        if (mensajeUI == null) return;
+        if (textoPopUp == null || panelPopUp == null || interaccionJugador == null)
+            return;
 
         if (estadoActual == 0 && interaccionJugador.LlevaObjetoConTag(tagPlatosSucios))
         {
-            mensajeUI.text = $"Presiona {teclaInteraccion} para dejar los platos sucios";
+            MostrarPopUp($"Presiona {teclaInteraccion} para dejar los platos sucios");
         }
         else if (estadoActual == 1 && !interaccionJugador.EstaLlevandoObjeto())
         {
-            mensajeUI.text = $"Presiona {teclaInteraccion} para lavar los platos";
+            MostrarPopUp($"Presiona {teclaInteraccion} para lavar los platos");
         }
         else if (estadoActual == 2 && !interaccionJugador.EstaLlevandoObjeto())
         {
-            mensajeUI.text = $"Presiona {teclaInteraccion} para recoger platoslimpios";
+            MostrarPopUp($"Presiona {teclaInteraccion} para recoger los platos limpios");
         }
         else
         {
-            mensajeUI.text = "";
+            OcultarPopUp();
         }
-
-        mensajeUI.gameObject.SetActive(mensajeUI.text != "");
     }
 
-    private void OcultarMensaje()
+    private void MostrarPopUp(string mensaje)
     {
-        if (mensajeUI != null)
-        {
-            mensajeUI.text = "";
-            mensajeUI.gameObject.SetActive(false);
-        }
+        panelPopUp.SetActive(true);
+        textoPopUp.text = mensaje;
+    }
+
+    private void OcultarPopUp()
+    {
+        panelPopUp.SetActive(false);
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -131,7 +130,7 @@ public class SinkController : MonoBehaviour
             jugadorEnRango = false;
             jugador = null;
             interaccionJugador = null;
-            OcultarMensaje();
+            OcultarPopUp();
         }
     }
 
@@ -149,13 +148,6 @@ public class SinkController : MonoBehaviour
 
     private void InstanciarYAsignarPlatos(GameObject prefab, Transform puntoDeCarga, InteraccionJugador jugador)
     {
-        if (prefab == null)
-            Debug.LogWarning("❌ Error: prefabPlatosLimpios es null");
-        if (puntoDeCarga == null)
-            Debug.LogWarning("❌ Error: puntoDeCarga es null");
-        if (jugador == null)
-            Debug.LogWarning("❌ Error: interaccionJugador es null");
-
         if (prefab == null || puntoDeCarga == null || jugador == null)
         {
             Debug.LogWarning("❌ No se puede instanciar platos: faltan referencias.");
@@ -166,14 +158,9 @@ public class SinkController : MonoBehaviour
         platos.transform.SetParent(puntoDeCarga);
         platos.transform.localPosition = Vector3.zero;
         platos.transform.localRotation = Quaternion.identity;
-
-        // ✅ usar la escala del prefab (ya seteada correctamente en Unity)
         platos.transform.localScale = prefab.transform.localScale;
-
-        // ✅ establecer el tag correcto
         platos.tag = "PlatosLimpios";
 
         jugador.RecogerObjeto(platos);
     }
-
 }
