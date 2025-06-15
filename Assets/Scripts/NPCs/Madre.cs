@@ -46,6 +46,11 @@ public class Madre : MonoBehaviour
     private Transform jugador;
     private bool esperandoRespuestaTareas = false;
 
+
+    GameObject panel;
+    string dialogo;
+    TextMeshProUGUI texto;
+
     void Start()
     {
         InicializarComponentes();
@@ -254,17 +259,38 @@ public class Madre : MonoBehaviour
     private void EvaluarRespuestaTareas(bool jugadorDiceSi)
     {
         bool tareasHechas = TareasManager.Instance?.TodasLasTareasCompletadasParaMadre() ?? false;
-        string dialogo;
         GameObject panel;
+        string dialogo;
         TextMeshProUGUI texto;
 
         if (jugadorDiceSi)
         {
-            dialogo = tareasHechas ? dialogoVerdadTareas : dialogoMentiraTareas;
-            panel = tareasHechas ? panelDialogoRespuestaSi : panelDialogoRespuestaNo;
-            texto = tareasHechas ? textoDialogoRespuestaSi : textoDialogoRespuestaNo;
+            if (tareasHechas)
+            {
+                dialogo = dialogoVerdadTareas;
+                panel = panelDialogoRespuestaSi;
+                texto = textoDialogoRespuestaSi;
 
-            if (!tareasHechas) PenalizarJugador(danoPorMentir);
+                MostrarDialogo(panel, dialogo, texto);
+                esperandoRespuestaTareas = false;
+                interaccionesConJugador++;
+
+                // ✅ Mostrar panel de victoria y cambiar de escena
+                if (TareasManager.Instance != null)
+                {
+                    TareasManager.Instance.PanelVictoria.SetActive(true);
+                    StartCoroutine(TareasManager.Instance.CargarMenuPrincipalTrasDelay());
+                }
+            }
+            else
+            {
+                dialogo = dialogoMentiraTareas;
+                panel = panelDialogoRespuestaNo;
+                texto = textoDialogoRespuestaNo;
+
+                MostrarDialogo(panel, dialogo, texto);
+                PenalizarJugador(danoPorMentir);
+            }
         }
         else
         {
@@ -274,14 +300,19 @@ public class Madre : MonoBehaviour
             panel = panelDialogoRespuestaNo;
             texto = textoDialogoRespuestaNo;
 
+            MostrarDialogo(panel, dialogo, texto);
             if (!tareasHechas) PenalizarJugador(danoAlFallar);
         }
 
-        MostrarDialogo(panel, dialogo, texto);
         esperandoRespuestaTareas = false;
         interaccionesConJugador++;
-        StartCoroutine(EsperarYReanudar());
+
+        if (!tareasHechas)
+        {
+            StartCoroutine(EsperarYReanudar());
+        }
     }
+
 
     private IEnumerator EsperarYReanudar()
     {
