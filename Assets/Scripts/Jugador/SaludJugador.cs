@@ -1,66 +1,100 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SaludJugador : MonoBehaviour
 {
     [Header("Salud del Jugador")]
-    [SerializeField] private int vidaMaxima = 100;
-    private int vidaActual;
-    public int saludMaxima = 100;
-    public int saludActual;
+    [SerializeField] private int saludMaxima = 100;
+    private int saludActual;
 
-    [Header("Referencias")]
-    public Animator animator; // Opcional para animaciones de daño o muerte
+    [Header("Corazones UI (Sprites)")]
+    [SerializeField] private SpriteRenderer[] corazonesSprites; // Asegurate de usar SpriteRenderer, NO Image
+
+    [Header("Panel de derrota")]
+    [SerializeField] private GameObject panelDerrota;
+
+    [Header("Animator")]
+    [SerializeField] private Animator animator;
+
+    private bool yaMurio = false;
 
     public bool EstaMuerto => saludActual <= 0;
 
     void Start()
     {
         saludActual = saludMaxima;
+        ActualizarCorazones();
+        if (panelDerrota != null) panelDerrota.SetActive(false);
     }
 
-    // Llamar cuando recibe daño
     public void RecibirDaño(int cantidad)
     {
-        Debug.Log($"🔥 SaludJugador.RecibirDaño llamado con cantidad: {cantidad}");
+        if (yaMurio) return;
 
         saludActual -= cantidad;
         saludActual = Mathf.Clamp(saludActual, 0, saludMaxima);
-
-        Debug.Log($"❤️ Salud actual: {saludActual}");
 
         if (animator != null)
         {
             animator.SetTrigger("Daño");
         }
 
+        ActualizarCorazones();
+
         if (saludActual <= 0)
         {
+            yaMurio = true;
             Morir();
         }
     }
 
-    public int GetVidaActual()
+    private void ActualizarCorazones()
     {
-        return vidaActual;
+        int corazonesVisibles = Mathf.CeilToInt((float)saludActual / (saludMaxima / corazonesSprites.Length));
+
+        for (int i = 0; i < corazonesSprites.Length; i++)
+        {
+            if (corazonesSprites[i] != null)
+            {
+                Color color = corazonesSprites[i].color;
+                color.a = i < corazonesVisibles ? 1f : 0f;
+                corazonesSprites[i].color = color;
+            }
+        }
     }
-    // Llamar cuando toma una poción u objeto de curación
+
+    private void Morir()
+    {
+        Debug.Log("☠️ El jugador ha muerto.");
+
+        if (animator != null)
+            animator.SetTrigger("Morir");
+
+        if (panelDerrota != null)
+            panelDerrota.SetActive(true);
+
+        GetComponent<InteraccionJugador>().enabled = false;
+
+        StartCoroutine(CargarMenuDerrotaTrasDelay());
+    }
+
+    private System.Collections.IEnumerator CargarMenuDerrotaTrasDelay()
+    {
+        yield return new WaitForSeconds(3f);
+        SceneManager.LoadScene("MenuPrincipal");
+    }
+
     public void Curar(int cantidad)
     {
+        if (yaMurio) return;
+
         saludActual += cantidad;
         saludActual = Mathf.Clamp(saludActual, 0, saludMaxima);
-        Debug.Log($"Jugador se curó {cantidad}. Salud actual: {saludActual}");
+        ActualizarCorazones();
     }
 
-    void Morir()
+    public int GetVidaActual()
     {
-        Debug.Log("El jugador ha muerto.");
-        if (animator != null)
-        {
-            animator.SetTrigger("Morir");
-        }
-
-        // Aquí podrías desactivar controles, reproducir sonidos, etc.
-        GetComponent<InteraccionJugador>().enabled = false;
-        // También podrías llamar a un GameManager para reiniciar nivel, mostrar UI, etc.
+        return saludActual;
     }
 }

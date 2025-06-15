@@ -111,9 +111,13 @@ public class Madre : MonoBehaviour
         if (tareasHechas)
         {
             textoDialogo.text = "¡Muy bien! Estoy orgullosa de ti.";
-            // Podés agregar aquí la victoria si querés:
-            // TareasManager.Instance.PanelVictoria.SetActive(true);
-            // StartCoroutine(TareasManager.Instance.CargarMenuPrincipalTrasDelay());
+
+            // 🔥 ACTIVAR PANEL DE VICTORIA Y CAMBIAR DE ESCENA
+            if (TareasManager.Instance != null)
+            {
+                TareasManager.Instance.PanelVictoria.SetActive(true);
+                StartCoroutine(TareasManager.Instance.CargarMenuPrincipalTrasDelay());
+            }
         }
         else
         {
@@ -121,6 +125,7 @@ public class Madre : MonoBehaviour
             PenalizarJugador(danoPorMentir);
         }
     }
+
 
     private void RespuestaNo()
     {
