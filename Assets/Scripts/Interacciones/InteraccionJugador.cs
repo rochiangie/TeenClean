@@ -195,7 +195,7 @@ public class InteraccionJugador : MonoBehaviour
                     Madre madre = obj.GetComponent<Madre>();
                     if (madre != null)
                     {
-                        madre.IniciarDialogoConMadre(); 
+                        madre.IniciarDialogo(); 
                         return;
                     }
                 }
@@ -931,7 +931,9 @@ public class InteraccionJugador : MonoBehaviour
 
     public void Die()
     {
-        if (!isAlive) return;
+        GetComponent<SaludJugador>()?.Morir();
+
+       /* if (!isAlive) return;
 
         isAlive = false;
 
@@ -943,7 +945,7 @@ public class InteraccionJugador : MonoBehaviour
             animator.SetBool("isAlive", false);
         }
 
-        Debug.Log("¡El jugador ha muerto!");
+        Debug.Log("¡El jugador ha muerto!");*/
     }
 
 

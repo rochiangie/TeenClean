@@ -15,6 +15,8 @@ public class Madre : MonoBehaviour
     [SerializeField] private TextMeshProUGUI textoDialogo;
     [SerializeField] private Button botonSi;
     [SerializeField] private Button botonNo;
+    [SerializeField] private Button botonEntendi;
+    [SerializeField] private Button botonNoEntendi;
     [SerializeField] private Button botonCerrar;
 
     [Header("Configuración")]
@@ -37,13 +39,9 @@ public class Madre : MonoBehaviour
         jugador = GameObject.FindGameObjectWithTag("Player")?.transform;
         if (jugador == null) Debug.LogError("❌ No se encontró al jugador");
 
-        if (panelDialogoMadre != null)
-            panelDialogoMadre.SetActive(false);
+        if (panelDialogoMadre != null) panelDialogoMadre.SetActive(false);
 
-        // Configurar eventos de botones
-        if (botonSi != null) botonSi.onClick.AddListener(RespuestaSi);
-        if (botonNo != null) botonNo.onClick.AddListener(RespuestaNo);
-        if (botonCerrar != null) botonCerrar.onClick.AddListener(CerrarDialogo);
+        OcultarBotones(botonSi, botonNo, botonEntendi, botonNoEntendi, botonCerrar);
 
         IrAlSiguientePunto();
     }
@@ -62,7 +60,7 @@ public class Madre : MonoBehaviour
         if (other.CompareTag("Player") && !enDialogo)
         {
             DetenerMovimiento();
-            IniciarDialogoConMadre();
+            IniciarDialogo();
         }
     }
 
@@ -93,44 +91,75 @@ public class Madre : MonoBehaviour
         }
     }
 
-    public void IniciarDialogoConMadre()
+    public void IniciarDialogo()
     {
         enDialogo = true;
 
         if (panelDialogoMadre != null && textoDialogo != null)
         {
             panelDialogoMadre.SetActive(true);
-            textoDialogo.text = "Hola hija! Espero estés bien. ¿Hiciste tus tasks de hoy?";
+            textoDialogo.text = "Hola hija! ¿Hiciste tus tareas hoy?";
+
+            MostrarBotones(botonSi, botonNo);
+            OcultarBotones(botonEntendi, botonNoEntendi, botonCerrar);
+
+            botonSi.onClick.RemoveAllListeners();
+            botonNo.onClick.RemoveAllListeners();
+
+            botonSi.onClick.AddListener(() => ResponderSi());
+            botonNo.onClick.AddListener(() => ResponderNo());
         }
     }
 
-    private void RespuestaSi()
+    private void ResponderSi()
     {
         bool tareasHechas = TareasManager.Instance?.TodasLasTareasCompletadasParaMadre() ?? false;
 
         if (tareasHechas)
         {
             textoDialogo.text = "¡Muy bien! Estoy orgullosa de ti.";
+            OcultarBotones(botonSi, botonNo, botonEntendi, botonNoEntendi);
+            MostrarBotones(botonCerrar);
 
-            // 🔥 ACTIVAR PANEL DE VICTORIA Y CAMBIAR DE ESCENA
-            if (TareasManager.Instance != null)
-            {
-                TareasManager.Instance.PanelVictoria.SetActive(true);
-                StartCoroutine(TareasManager.Instance.CargarMenuPrincipalTrasDelay());
-            }
+            TareasManager.Instance?.PanelVictoria?.SetActive(true);
+            StartCoroutine(TareasManager.Instance.CargarMenuPrincipalTrasDelay());
         }
         else
         {
             textoDialogo.text = "Me has dicho una mentira, entonces hay castigo!";
             PenalizarJugador(danoPorMentir);
+
+            MostrarBotones(botonCerrar);
+            OcultarBotones(botonSi, botonNo, botonEntendi, botonNoEntendi);
         }
+
+        botonCerrar.onClick.RemoveAllListeners();
+        botonCerrar.onClick.AddListener(CerrarDialogo);
     }
 
-
-    private void RespuestaNo()
+    private void ResponderNo()
     {
-        textoDialogo.text = "Debes lavar los platos y la ropa, luego guardar todo en su lugar y venir a chequear conmigo.";
-        PenalizarJugador(danoAlFallar);
+        textoDialogo.text = "Debes lavar los platos, la ropa, guardar todo y luego chequear conmigo.\n¿Entendiste?";
+
+        MostrarBotones(botonEntendi, botonNoEntendi, botonCerrar);
+        OcultarBotones(botonSi, botonNo);
+
+        botonEntendi.onClick.RemoveAllListeners();
+        botonNoEntendi.onClick.RemoveAllListeners();
+
+        botonEntendi.onClick.AddListener(() =>
+        {
+            CerrarDialogo();
+        });
+
+        botonNoEntendi.onClick.AddListener(() =>
+        {
+            textoDialogo.text = "No te preocupes... pero no es tan difícil eh 😅";
+            MostrarBotones(botonCerrar);
+            OcultarBotones(botonEntendi, botonNoEntendi);
+            botonCerrar.onClick.RemoveAllListeners();
+            botonCerrar.onClick.AddListener(CerrarDialogo);
+        });
     }
 
     private void PenalizarJugador(int daño)
@@ -149,5 +178,17 @@ public class Madre : MonoBehaviour
 
         enDialogo = false;
         ReanudarMovimiento();
+    }
+
+    private void MostrarBotones(params Button[] botones)
+    {
+        foreach (var btn in botones)
+            if (btn != null) btn.gameObject.SetActive(true);
+    }
+
+    private void OcultarBotones(params Button[] botones)
+    {
+        foreach (var btn in botones)
+            if (btn != null) btn.gameObject.SetActive(false);
     }
 }

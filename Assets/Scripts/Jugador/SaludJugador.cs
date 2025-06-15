@@ -19,6 +19,9 @@ public class SaludJugador : MonoBehaviour
 
     [SerializeField] private CorazonPorSprite corazonHUD;
 
+    private bool isAlive = true;
+    private Rigidbody2D rb;
+
 
     private bool yaMurio = false;
 
@@ -26,6 +29,8 @@ public class SaludJugador : MonoBehaviour
 
     void Start()
     {
+        rb = GetComponent<Rigidbody2D>();
+
         saludActual = saludMaxima;
         //ActualizarCorazones();
         if (panelDerrota != null) panelDerrota.SetActive(false);
@@ -71,20 +76,32 @@ public class SaludJugador : MonoBehaviour
         }
     }*/
 
-    void Morir()
+    public void Morir()
     {
-        Debug.Log("☠️ El jugador ha muerto.");
+        if (!isAlive) return;
+        isAlive = false;
 
         if (animator != null)
+        {
+            animator.SetBool("isAlive", false);
             animator.SetTrigger("Morir");
+            animator.SetTrigger("Die");
+        }
+
+        rb.velocity = Vector2.zero;
+        rb.bodyType = RigidbodyType2D.Static;
 
         if (panelDerrota != null)
+        {
+            panelDerrota.transform.SetAsLastSibling();
             panelDerrota.SetActive(true);
+        }
 
-        GetComponent<InteraccionJugador>().enabled = false;
-
+        Debug.Log("☠️ El jugador ha muerto por SaludJugador.");
         StartCoroutine(CargarMenuDerrotaTrasDelay());
     }
+
+
 
 
     public IEnumerator CargarMenuDerrotaTrasDelay()
