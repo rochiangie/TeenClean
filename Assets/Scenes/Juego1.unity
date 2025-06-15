@@ -539,7 +539,7 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
-    - {fileID: 159579111597402003, guid: d8d9eaaefaa921144ab5f3643b49f2c0, type: 3}
+    - {fileID: 0}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -13680,7 +13680,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saludMaxima: 100
-  panelDerrota: {fileID: 327773530}
+  panelDerrota: {fileID: 788271877}
   animator: {fileID: 1193191332}
   corazonHUD: {fileID: 243902061}
 --- !u!114 &1193191339
