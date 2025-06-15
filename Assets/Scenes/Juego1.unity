@@ -5063,6 +5063,9 @@ MonoBehaviour:
   estadoVacio: {fileID: 820048549}
   estadoLleno: {fileID: 361159726}
   prefabObjetoLleno: {fileID: 3474649480941468609, guid: 25e6c55c29e13d14997876aae03d0838, type: 3}
+  panelUI: {fileID: 1331323267}
+  textoUI: {fileID: 869905993}
+  mensajeInteraccion: "Presion\xE1 E para guardar la ropa limpia"
 --- !u!1 &591346793
 GameObject:
   m_ObjectHideFlags: 0
@@ -16684,6 +16687,18 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4781822936484039209, guid: 19dbe556de8d04349a76fa864e9087c7, type: 3}
+      propertyPath: panelUI
+      value: 
+      objectReference: {fileID: 1331323267}
+    - target: {fileID: 4781822936484039209, guid: 19dbe556de8d04349a76fa864e9087c7, type: 3}
+      propertyPath: textoUI
+      value: 
+      objectReference: {fileID: 869905993}
+    - target: {fileID: 4781822936484039209, guid: 19dbe556de8d04349a76fa864e9087c7, type: 3}
+      propertyPath: prefabObjetoLleno
+      value: 
+      objectReference: {fileID: 5269092204875667488, guid: 4bb1498d76145a74d837ed4e70730152, type: 3}
     - target: {fileID: 5478951491569222526, guid: 19dbe556de8d04349a76fa864e9087c7, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -18048,6 +18063,9 @@ MonoBehaviour:
   estadoVacio: {fileID: 1202513066}
   estadoLleno: {fileID: 1811389696}
   prefabObjetoLleno: {fileID: 3474649480941468609, guid: 25e6c55c29e13d14997876aae03d0838, type: 3}
+  panelUI: {fileID: 1331323267}
+  textoUI: {fileID: 869905993}
+  mensajeInteraccion: "Presion\xE1 E para guardar la ropa limpia"
 --- !u!1 &1529790084 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 9162304587956990708, guid: 8b3cb8913fad1bd4ca888d33b1ea57fa, type: 3}
@@ -25975,6 +25993,18 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4781822936484039209, guid: 19dbe556de8d04349a76fa864e9087c7, type: 3}
+      propertyPath: panelUI
+      value: 
+      objectReference: {fileID: 1331323267}
+    - target: {fileID: 4781822936484039209, guid: 19dbe556de8d04349a76fa864e9087c7, type: 3}
+      propertyPath: textoUI
+      value: 
+      objectReference: {fileID: 869905993}
+    - target: {fileID: 4781822936484039209, guid: 19dbe556de8d04349a76fa864e9087c7, type: 3}
+      propertyPath: prefabObjetoLleno
+      value: 
+      objectReference: {fileID: 5269092204875667488, guid: 4bb1498d76145a74d837ed4e70730152, type: 3}
     - target: {fileID: 5478951491569222526, guid: 19dbe556de8d04349a76fa864e9087c7, type: 3}
       propertyPath: m_IsActive
       value: 1

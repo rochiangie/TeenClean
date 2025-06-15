@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using TMPro;
 
 public class GabineteRopa : MonoBehaviour
 {
@@ -6,6 +7,11 @@ public class GabineteRopa : MonoBehaviour
     public GameObject estadoVacio;
     public GameObject estadoLleno;
     public GameObject prefabObjetoLleno;
+
+    [Header("UI de interacción")]
+    public GameObject panelUI;
+    public TextMeshProUGUI textoUI;
+    [TextArea] public string mensajeInteraccion = "Presioná E para guardar la ropa limpia";
 
     private bool estaLleno = false;
     private TareasManager tareasManager;
@@ -18,6 +24,10 @@ public class GabineteRopa : MonoBehaviour
 
         estadoVacio?.SetActive(true);
         estadoLleno?.SetActive(false);
+
+        // Asegurarse de que el panel esté oculto al inicio
+        if (panelUI != null)
+            panelUI.SetActive(false);
     }
 
     public bool IntentarGuardar(GameObject objeto)
@@ -56,37 +66,27 @@ public class GabineteRopa : MonoBehaviour
             Debug.Log("🎯 Tarea de ropa completada");
         }
 
+        // Ocultar panel al completar
+        if (panelUI != null)
+            panelUI.SetActive(false);
+
         return true;
     }
 
-
-    /*public void SacarObjeto(Transform puntoDeCarga, InteraccionJugador jugador)
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        if (!estaLleno || prefabObjetoLleno == null || jugador == null)
+        if (other.CompareTag("Player") && !estaLleno && panelUI != null && textoUI != null)
         {
-            Debug.LogWarning("⚠️ No se puede sacar objeto: condiciones inválidas.");
-            return;
+            panelUI.SetActive(true);
+            textoUI.text = mensajeInteraccion;
         }
-
-        GameObject nuevo = Instantiate(prefabObjetoLleno, puntoDeCarga.position, Quaternion.identity);
-        nuevo.transform.SetParent(puntoDeCarga);
-        nuevo.transform.localPosition = Vector3.zero;
-        nuevo.transform.localRotation = Quaternion.identity;
-        nuevo.transform.localScale = Vector3.one * 0.5f;
-        nuevo.tag = "RopaLimpia";
-
-        jugador.RecogerObjeto(nuevo);
-
-        estaLleno = false;
-        estadoVacio?.SetActive(true);
-        estadoLleno?.SetActive(false);
-
-        Debug.Log("🧺 Ropa sacada del gabinete");
     }
 
-    public bool EstaLleno()
+    private void OnTriggerExit2D(Collider2D other)
     {
-        return estaLleno;
-    }*/
-
+        if (other.CompareTag("Player") && panelUI != null)
+        {
+            panelUI.SetActive(false);
+        }
+    }
 }
