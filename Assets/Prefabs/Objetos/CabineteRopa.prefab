@@ -141,10 +141,9 @@ GameObject:
   - component: {fileID: 4626920157283591810}
   - component: {fileID: 350005122233408080}
   - component: {fileID: 6267714152065029089}
-  - component: {fileID: 686610572293357601}
-  - component: {fileID: 3240869461952040871}
+  - component: {fileID: 3682993414744191029}
   m_Layer: 3
-  m_Name: CabineteLibros
+  m_Name: CabineteRopa
   m_TagString: Cabinete
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -228,7 +227,7 @@ MonoBehaviour:
   m_Area: 1
   m_IgnoreFromBuild: 0
   m_AffectedAgents: ffffffff
---- !u!114 &686610572293357601
+--- !u!114 &3682993414744191029
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -237,31 +236,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 2512872479426731146}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c041b5a0ba3f10245a9b60761eaad85b, type: 3}
+  m_Script: {fileID: 11500000, guid: bf25dc330b9f7e64ebd06a0f87289b1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   estadoVacio: {fileID: 5513591663989636413}
-  estadoLleno: {fileID: 941855796034353215}
-  prefabObjetoLleno: {fileID: 3463493620268787513, guid: 134290439da50f64f84b35e83563dfd8, type: 3}
-  panelUI: {fileID: 4456029927996470422, guid: 1b1dfdce1cdb2124bb9f51a74fbc34e2, type: 3}
-  textoUI: {fileID: 1182757396174897816, guid: 637cf575cd18a3345a22250881b2f79c, type: 3}
-  mensajeInteraccion: "Presion\xE1 E para guardar la ropa limpia"
---- !u!114 &3240869461952040871
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2512872479426731146}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9809bf1345abc5648af68b3a82653f08, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_OverrideArea: 1
-  m_Area: 1
-  m_IgnoreFromBuild: 0
-  m_AffectedAgents: ffffffff
+  estadoLleno: {fileID: 0}
+  prefabObjetoLleno: {fileID: 0}
 --- !u!1 &5513591663989636413
 GameObject:
   m_ObjectHideFlags: 0
