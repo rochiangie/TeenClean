@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class SaludJugador : MonoBehaviour
 {
@@ -70,7 +71,7 @@ public class SaludJugador : MonoBehaviour
         }
     }*/
 
-    private void Morir()
+    void Morir()
     {
         Debug.Log("☠️ El jugador ha muerto.");
 
@@ -85,11 +86,24 @@ public class SaludJugador : MonoBehaviour
         StartCoroutine(CargarMenuDerrotaTrasDelay());
     }
 
-    private System.Collections.IEnumerator CargarMenuDerrotaTrasDelay()
+
+    public IEnumerator CargarMenuDerrotaTrasDelay()
     {
+        yield return new WaitForSeconds(2f);
+
+        // Mostrar panel de derrota
+        if (panelDerrota != null)
+            panelDerrota.SetActive(true);
+
+        // Opcional: esperar un poco más antes de cargar el menú
         yield return new WaitForSeconds(3f);
+
+        // Cargar menú principal
         SceneManager.LoadScene("MenuPrincipal");
     }
+
+
+
 
     public void Curar(int cantidad)
     {

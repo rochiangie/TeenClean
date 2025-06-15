@@ -73,6 +73,14 @@ PrefabInstance:
       value: 24.93
       objectReference: {fileID: 0}
     - target: {fileID: 4548497680473467120, guid: c52ae203d4d695e4292ddfe50409a0af, type: 3}
+      propertyPath: botonNo
+      value: 
+      objectReference: {fileID: 8679379479244963847, guid: 2c23875e258d2354cb3c205f6b7e6bdf, type: 3}
+    - target: {fileID: 4548497680473467120, guid: c52ae203d4d695e4292ddfe50409a0af, type: 3}
+      propertyPath: botonSi
+      value: 
+      objectReference: {fileID: 1808775407514122656, guid: 5a1d07b0d96ac4b4c90a8ffeded29138, type: 3}
+    - target: {fileID: 4548497680473467120, guid: c52ae203d4d695e4292ddfe50409a0af, type: 3}
       propertyPath: botonNoUI
       value: 
       objectReference: {fileID: 8679379479244963847, guid: 2c23875e258d2354cb3c205f6b7e6bdf, type: 3}
@@ -84,6 +92,10 @@ PrefabInstance:
       propertyPath: canvasMom
       value: 
       objectReference: {fileID: 3990517627513594880, guid: d8c5f69733bfb974288a05e3e451f97a, type: 3}
+    - target: {fileID: 4548497680473467120, guid: c52ae203d4d695e4292ddfe50409a0af, type: 3}
+      propertyPath: botonCerrar
+      value: 
+      objectReference: {fileID: 3403858220961426886, guid: 3d1764fa779b8d6448870b847f2faf19, type: 3}
     - target: {fileID: 4548497680473467120, guid: c52ae203d4d695e4292ddfe50409a0af, type: 3}
       propertyPath: panelDialogo
       value: 
