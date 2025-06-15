@@ -1152,7 +1152,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timerText: {fileID: 657034182}
-  timerText: {fileID: 993449882}
   gameOverPanel: {fileID: 788271877}
 --- !u!4 &290897969
 Transform:
@@ -2857,6 +2856,10 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3083488791747815759, guid: ed52dcb83f03ca0419d0e2cbb4f5b908, type: 3}
+      propertyPath: "sonidoDa\xF1o"
+      value: 
+      objectReference: {fileID: 8300000, guid: 82e6dfd9dc1e0f749936ff764c2f8847, type: 3}
+    - target: {fileID: 3083488791747815759, guid: ed52dcb83f03ca0419d0e2cbb4f5b908, type: 3}
       propertyPath: canvasTextoE
       value: 
       objectReference: {fileID: 1815565742}
@@ -2990,6 +2993,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8988786418309249223, guid: ed52dcb83f03ca0419d0e2cbb4f5b908, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1193191333}
+    - targetCorrespondingSourceObject: {fileID: 8988786418309249223, guid: ed52dcb83f03ca0419d0e2cbb4f5b908, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1193191345}
   m_SourcePrefab: {fileID: 100100000, guid: ed52dcb83f03ca0419d0e2cbb4f5b908, type: 3}
 --- !u!4 &332908751 stripped
 Transform:
@@ -3417,7 +3423,7 @@ Transform:
   m_GameObject: {fileID: 357489272}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -47.7, y: -33.8, z: -0.6859235}
+  m_LocalPosition: {x: 12.4, y: -72.7, z: -0.6859235}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -6556,8 +6562,7 @@ MonoBehaviour:
   panelInfo: {fileID: 323759215}
   textoInfo: {fileID: 2128065735}
   mensaje: "Presiona ENTER para acceder al men\xFA principal\nPresiona R para abrir
-    el menu de tareas\nPresiona F para atacar\nPresiona la barra espaciadora para
-    actrivar el escudo"
+    el menu de tareas\nPresiona F para atacar\nPresiona G para actrivar el escudo"
   tiempoEnPantalla: 5
 --- !u!82 &718845225
 AudioSource:
@@ -14696,6 +14701,7 @@ MonoBehaviour:
   panelDerrota: {fileID: 788271877}
   animator: {fileID: 1193191332}
   corazonHUD: {fileID: 243902061}
+  "sonidoDa\xF1o": {fileID: 8300000, guid: 82e6dfd9dc1e0f749936ff764c2f8847, type: 3}
 --- !u!114 &1193191339
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14711,6 +14717,102 @@ MonoBehaviour:
   teclaDefensa: 103
   prefabEscudo: {fileID: 3845032672443722249, guid: e6eca3dadd818c14f94e124d8544d6de, type: 3}
   puntoDeSpawn: {fileID: 2034354229}
+--- !u!82 &1193191345
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1193191326}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &1193321182
 GameObject:
   m_ObjectHideFlags: 0
@@ -25442,7 +25544,8 @@ PrefabInstance:
       propertyPath: puntoCarga
       value: 
       objectReference: {fileID: 441302571}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8863019173581842338, guid: 8b1894130a1041e46831234233fe86c5, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:

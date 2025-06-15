@@ -24,7 +24,6 @@ public class InteraccionJugador : MonoBehaviour
     public Transform puntoCarga;
     [SerializeField] private string[] tagsRecogibles = { "Platos", "RopaSucia", "RopaLimpia", "Tarea" };
 
-
     private Rigidbody2D rb;
     private Animator animator;
     private Vector2 input;
@@ -109,7 +108,6 @@ public class InteraccionJugador : MonoBehaviour
             Debug.LogError("🚨 No se encontró el TareasManager en la escena.");
         }
     }
-
 
     void Update()
     {

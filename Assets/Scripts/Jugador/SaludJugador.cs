@@ -21,7 +21,8 @@ public class SaludJugador : MonoBehaviour
 
     private bool isAlive = true;
     private Rigidbody2D rb;
-
+    public AudioClip sonidoDaño;
+    private AudioSource audioSource;
 
     private bool yaMurio = false;
 
@@ -30,6 +31,7 @@ public class SaludJugador : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        audioSource = GetComponent<AudioSource>();
 
         saludActual = saludMaxima;
         //ActualizarCorazones();
@@ -53,6 +55,9 @@ public class SaludJugador : MonoBehaviour
         {
             corazonHUD.RecibirDaño(cantidad); // ← actualiza el sprite de vida visual
         }
+
+        if (sonidoDaño != null && audioSource != null)
+            audioSource.PlayOneShot(sonidoDaño);
 
         if (saludActual <= 0)
         {
