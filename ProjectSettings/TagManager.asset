@@ -38,6 +38,7 @@ TagManager:
   - Lavarropas
   - Madre
   - Pollo
+  - GabinetePollo
   layers:
   - Default
   - TransparentFX
