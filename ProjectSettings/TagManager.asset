@@ -39,6 +39,7 @@ TagManager:
   - Madre
   - Pollo
   - GabinetePollo
+  - Horno
   layers:
   - Default
   - TransparentFX

@@ -149,6 +149,16 @@ public class TareasManager : MonoBehaviour
         }
     }
 
+
+    public class FinDelJuego : MonoBehaviour
+    {
+        public void IrAEscenaEnding()
+        {
+            SceneManager.LoadScene("Ending");
+        }
+    }
+
+
     public bool TodasLasTareasCompletadasParaMadre()
     {
         return ropaCompletada && platosCompletados && tareaCompletada && camaCompletada && polloCompletado;
