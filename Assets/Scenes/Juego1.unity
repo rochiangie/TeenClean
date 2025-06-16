@@ -1266,7 +1266,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e0bb8b5d8e30d9478874b11dacd7139, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  panelInstrucciones: {fileID: 0}
+  panelInstrucciones: {fileID: 323759215}
 --- !u!4 &291930380
 Transform:
   m_ObjectHideFlags: 0
@@ -9975,7 +9975,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 5
+  m_SortingOrder: 6
   m_TargetDisplay: 0
 --- !u!1 &992852873
 GameObject:
@@ -14658,16 +14658,16 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1195249435}
   m_LocalRotation: {x: -0, y: -0, z: -0.002240578, w: 0.99999756}
-  m_LocalPosition: {x: 0, y: 0, z: 10}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2086912684}
-  m_Father: {fileID: 1856358769}
+  m_Father: {fileID: 1702179805}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -0.257}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 28, y: -21.1}
+  m_AnchoredPosition: {x: 270.86194, y: 125.33564}
   m_SizeDelta: {x: 257.4537, y: 200.3023}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1195249437
@@ -17323,7 +17323,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 149.07007, y: -83.63959}
+  m_AnchoredPosition: {x: 134.4, y: -73.9}
   m_SizeDelta: {x: 53.5758, y: 11.3436}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1494913145
@@ -18656,6 +18656,7 @@ RectTransform:
   - {fileID: 1494913144}
   - {fileID: 323759216}
   - {fileID: 590200886}
+  - {fileID: 1195249436}
   m_Father: {fileID: 1856358769}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -18723,7 +18724,7 @@ Canvas:
   m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
-  m_SortingLayerID: 0
+  m_SortingLayerID: 50653485
   m_SortingOrder: 5
   m_TargetDisplay: 0
 --- !u!1 &1707183777 stripped
@@ -19589,6 +19590,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1702179805}
   - {fileID: 832019752}
   - {fileID: 349872166}
   - {fileID: 1662106550}
@@ -19600,8 +19602,6 @@ Transform:
   - {fileID: 2006611039}
   - {fileID: 504534370}
   - {fileID: 591346794}
-  - {fileID: 1702179805}
-  - {fileID: 1195249436}
   - {fileID: 992188281}
   m_Father: {fileID: 519420032}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
