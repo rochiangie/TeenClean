@@ -37,6 +37,8 @@ TagManager:
   - RopaSucia
   - Lavarropas
   - Madre
+  - Pollo
+  - GabinetePollo
   layers:
   - Default
   - TransparentFX

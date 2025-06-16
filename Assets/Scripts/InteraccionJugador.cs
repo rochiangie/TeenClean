@@ -35,7 +35,7 @@ public class InteraccionJugador : MonoBehaviour
     public GameObject panelInteraccion;
     public TextMeshProUGUI textoInteraccion;
 
-    private GameObject objetoEnMano;
+    public GameObject objetoEnMano;
 
 
     private GameObject objetoCercanoRecogible;

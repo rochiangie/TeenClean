@@ -34,6 +34,9 @@ public class TareasManager : MonoBehaviour
     [SerializeField] private Toggle PlatosToggle;
     [SerializeField] private Toggle TareaToggle;
     [SerializeField] private Toggle CamaToggle;
+    [SerializeField] private Toggle PolloToggle; // 👈 nuevo toggle
+
+    private bool polloCompletado = false; // 👈 nueva flag
 
     private int ropaContador = 0;
     private int platosContador = 0;
@@ -128,6 +131,10 @@ public class TareasManager : MonoBehaviour
             default:
                 Debug.LogWarning($"⚠️ Tarea '{tarea}' no reconocida.");
                 break;
+            case "Pollo":
+                PolloToggle.isOn = true;
+                polloCompletado = true;
+                break;
         }
 
         VerificarVictoria();
@@ -135,7 +142,7 @@ public class TareasManager : MonoBehaviour
 
     private void VerificarVictoria()
     {
-        if (ropaCompletada && platosCompletados && tareaCompletada && camaCompletada)
+        if (ropaCompletada && platosCompletados && tareaCompletada && camaCompletada && polloCompletado)
         {
             Debug.Log("✅ Todas las tareas completadas.");
             // Ya no activamos el panel de victoria aquí.
@@ -144,7 +151,7 @@ public class TareasManager : MonoBehaviour
 
     public bool TodasLasTareasCompletadasParaMadre()
     {
-        return ropaCompletada && platosCompletados && tareaCompletada && camaCompletada;
+        return ropaCompletada && platosCompletados && tareaCompletada && camaCompletada && polloCompletado;
     }
 
     private HashSet<GabineteRopa> gabinetesConRopa = new HashSet<GabineteRopa>();
