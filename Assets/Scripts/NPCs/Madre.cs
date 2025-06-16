@@ -54,6 +54,17 @@ public class Madre : MonoBehaviour
             IrAlSiguientePunto();
         }
     }
+    void LateUpdate()
+    {
+        // Mantener la madre siempre visible en Z = 0
+        Vector3 pos = transform.position;
+        pos.z = 0f;
+        transform.position = pos;
+
+        // También podés fijar la altura (Y) si flota o se hunde
+        // pos.y = Mathf.Clamp(pos.y, -5f, 5f);
+        // transform.position = pos;
+    }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
