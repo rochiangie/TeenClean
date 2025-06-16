@@ -3664,7 +3664,7 @@ Transform:
   m_GameObject: {fileID: 357489272}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -14.6, y: 10, z: -0.6859235}
+  m_LocalPosition: {x: -48.8, y: -61.7, z: -0.6859235}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -13236,6 +13236,11 @@ CanvasGroup:
   m_Interactable: 0
   m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 1
+--- !u!4 &1139367198 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5851892015240501842, guid: 9b2aca140e57097438df70070a6f7323, type: 3}
+  m_PrefabInstance: {fileID: 4894243420988976473}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1145668035
 GameObject:
   m_ObjectHideFlags: 0
@@ -17124,6 +17129,7 @@ Transform:
   m_Children:
   - {fileID: 4345335772069050090}
   - {fileID: 248965731}
+  - {fileID: 1139367198}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1358554475 stripped
@@ -26202,13 +26208,21 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1777776194022876035, guid: 9e7e39a53066df845a2bbb2bd34cdc3a, type: 3}
+      propertyPath: m_LayerOverridePriority
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3444838060319976510, guid: 9e7e39a53066df845a2bbb2bd34cdc3a, type: 3}
       propertyPath: m_Name
       value: pollo
       objectReference: {fileID: 0}
     - target: {fileID: 3444838060319976510, guid: 9e7e39a53066df845a2bbb2bd34cdc3a, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3715741390546682507, guid: 9e7e39a53066df845a2bbb2bd34cdc3a, type: 3}
+      propertyPath: m_SortingOrder
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 8840133659410972381, guid: 9e7e39a53066df845a2bbb2bd34cdc3a, type: 3}
       propertyPath: m_LocalPosition.x
@@ -26216,7 +26230,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8840133659410972381, guid: 9e7e39a53066df845a2bbb2bd34cdc3a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -16.6
+      value: -17.7
       objectReference: {fileID: 0}
     - target: {fileID: 8840133659410972381, guid: 9e7e39a53066df845a2bbb2bd34cdc3a, type: 3}
       propertyPath: m_LocalPosition.z
@@ -26255,6 +26269,63 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9e7e39a53066df845a2bbb2bd34cdc3a, type: 3}
+--- !u!1001 &4894243420988976473
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1356364878}
+    m_Modifications:
+    - target: {fileID: 3566854299185269085, guid: 9b2aca140e57097438df70070a6f7323, type: 3}
+      propertyPath: m_Name
+      value: SalidaPOllo
+      objectReference: {fileID: 0}
+    - target: {fileID: 5851892015240501842, guid: 9b2aca140e57097438df70070a6f7323, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 5851892015240501842, guid: 9b2aca140e57097438df70070a6f7323, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -43.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 5851892015240501842, guid: 9b2aca140e57097438df70070a6f7323, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.75346017
+      objectReference: {fileID: 0}
+    - target: {fileID: 5851892015240501842, guid: 9b2aca140e57097438df70070a6f7323, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5851892015240501842, guid: 9b2aca140e57097438df70070a6f7323, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5851892015240501842, guid: 9b2aca140e57097438df70070a6f7323, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5851892015240501842, guid: 9b2aca140e57097438df70070a6f7323, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5851892015240501842, guid: 9b2aca140e57097438df70070a6f7323, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5851892015240501842, guid: 9b2aca140e57097438df70070a6f7323, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5851892015240501842, guid: 9b2aca140e57097438df70070a6f7323, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 9b2aca140e57097438df70070a6f7323, type: 3}
 --- !u!1001 &4906145515156708188
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -26895,6 +26966,14 @@ PrefabInstance:
       propertyPath: tareasManager
       value: 
       objectReference: {fileID: 718845222}
+    - target: {fileID: 3820014415791884429, guid: b9e28a2a12c8ca54a89750a8b22d3d7e, type: 3}
+      propertyPath: polloPrefab
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3820014415791884429, guid: b9e28a2a12c8ca54a89750a8b22d3d7e, type: 3}
+      propertyPath: puntoDeSalida
+      value: 
+      objectReference: {fileID: 1139367198}
     - target: {fileID: 8896608694200803977, guid: b9e28a2a12c8ca54a89750a8b22d3d7e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 10.686737

@@ -311,6 +311,20 @@ public class InteraccionJugador : MonoBehaviour
                 }
             }
 
+            if (objetoInteractuableCercano != null && Input.GetKeyDown(teclaInteraccion))
+            {
+                if (objetoInteractuableCercano.CompareTag("CabinetePollo"))
+                {
+                    HeladeraController heladera = objetoInteractuableCercano.GetComponent<HeladeraController>();
+                    if (heladera != null)
+                    {
+                        heladera.IntentarSacarPollo(gameObject);
+                        return;
+                    }
+                }
+
+               
+            }
 
             // Recoger objeto
             if (objetoRecogibleCercano != null && !llevaObjeto)

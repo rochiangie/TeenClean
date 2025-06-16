@@ -206,7 +206,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fff7e427ca32484483794b5151ca1e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefabPollo: {fileID: 3444838060319976510, guid: 9e7e39a53066df845a2bbb2bd34cdc3a, type: 3}
-  mensajeUI: {fileID: 6630925399850880285, guid: 42f8953965ccb9244aef70ca667dbc12, type: 3}
-  mensajeInteraccion: Presiona E para sacar el pollo
-  tareasManager: {fileID: 8379439569247759483, guid: 46983a116f4ba004496067b5725832f8, type: 3}
+  polloPrefab: {fileID: 3444838060319976510, guid: 9e7e39a53066df845a2bbb2bd34cdc3a, type: 3}
+  puntoDeSalida: {fileID: 5851892015240501842, guid: 9b2aca140e57097438df70070a6f7323, type: 3}
