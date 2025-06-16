@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 4875598997981779157}
   - component: {fileID: 2779625633285452152}
   - component: {fileID: 6913573148430718961}
-  - component: {fileID: 2845728896220687804}
   - component: {fileID: 231152871898158967}
+  - component: {fileID: 3820014415791884429}
   m_Layer: 3
   m_Name: Heladera
   m_TagString: GabinetePollo
@@ -149,22 +149,6 @@ MonoBehaviour:
   m_Area: 1
   m_IgnoreFromBuild: 0
   m_AffectedAgents: ffffffff
---- !u!114 &2845728896220687804
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1457344063242796264}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e4f6045f2f961074f979f82b8222000b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  tagObjetoRequerido: Pollo
-  tareasManager: {fileID: 8379439569247759483, guid: 46983a116f4ba004496067b5725832f8, type: 3}
-  mensajeUI: {fileID: 1182757396174897816, guid: 637cf575cd18a3345a22250881b2f79c, type: 3}
-  mensajeInteraccion: Presiona E para guardar el pollo
 --- !u!61 &231152871898158967
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -210,3 +194,19 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.49, y: 0.92}
   m_EdgeRadius: 0
+--- !u!114 &3820014415791884429
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1457344063242796264}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4fff7e427ca32484483794b5151ca1e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefabPollo: {fileID: 3444838060319976510, guid: 9e7e39a53066df845a2bbb2bd34cdc3a, type: 3}
+  mensajeUI: {fileID: 6630925399850880285, guid: 42f8953965ccb9244aef70ca667dbc12, type: 3}
+  mensajeInteraccion: Presiona E para sacar el pollo
+  tareasManager: {fileID: 8379439569247759483, guid: 46983a116f4ba004496067b5725832f8, type: 3}
