@@ -139,7 +139,7 @@ public class Madre : MonoBehaviour
 
     private void ResponderNo()
     {
-        textoDialogo.text = "Debes lavar los platos, la ropa, guardar todo y luego chequear conmigo.\n¿Entendiste?";
+        textoDialogo.text = "Debes lavar los platos, la ropa, sacar el pollo, guardar todo y luego chequear conmigo.\n¿Entendiste?";
 
         MostrarBotones(botonEntendi, botonNoEntendi, botonCerrar);
         OcultarBotones(botonSi, botonNo);
