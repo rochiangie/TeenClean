@@ -1,77 +1,46 @@
 ﻿using UnityEngine;
-using TMPro;
 
 public class HeladeraController : MonoBehaviour
 {
     [Header("Configuración")]
-    [SerializeField] private GameObject prefabPollo;
-    [SerializeField] private TextMeshProUGUI mensajeUI;
-    [SerializeField] private string mensajeInteraccion = "Presiona E para sacar el pollo";
-    [SerializeField] private TareasManager tareasManager;
+    public GameObject polloPrefab;
+    public Transform puntoDeSalida;
 
-    private bool jugadorEnRango = false;
-    private GameObject jugador;
-    private bool tareaCompletada = false;
+    private bool polloYaRetirado = false;
 
-    private void Update()
+    private TareasManager tareasManager;
+
+    private void Start()
     {
-        if (!jugadorEnRango || tareaCompletada || jugador == null) return;
+        tareasManager = FindObjectOfType<TareasManager>();
+    }
 
-        if (Input.GetKeyDown(KeyCode.E))
+    public void IntentarSacarPollo(GameObject jugador)
+    {
+        if (polloYaRetirado)
         {
-            Debug.Log("🍗 Sacando pollo de la heladera");
+            Debug.Log("❌ Ya sacaste el pollo.");
+            return;
+        }
 
-            InteraccionJugador interaccion = jugador.GetComponent<InteraccionJugador>();
-            if (interaccion != null && !interaccion.EstaLlevandoObjeto())
+        if (polloPrefab != null && puntoDeSalida != null)
+        {
+            GameObject pollo = Instantiate(polloPrefab, puntoDeSalida.position, Quaternion.identity);
+
+            // Colocar el pollo en el punto de carga del jugador
+            Transform puntoCarga = jugador.GetComponent<InteraccionJugador>().puntoDeCarga;
+            pollo.transform.SetParent(puntoCarga);
+            pollo.transform.localPosition = Vector3.zero;
+
+            polloYaRetirado = true;
+            Debug.Log("✅ Pollo retirado de la heladera.");
+
+            // ✅ Completar la tarea del pollo (si existe en el sistema de tareas)
+            if (tareasManager != null)
             {
-                GameObject pollo = Instantiate(prefabPollo);
-                interaccion.RecogerObjeto(pollo);
-
-                tareasManager?.CompletarTarea("Pollo");
-                tareaCompletada = true;
-                OcultarMensaje();
+                tareasManager.CompletarTarea("Pollo");
+                Debug.Log("✅ Tarea del pollo completada.");
             }
-            else
-            {
-                Debug.Log("⚠️ Ya estás llevando otro objeto o algo salió mal.");
-            }
-        }
-    }
-
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            jugador = other.gameObject;
-            jugadorEnRango = true;
-            MostrarMensaje();
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            jugadorEnRango = false;
-            jugador = null;
-            OcultarMensaje();
-        }
-    }
-
-    private void MostrarMensaje()
-    {
-        if (mensajeUI != null && !tareaCompletada)
-        {
-            mensajeUI.text = mensajeInteraccion;
-            mensajeUI.gameObject.SetActive(true);
-        }
-    }
-
-    private void OcultarMensaje()
-    {
-        if (mensajeUI != null)
-        {
-            mensajeUI.gameObject.SetActive(false);
         }
     }
 }
