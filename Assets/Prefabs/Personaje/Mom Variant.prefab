@@ -97,6 +97,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 3403858220961426886, guid: 3d1764fa779b8d6448870b847f2faf19, type: 3}
     - target: {fileID: 4548497680473467120, guid: c52ae203d4d695e4292ddfe50409a0af, type: 3}
+      propertyPath: botonEntendi
+      value: 
+      objectReference: {fileID: 3485700973639345314, guid: 493023f998d302b448fc0ca2126da490, type: 3}
+    - target: {fileID: 4548497680473467120, guid: c52ae203d4d695e4292ddfe50409a0af, type: 3}
       propertyPath: panelDialogo
       value: 
       objectReference: {fileID: 6683576631073101152, guid: 197c974a1d2bfd3459ec06168971896a, type: 3}
@@ -108,6 +112,14 @@ PrefabInstance:
       propertyPath: botonCerrarUI
       value: 
       objectReference: {fileID: 3403858220961426886, guid: 3d1764fa779b8d6448870b847f2faf19, type: 3}
+    - target: {fileID: 4548497680473467120, guid: c52ae203d4d695e4292ddfe50409a0af, type: 3}
+      propertyPath: botonNoEntendi
+      value: 
+      objectReference: {fileID: 2009859748657458058, guid: a589a5e9b995cac478828e1886d26127, type: 3}
+    - target: {fileID: 4548497680473467120, guid: c52ae203d4d695e4292ddfe50409a0af, type: 3}
+      propertyPath: panelDialogoMadre
+      value: 
+      objectReference: {fileID: 4456029927996470422, guid: 1b1dfdce1cdb2124bb9f51a74fbc34e2, type: 3}
     - target: {fileID: 4548497680473467120, guid: c52ae203d4d695e4292ddfe50409a0af, type: 3}
       propertyPath: panelDialogoPadre
       value: 
