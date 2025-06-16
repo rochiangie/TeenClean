@@ -65,8 +65,8 @@ public class InteraccionJugador : MonoBehaviour
 
     private Dictionary<string, GameObject> prefabsPorTag = new Dictionary<string, GameObject>();
 
-    [SerializeField] private GameObject panelPopUp; // Para E
-    [SerializeField] public TextMeshProUGUI textoPopUp;
+    //[SerializeField] private GameObject panelPopUp; // Para E
+    //[SerializeField] public TextMeshProUGUI textoPopUp;
 
     [SerializeField] private GameObject panelTasks; // Para R (tasks)
 
@@ -162,36 +162,31 @@ public class InteraccionJugador : MonoBehaviour
         // === INTERACCIONES ===
         if (Input.GetKeyDown(teclaInteraccion))
         {
+            if (objetoInteractuableCercano != null && objetoInteractuableCercano.CompareTag("Puerta"))
+            {
+                PuertaController puerta = objetoInteractuableCercano.GetComponent<PuertaController>();
+                if (puerta != null)
+                {
+                    string mensaje = $"Presiona {teclaInteraccion} para usar {puerta.ObtenerNombreEstado()}";
+                    MostrarInteraccion(mensaje);
+                }
+            }
 
 
             if (objetoInteractuableCercano != null)
             {
-                if (panelPopUp != null)
+                string mensaje = $"Presiona {teclaInteraccion} para interactuar";
+
+                if (objetoInteractuableCercano.CompareTag("Madre"))
                 {
-                    panelPopUp.SetActive(true);
-                    foreach (Transform child in panelPopUp.transform)
-                    {
-                        child.gameObject.SetActive(true);
-                    }
-
-                    TextMeshProUGUI textoTMP = panelPopUp.GetComponentInChildren<TextMeshProUGUI>(true);
-                    if (textoTMP != null)
-                    {
-                        if (objetoInteractuableCercano != null && objetoInteractuableCercano.CompareTag("Madre"))
-                        {
-                            textoTMP.text = $"Presiona {teclaInteraccion} para hablar con Mamá";
-                        }
-                        else if (objetoInteractuableCercano != null)
-                        {
-                            textoTMP.text = $"Presiona {teclaInteraccion} para usar {objetoInteractuableCercano.ObtenerNombreEstado()}";
-                        }
-                        else
-                        {
-                            textoTMP.text = "";
-                        }
-                    }
-
+                    mensaje = $"Presiona {teclaInteraccion} para hablar con Mamá";
                 }
+                else if (objetoInteractuableCercano.TryGetComponent(out ControladorEstados estado))
+                {
+                    mensaje = $"Presiona {teclaInteraccion} para usar {estado.ObtenerNombreEstado()}";
+                }
+
+                MostrarInteraccion(mensaje);
 
                 GameObject obj = objetoInteractuableCercano.gameObject;
 
@@ -200,13 +195,13 @@ public class InteraccionJugador : MonoBehaviour
                     Madre madre = obj.GetComponent<Madre>();
                     if (madre != null)
                     {
-                        madre.IniciarDialogo(); 
+                        madre.IniciarDialogo();
                         return;
                     }
                 }
-                else if (obj.TryGetComponent(out ControladorEstados estado))
+                else if (obj.TryGetComponent(out ControladorEstados estado2))
                 {
-                    estado.AlternarEstado();
+                    estado2.AlternarEstado();
 
                     if (obj.CompareTag("Cama") && tareasManager != null)
                     {
@@ -216,114 +211,60 @@ public class InteraccionJugador : MonoBehaviour
                     return;
                 }
 
-
                 // Revisar si es la cama para completar la tarea
-                if (objetoInteractuableCercano.gameObject.CompareTag("Cama") && tareasManager != null)
+                if (objetoInteractuableCercano.CompareTag("Cama") && tareasManager != null)
                 {
                     tareasManager.CompletarTarea("Cama");
                 }
-                if (Input.GetKeyDown(teclaInteraccion))
 
-
-                    return;
+                return;
             }
 
-            // Gabinete para guardar/sacar
-            if (Input.GetKeyDown(teclaInteraccion))
+            // Gabinete para guardar
+            if (llevaObjeto)
             {
-                if (Input.GetKeyDown(teclaInteraccion) && llevaObjeto)
+                if (gabineteRopaCercano != null && objetoTransportado.CompareTag("RopaLimpia") && gabineteRopaCercano.IntentarGuardar(objetoTransportado))
                 {
-                    // ROPA
-                    if (gabineteRopaCercano != null && objetoTransportado.CompareTag("RopaLimpia"))
-                    {
-                        if (gabineteRopaCercano.IntentarGuardar(objetoTransportado))
-                        {
-                            objetoTransportado = null;
-                            llevaObjeto = false;
-                            return;
-                        }
-                    }
-
-                    // PLATOS
-                    if (gabinetePlatosNuevoCercano != null && objetoTransportado.CompareTag("PlatosLimpios"))
-                    {
-                        if (gabinetePlatosNuevoCercano.IntentarGuardar(objetoTransportado))
-                        {
-                            objetoTransportado = null;
-                            llevaObjeto = false;
-                            return;
-                        }
-                    }
-
-                    // TAREA
-                    if (gabineteTareaCercano != null && objetoTransportado.CompareTag("Tarea"))
-                    {
-                        if (gabineteTareaCercano.IntentarGuardar(objetoTransportado))
-                        {
-                            objetoTransportado = null;
-                            llevaObjeto = false;
-                            return;
-                        }
-                    }
+                    objetoTransportado = null;
+                    llevaObjeto = false;
+                    return;
                 }
-
-               /* if (!llevaObjeto)
+                if (gabinetePlatosNuevoCercano != null && objetoTransportado.CompareTag("PlatosLimpios") && gabinetePlatosNuevoCercano.IntentarGuardar(objetoTransportado))
                 {
-                    if (gabineteRopaCercano != null && gabineteRopaCercano.EstaLleno())
-                    {
-                        gabineteRopaCercano.SacarObjeto(puntoDeCarga, this);
-                        llevaObjeto = true;
-                        return;
-                    }
-                    else if (gabinetePlatosNuevoCercano != null && gabinetePlatosNuevoCercano.EstaLleno())
-                    {
-                        gabinetePlatosNuevoCercano.SacarObjeto(puntoDeCarga, this);
-                        llevaObjeto = true;
-                        return;
-                    }
-                    else if (gabineteTareaCercano != null && gabineteTareaCercano.EstaLleno())
-                    {
-                        gabineteTareaCercano.SacarObjeto(puntoDeCarga, this);
-                        llevaObjeto = true;
-                        return;
-                    }
-                }*/
-
+                    objetoTransportado = null;
+                    llevaObjeto = false;
+                    return;
+                }
+                if (gabineteTareaCercano != null && objetoTransportado.CompareTag("Tarea") && gabineteTareaCercano.IntentarGuardar(objetoTransportado))
+                {
+                    objetoTransportado = null;
+                    llevaObjeto = false;
+                    return;
+                }
             }
-            if (Input.GetKeyDown(teclaInteraccion) && objetoCercano != null)
+
+            // Guardar con objeto cercano
+            if (objetoCercano != null)
             {
                 if (objetoCercano.TryGetComponent(out GabineteRopa ropa))
-                {
                     ropa.IntentarGuardar(objetoEnMano);
-                }
                 else if (objetoCercano.TryGetComponent(out GabinetePlatos platos))
-                {
                     platos.IntentarGuardar(objetoEnMano);
-                }
                 else if (objetoCercano.TryGetComponent(out GabineteTarea tarea))
-                {
                     tarea.IntentarGuardar(objetoEnMano);
-                }
                 else if (objetoCercano.CompareTag("Sink") && sinkCercano != null)
-                {
                     return;
-                    //sinkCercano.GetComponent<SinkController>().Lavar(objetoEnMano);
-                }
             }
 
-            if (objetoInteractuableCercano != null && Input.GetKeyDown(teclaInteraccion))
+            // Heladera (pollo)
+            if (objetoInteractuableCercano != null && objetoInteractuableCercano.CompareTag("CabinetePollo"))
             {
-                if (objetoInteractuableCercano.CompareTag("CabinetePollo"))
+                HeladeraController heladera = objetoInteractuableCercano.GetComponent<HeladeraController>();
+                if (heladera != null)
                 {
-                    HeladeraController heladera = objetoInteractuableCercano.GetComponent<HeladeraController>();
-                    if (heladera != null)
-                    {
-                        heladera.IntentarSacarPollo(gameObject);
-                        return;
-                    }
+                    heladera.IntentarSacarPollo(gameObject);
+                    return;
                 }
-
-               
             }
 
             // Recoger objeto
@@ -369,45 +310,6 @@ public class InteraccionJugador : MonoBehaviour
                     tareasManager.CompletarTarea("Platos");
                 }
             }
-            if (Input.GetKeyDown(teclaInteraccion))
-            {
-                if (gabineteRopaCercano != null && llevaObjeto && objetoTransportado.CompareTag("RopaLimpia"))
-                {
-                    if (gabineteRopaCercano.IntentarGuardar(objetoTransportado))
-                    {
-                        objetoTransportado = null;
-                        llevaObjeto = false;
-                    }
-                    return;
-                }
-            }
-            if (Input.GetKeyDown(teclaInteraccion))
-            {
-                if (gabinetePlatosCercano != null && llevaObjeto && objetoTransportado.CompareTag("RopaLimpia"))
-                {
-                    if (gabinetePlatosCercano.IntentarGuardar(objetoTransportado))
-                    {
-                        objetoTransportado = null;
-                        llevaObjeto = false;
-                    }
-                    return;
-                }
-            }
-            if (Input.GetKeyDown(teclaInteraccion))
-            {
-                if (gabineteTareaCercano != null && llevaObjeto && objetoTransportado.CompareTag("RopaLimpia"))
-                {
-                    if (gabineteTareaCercano.IntentarGuardar(objetoTransportado))
-                    {
-                        objetoTransportado = null;
-                        llevaObjeto = false;
-                    }
-                    return;
-                }
-            }
-
-
-
         }
 
         ActualizarUI();
@@ -492,122 +394,82 @@ public class InteraccionJugador : MonoBehaviour
 
     void ActualizarUI()
     {
-        
-        
         // Mostrar el panel de interacción solo si hay objetos interactuables cerca
         if (objetoInteractuableCercano != null)
         {
-            if (panelPopUp != null)
+            string texto = $"Presiona {teclaInteraccion} para interactuar";
+
+            if (madreCercana != null)
             {
-                panelPopUp.SetActive(true);
-
-                foreach (Transform child in panelPopUp.transform)
-                {
-                    child.gameObject.SetActive(true);
-                }
-
-                TextMeshProUGUI textoTMP = panelPopUp.GetComponentInChildren<TextMeshProUGUI>(true);
-                if (textoTMP != null)
-                {
-                    string texto = $"Presiona {teclaInteraccion} para interactuar";
-
-                    if (madreCercana != null)
-                    {
-                        texto = $"Presiona {teclaInteraccion} para hablar con Mamá";
-                    }
-                    else if (objetoInteractuableCercano != null && objetoInteractuableCercano.TryGetComponent(out ControladorEstados estado))
-                    {
-                        texto = $"Presiona {teclaInteraccion} para usar {estado.ObtenerNombreEstado()}";
-                    }
-
-                    textoTMP.text = texto;
-                }
-
-
+                texto = $"Presiona {teclaInteraccion} para hablar con Mamá";
+            }
+            else if (objetoInteractuableCercano.TryGetComponent(out ControladorEstados estado))
+            {
+                texto = $"Presiona {teclaInteraccion} para usar {estado.ObtenerNombreEstado()}";
             }
 
-
-
+            MostrarInteraccion(texto);
         }
         else if (gabinetePlatosCercano != null)
         {
-            if (panelPopUp != null)
-            {
-                panelPopUp.SetActive(true);
+            string nombreObjeto = gabinetePlatosCercano.EstaLleno()
+                ? (prefabPlatosDefinitivo != null ? prefabPlatosDefinitivo.name : "objeto")
+                : gabinetePlatosCercano.TagObjetoRequerido;
 
-                TextMeshProUGUI textoTMP = panelPopUp.GetComponentInChildren<TextMeshProUGUI>(true);
-                if (textoTMP != null)
-                {
-                    string nombreObjeto = gabinetePlatosCercano.EstaLleno()
-                        ? (prefabPlatosDefinitivo != null ? prefabPlatosDefinitivo.name : "objeto")
-                        : gabinetePlatosCercano.TagObjetoRequerido;
-
-                    textoTMP.text = $"Presiona {teclaInteraccion} para {(gabinetePlatosCercano.EstaLleno() ? "sacar" : "guardar")} {nombreObjeto}";
-                }
-            }
+            string texto = $"Presiona {teclaInteraccion} para {(gabinetePlatosCercano.EstaLleno() ? "sacar" : "guardar")} {nombreObjeto}";
+            MostrarInteraccion(texto);
         }
         else if (objetoCercanoRecogible != null && !llevaObjeto)
         {
-            if (panelPopUp != null)
-            {
-                panelPopUp.SetActive(true);
-
-                TextMeshProUGUI textoTMP = panelPopUp.GetComponentInChildren<TextMeshProUGUI>(true);
-                if (textoTMP != null)
-                {
-                    textoTMP.text = $"Presiona {teclaInteraccion} para recoger {objetoCercanoRecogible.tag}";
-                }
-            }
+            string texto = $"Presiona {teclaInteraccion} para recoger {objetoCercanoRecogible.tag}";
+            MostrarInteraccion(texto);
         }
         else if (objetoCercano != null)
         {
-            if (panelPopUp != null)
+            string texto = "";
+
+            if (objetoCercano.CompareTag("Sink"))
+                texto = "Presioná E para lavar los platos";
+            else if (objetoCercano.TryGetComponent(out GabineteRopa _))
+                texto = "Presioná E para guardar la ropa limpia";
+            else if (objetoCercano.TryGetComponent(out GabinetePlatos _))
+                texto = "Presioná E para guardar los platos limpios";
+            else if (objetoCercano.TryGetComponent(out GabineteTarea _))
+                texto = "Presioná E para entregar la tarea";
+
+            if (!string.IsNullOrEmpty(texto))
+                MostrarInteraccion(texto);
+        }
+        else if (objetoInteractuableCercano != null && objetoInteractuableCercano.CompareTag("Puerta"))
+        {
+            PuertaController puerta = objetoInteractuableCercano.GetComponent<PuertaController>();
+            if (puerta != null)
             {
-                panelPopUp.SetActive(true);
-
-                foreach (Transform child in panelPopUp.transform)
-                {
-                    child.gameObject.SetActive(true);
-                }
-
-                TextMeshProUGUI textoTMP = panelPopUp.GetComponentInChildren<TextMeshProUGUI>(true);
-                if (textoTMP != null)
-                {
-                    string texto = "";
-
-                    if (objetoCercano.CompareTag("Sink"))
-                    {
-                        texto = "Presioná E para lavar los platos";
-                    }
-                    else if (objetoCercano.TryGetComponent(out GabineteRopa _))
-                    {
-                        texto = "Presioná E para guardar la ropa limpia";
-                    }
-                    else if (objetoCercano.TryGetComponent(out GabinetePlatos _))
-                    {
-                        texto = "Presioná E para guardar los platos limpios";
-                    }
-                    else if (objetoCercano.TryGetComponent(out GabineteTarea _))
-                    {
-                        texto = "Presioná E para entregar la tarea";
-                    }
-
-                    textoTMP.text = texto;
-                }
+                string mensaje = $"Presiona {teclaInteraccion} para usar {puerta.ObtenerNombreEstado()}";
+                MostrarInteraccion(mensaje);
             }
         }
 
         else
         {
-            // Desactivar el panel de interacción si no hay objetos cerca
-            if (panelPopUp != null)
-            {
-                panelPopUp.SetActive(false);
-            }
+            OcultarInteraccion();
         }
+    }
+    public bool LlevaObjetoConTag(string tag)
+    {
+        return llevaObjeto && objetoTransportado != null && objetoTransportado.CompareTag(tag);
     }
 
 
+    public void EliminarObjetoTransportado()
+    {
+        if (objetoTransportado != null)
+        {
+            Destroy(objetoTransportado);
+            objetoTransportado = null;
+            llevaObjeto = false;
+        }
+    }
 
 
 
@@ -826,6 +688,7 @@ public class InteraccionJugador : MonoBehaviour
             panelInteraccion.SetActive(false);
     }
 
+
     void OnTriggerExit2D(Collider2D other)
     {
         if (other.CompareTag("Silla") || other.CompareTag("Sofa"))
@@ -990,12 +853,14 @@ public class InteraccionJugador : MonoBehaviour
     void MostrarPopUp(string mensaje)
     {
         Debug.Log($"🟢 MostrarPopUp llamado con mensaje: {mensaje}");
-        panelPopUp.SetActive(true);
-        if (textoPopUp != null)
-        {
-            textoPopUp.text = mensaje;
-        }
+        MostrarInteraccion(mensaje);
     }
+
+    void OcultarPopUp()
+    {
+        OcultarInteraccion();
+    }
+
 
 
     public bool EsTagRecogible(string tag)
@@ -1003,27 +868,7 @@ public class InteraccionJugador : MonoBehaviour
         return tagsRecogibles.Contains(tag);
     }
 
-    void OcultarPopUp()
-    {
-        panelPopUp.SetActive(false);
-    }
-
-    // Verifica si el jugador lleva un objeto con un tag específico
-    public bool LlevaObjetoConTag(string tag)
-    {
-        return llevaObjeto && objetoTransportado != null && objetoTransportado.CompareTag(tag);
-    }
-
-    // Elimina el objeto que el jugador está transportando
-    public void EliminarObjetoTransportado()
-    {
-        if (objetoTransportado != null)
-        {
-            Destroy(objetoTransportado);
-            objetoTransportado = null;
-            llevaObjeto = false;
-        }
-    }
+    
 
     public void Die()
     {
