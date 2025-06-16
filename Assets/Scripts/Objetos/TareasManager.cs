@@ -212,9 +212,10 @@ public class TareasManager : MonoBehaviour
 
     public GameObject PanelVictoria => panelWin;
 
-    public IEnumerator CargarMenuPrincipalTrasDelay()
+    public IEnumerator CargarCreditosFinalesTrasDelay(float delay)
     {
-        yield return new WaitForSeconds(3f);
-        VolverAlMenu();
+        yield return new WaitForSeconds(delay);
+        UnityEngine.SceneManagement.SceneManager.LoadScene("CreditosFinales");
     }
+
 }

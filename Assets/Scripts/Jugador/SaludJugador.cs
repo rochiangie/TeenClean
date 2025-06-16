@@ -92,6 +92,7 @@ public class SaludJugador : MonoBehaviour
             animator.SetTrigger("Morir");
             animator.SetTrigger("Die");
         }
+        StartCoroutine(TareasManager.Instance.CargarCreditosFinalesTrasDelay(2f));
 
         rb.velocity = Vector2.zero;
         rb.bodyType = RigidbodyType2D.Static;
@@ -102,8 +103,8 @@ public class SaludJugador : MonoBehaviour
             panelDerrota.SetActive(true);
         }
 
-        Debug.Log("☠️ El jugador ha muerto por SaludJugador.");
-        StartCoroutine(CargarMenuDerrotaTrasDelay());
+        //bug.Log("☠️ El jugador ha muerto por SaludJugador.");
+        //tCoroutine(CargarMenuDerrotaTrasDelay());
     }
 
 

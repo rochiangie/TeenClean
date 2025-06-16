@@ -2,6 +2,10 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
 using TMPro;
+using System.Collections;
+using UnityEngine.SceneManagement;
+
+
 
 public class Madre : MonoBehaviour
 {
@@ -138,8 +142,7 @@ public class Madre : MonoBehaviour
             OcultarBotones(botonSi, botonNo, botonEntendi, botonNoEntendi);
             MostrarBotones(botonCerrar);
 
-            TareasManager.Instance?.PanelVictoria?.SetActive(true);
-            StartCoroutine(TareasManager.Instance.CargarMenuPrincipalTrasDelay());
+            StartCoroutine(CargarCreditosTrasDelay(1.5f)); // Espera antes de cambiar de escena
         }
         else
         {
@@ -153,6 +156,9 @@ public class Madre : MonoBehaviour
         botonCerrar.onClick.RemoveAllListeners();
         botonCerrar.onClick.AddListener(CerrarDialogo);
     }
+
+    
+
 
     private void ResponderNo()
     {
@@ -201,6 +207,18 @@ public class Madre : MonoBehaviour
     {
         foreach (var btn in botones)
             if (btn != null) btn.gameObject.SetActive(true);
+    }
+
+    private IEnumerator MostrarPanelVictoriaConDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        TareasManager.Instance?.PanelVictoria?.SetActive(true);
+        StartCoroutine(TareasManager.Instance.CargarCreditosFinalesTrasDelay(2f));
+    }
+    private IEnumerator CargarCreditosTrasDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        UnityEngine.SceneManagement.SceneManager.LoadScene("CreditosFinales");
     }
 
     private void OcultarBotones(params Button[] botones)
