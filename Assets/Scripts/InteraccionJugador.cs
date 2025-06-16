@@ -162,6 +162,17 @@ public class InteraccionJugador : MonoBehaviour
         // === INTERACCIONES ===
         if (Input.GetKeyDown(teclaInteraccion))
         {
+            if (objetoInteractuableCercano != null && objetoInteractuableCercano.CompareTag("Puerta"))
+            {
+                PuertaController puerta = objetoInteractuableCercano.GetComponent<PuertaController>();
+                if (puerta != null)
+                {
+                    string mensaje = $"Presiona {teclaInteraccion} para usar {puerta.ObtenerNombreEstado()}";
+                    MostrarInteraccion(mensaje);
+                }
+            }
+
+
             if (objetoInteractuableCercano != null)
             {
                 string mensaje = $"Presiona {teclaInteraccion} para interactuar";
@@ -429,6 +440,16 @@ public class InteraccionJugador : MonoBehaviour
             if (!string.IsNullOrEmpty(texto))
                 MostrarInteraccion(texto);
         }
+        else if (objetoInteractuableCercano != null && objetoInteractuableCercano.CompareTag("Puerta"))
+        {
+            PuertaController puerta = objetoInteractuableCercano.GetComponent<PuertaController>();
+            if (puerta != null)
+            {
+                string mensaje = $"Presiona {teclaInteraccion} para usar {puerta.ObtenerNombreEstado()}";
+                MostrarInteraccion(mensaje);
+            }
+        }
+
         else
         {
             OcultarInteraccion();
