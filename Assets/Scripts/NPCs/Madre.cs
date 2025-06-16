@@ -98,9 +98,15 @@ public class Madre : MonoBehaviour
         if (puntosRuta != null && puntosRuta.Length > 0 && agente != null && agente.isOnNavMesh)
         {
             agente.SetDestination(puntosRuta[indiceRuta].position);
+            Debug.Log("📍 Madre va hacia el punto " + indiceRuta);
             indiceRuta = (indiceRuta + 1) % puntosRuta.Length;
         }
+        else
+        {
+            Debug.LogWarning("⚠️ No se pudo mover: ruta vacía o no está en NavMesh");
+        }
     }
+
 
     public void IniciarDialogo()
     {
