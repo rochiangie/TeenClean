@@ -3024,15 +3024,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 672224774227325329, guid: ed52dcb83f03ca0419d0e2cbb4f5b908, type: 3}
       propertyPath: m_Size.x
-      value: 1.39
+      value: 1.66
       objectReference: {fileID: 0}
     - target: {fileID: 672224774227325329, guid: ed52dcb83f03ca0419d0e2cbb4f5b908, type: 3}
       propertyPath: m_Size.y
-      value: 1.24
+      value: 2.57
       objectReference: {fileID: 0}
     - target: {fileID: 672224774227325329, guid: ed52dcb83f03ca0419d0e2cbb4f5b908, type: 3}
       propertyPath: m_Offset.y
-      value: -3.14
+      value: -2.59
       objectReference: {fileID: 0}
     - target: {fileID: 2076207147775130839, guid: ed52dcb83f03ca0419d0e2cbb4f5b908, type: 3}
       propertyPath: textoHora
