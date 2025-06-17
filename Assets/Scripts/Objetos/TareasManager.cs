@@ -65,26 +65,6 @@ public class TareasManager : MonoBehaviour
         else Debug.LogError("🚨 TareasManager: 'panelWin' no está asignado en el Inspector.");
     }
 
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            ActivarPanelTasks(!panelTasks.activeSelf);
-        }
-    }
-
-    private void ActivarPanelTasks(bool activar)
-    {
-        if (panelTasks == null)
-        {
-            Debug.LogError("🚨 TareasManager: 'panelTasks' no está asignado.");
-            return;
-        }
-
-        panelTasks.SetActive(activar);
-        Debug.Log(activar ? "✅ Panel de tasks activado." : "❌ Panel de tasks desactivado.");
-        Time.timeScale = activar ? 0f : 1f;
-    }
 
     public void CompletarTarea(string tarea)
     {
