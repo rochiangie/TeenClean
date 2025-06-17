@@ -15,4 +15,4 @@
 - C#
 - TextMeshPro
 
-!  [Logo] https://github.com/rochiangie/TeenClean/blob/main/Assets/SpritesYAnimaciones/Fondos/Logo.png
+!  [Logo] (https://github.com/rochiangie/TeenClean/blob/main/Assets/SpritesYAnimaciones/Fondos/Logo.png)
