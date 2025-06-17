@@ -5,9 +5,9 @@
 ## 🎮 Características
 
 - Jugabilidad estilo runner con salto y recogida de objetos
-- Obstáculos animados: platos, ropa, tarea
+- Obstáculos animados: Madre y Bichos
 - Sistema de interacción con objetos como inodoros, sillas y lavamanos
-- Jefe final con trivia para ganar el juego
+- Tareas para completar como lavar los platos, sacar el pollo del freezer, guardar la ropa y tarea.
 
 ## 🛠️ Tecnologías
 
