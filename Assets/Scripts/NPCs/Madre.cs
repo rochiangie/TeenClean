@@ -65,6 +65,15 @@ public class Madre : MonoBehaviour
         pos.z = 0f;
         transform.position = pos;
 
+        if (!agente.pathPending && agente.remainingDistance <= agente.stoppingDistance)
+        {
+            if (!agente.hasPath || agente.velocity.sqrMagnitude == 0f)
+            {
+                indiceRuta = (indiceRuta + 1) % puntosRuta.Length;
+                IrAlSiguientePunto();
+            }
+        }
+
         // También podés fijar la altura (Y) si flota o se hunde
         // pos.y = Mathf.Clamp(pos.y, -5f, 5f);
         // transform.position = pos;
@@ -103,13 +112,14 @@ public class Madre : MonoBehaviour
         {
             agente.SetDestination(puntosRuta[indiceRuta].position);
             Debug.Log("📍 Madre va hacia el punto " + indiceRuta);
-            indiceRuta = (indiceRuta + 1) % puntosRuta.Length;
+            // No cambies indiceRuta acá todavía
         }
         else
         {
             Debug.LogWarning("⚠️ No se pudo mover: ruta vacía o no está en NavMesh");
         }
     }
+
 
 
     public void IniciarDialogo()
