@@ -19,33 +19,11 @@ public class HeladeraController : MonoBehaviour
 
     private void Update()
     {
-
-        if (jugadorEnRango)
+        if (jugadorEnRango && Input.GetKeyDown(KeyCode.E))
         {
-            //Debug.Log("✅ En rango de la heladera");
-
-            // 👉 Reemplazamos GetKeyDown por GetKey para testear
-            if (Input.GetKey(KeyCode.E))
-            {
-                Debug.Log("🎯 E detectada (con GetKey)");
-                IntentarSacarPollo(jugador);
-            }
-        }
-        if (Input.anyKey)
-        {
-            Debug.Log("⚠️ Se presionó alguna tecla");
-        }
-
-        if (Input.GetKey(KeyCode.Space))
-        {
-            Debug.Log("🎯 E detectada (con GetKey)");
             IntentarSacarPollo(jugador);
         }
-
     }
-
-
-
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -54,12 +32,8 @@ public class HeladeraController : MonoBehaviour
             jugadorEnRango = true;
             jugador = other.gameObject;
             Debug.Log("👀 Jugador entró en la heladera");
-
-            // 👉 Test directo: sacar pollo sin presionar tecla
-            IntentarSacarPollo(jugador);
         }
     }
-
 
     private void OnTriggerExit2D(Collider2D other)
     {
@@ -73,8 +47,6 @@ public class HeladeraController : MonoBehaviour
 
     public void IntentarSacarPollo(GameObject jugador)
     {
-        Debug.Log("👉 Intentando sacar el pollo");
-
         if (polloYaRetirado)
         {
             Debug.Log("❌ Ya sacaste el pollo.");
