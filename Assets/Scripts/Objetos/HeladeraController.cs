@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using TMPro;
 
 public class HeladeraController : MonoBehaviour
 {
@@ -9,8 +10,11 @@ public class HeladeraController : MonoBehaviour
     private bool polloYaRetirado = false;
     private bool jugadorEnRango = false;
     private GameObject jugador;
-
     private TareasManager tareasManager;
+
+    [Header("UI de interacción")]
+    [SerializeField] private GameObject panelInteraccion;
+    [SerializeField] private TextMeshProUGUI textoInteraccion;
 
     private void Start()
     {
@@ -32,6 +36,12 @@ public class HeladeraController : MonoBehaviour
             jugadorEnRango = true;
             jugador = other.gameObject;
             Debug.Log("👀 Jugador entró en la heladera");
+
+            if (panelInteraccion != null && textoInteraccion != null)
+            {
+                panelInteraccion.SetActive(true);
+                textoInteraccion.text = "Presioná E para sacar el pollo";
+            }
         }
     }
 
@@ -42,6 +52,11 @@ public class HeladeraController : MonoBehaviour
             jugadorEnRango = false;
             jugador = null;
             Debug.Log("👋 Jugador salió de la heladera");
+
+            if (panelInteraccion != null)
+            {
+                panelInteraccion.SetActive(false);
+            }
         }
     }
 
@@ -53,15 +68,9 @@ public class HeladeraController : MonoBehaviour
             return;
         }
 
-        if (polloPrefab == null)
+        if (polloPrefab == null || puntoDeSalida == null)
         {
-            Debug.LogError("❌ polloPrefab no asignado");
-            return;
-        }
-
-        if (puntoDeSalida == null)
-        {
-            Debug.LogError("❌ puntoDeSalida no asignado");
+            Debug.LogError("❌ Prefab o punto de salida no asignado");
             return;
         }
 
@@ -79,10 +88,11 @@ public class HeladeraController : MonoBehaviour
         polloYaRetirado = true;
         Debug.Log("✅ Pollo retirado y puesto en jugador");
 
-        if (tareasManager != null)
+        if (panelInteraccion != null)
         {
-            tareasManager.CompletarTarea("Pollo");
-            Debug.Log("✅ Tarea del pollo completada");
+            panelInteraccion.SetActive(false);
         }
+
+        tareasManager?.CompletarTarea("Pollo");
     }
 }
