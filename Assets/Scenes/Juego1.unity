@@ -21665,7 +21665,7 @@ TilemapRenderer:
   m_SortingLayer: 0
   m_SortingOrder: -2
   m_ChunkSize: {x: 32, y: 32, z: 32}
-  m_ChunkCullingBounds: {x: 2.9133334, y: 2.9133334, z: 0}
+  m_ChunkCullingBounds: {x: 9.74, y: 9.74, z: 0}
   m_MaxChunkCount: 16
   m_MaxFrameAge: 16
   m_SortOrder: 0
@@ -26859,6 +26859,14 @@ PrefabInstance:
       propertyPath: puntoDeSalida
       value: 
       objectReference: {fileID: 1139367198}
+    - target: {fileID: 3820014415791884429, guid: b9e28a2a12c8ca54a89750a8b22d3d7e, type: 3}
+      propertyPath: panelInteraccion
+      value: 
+      objectReference: {fileID: 1665552802}
+    - target: {fileID: 3820014415791884429, guid: b9e28a2a12c8ca54a89750a8b22d3d7e, type: 3}
+      propertyPath: textoInteraccion
+      value: 
+      objectReference: {fileID: 1851642208}
     - target: {fileID: 4875598997981779157, guid: b9e28a2a12c8ca54a89750a8b22d3d7e, type: 3}
       propertyPath: m_SortingOrder
       value: 2
