@@ -653,8 +653,8 @@ TextureImporter:
         serializedVersion: 2
         x: 116
         y: 129
-        width: 30
-        height: 51
+        width: 25
+        height: 46
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -861,9 +861,9 @@ TextureImporter:
       name: TopDownHouse_FurnitureState1 1_37
       rect:
         serializedVersion: 2
-        x: 58
+        x: 63
         y: 55
-        width: 38
+        width: 33
         height: 41
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
