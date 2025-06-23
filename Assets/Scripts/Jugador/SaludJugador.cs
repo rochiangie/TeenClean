@@ -81,6 +81,8 @@ public class SaludJugador : MonoBehaviour
         }
     }*/
 
+
+
     public void Morir()
     {
         if (!isAlive) return;
