@@ -17,12 +17,14 @@ public class TareasManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
+            DontDestroyOnLoad(gameObject); // 👈 ESTO ES CLAVE
         }
         else
         {
             Destroy(gameObject);
         }
     }
+
     // ========================
 
     [Header("Panel de Tasks")]
@@ -125,9 +127,14 @@ public class TareasManager : MonoBehaviour
         if (ropaCompletada && platosCompletados && tareaCompletada && camaCompletada && polloCompletado)
         {
             Debug.Log("✅ Todas las tareas completadas.");
-            // Ya no activamos el panel de victoria aquí.
+            if (panelWin != null)
+            {
+                panelWin.SetActive(true); // Mostramos el panel
+                StartCoroutine(CargarCreditosFinalesTrasDelay(3f)); // Y vamos a los créditos tras un delay
+            }
         }
     }
+
 
 
     public class FinDelJuego : MonoBehaviour

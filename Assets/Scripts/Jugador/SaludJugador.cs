@@ -94,7 +94,6 @@ public class SaludJugador : MonoBehaviour
             animator.SetTrigger("Morir");
             animator.SetTrigger("Die");
         }
-        StartCoroutine(TareasManager.Instance.CargarCreditosFinalesTrasDelay(2f));
 
         rb.velocity = Vector2.zero;
         rb.bodyType = RigidbodyType2D.Static;
@@ -105,14 +104,18 @@ public class SaludJugador : MonoBehaviour
             panelDerrota.SetActive(true);
         }
 
-        //bug.Log("☠️ El jugador ha muerto por SaludJugador.");
-        //tCoroutine(CargarMenuDerrotaTrasDelay());
+        // ✅ Solo esta corrutina debe quedar
+        StartCoroutine(TareasManager.Instance.CargarCreditosFinalesTrasDelay(2f));
+
+        // ❌ Esta sobra y pisaba la anterior
+        // StartCoroutine(CargarMenuDerrotaTrasDelay());
     }
 
 
 
 
-    public IEnumerator CargarMenuDerrotaTrasDelay()
+
+   /* public IEnumerator CargarMenuDerrotaTrasDelay()
     {
         yield return new WaitForSeconds(2f);
 
@@ -125,7 +128,7 @@ public class SaludJugador : MonoBehaviour
 
         // Cargar menú principal
         SceneManager.LoadScene("MenuPrincipal");
-    }
+    }*/
 
 
 

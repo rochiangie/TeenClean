@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2169959991931281342}
   - component: {fileID: 6772117681762020447}
   - component: {fileID: 5261058993102675382}
+  - component: {fileID: 7078418614992013447}
   m_Layer: 3
   m_Name: Sink 1
   m_TagString: Sink
@@ -103,6 +104,22 @@ MonoBehaviour:
   panelPopUp: {fileID: 4456029927996470422, guid: 1b1dfdce1cdb2124bb9f51a74fbc34e2, type: 3}
   textoPopUp: {fileID: 850578696039804156, guid: 0a5a35c7f8c668a489837d8c7f02a9b0, type: 3}
   puntoCarga: {fileID: 4182131762603622649, guid: b2b2b02f03552b544a15ac1614141ca8, type: 3}
+--- !u!114 &7078418614992013447
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 944049397268067229}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9809bf1345abc5648af68b3a82653f08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_OverrideArea: 1
+  m_Area: 1
+  m_IgnoreFromBuild: 0
+  m_AffectedAgents: ffffffff
 --- !u!1 &3212983591278673300
 GameObject:
   m_ObjectHideFlags: 0

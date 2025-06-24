@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
 using System.Collections;
@@ -39,35 +39,43 @@ public class GameTimer : MonoBehaviour
             {
                 timeRemaining = 0;
                 timerIsRunning = false;
-                Debug.Log("�Tiempo terminado!");
+                Debug.Log("⏰ ¡Tiempo terminado!");
 
                 // Mostrar cartel
-                gameOverPanel.SetActive(true);
+                if (gameOverPanel != null) gameOverPanel.SetActive(true);
 
-                // Matar al jugador con animaci�n
+                // Intentar matar al jugador (esto ya dispara los créditos)
+                SaludJugador salud = FindObjectOfType<SaludJugador>();
+                if (salud != null)
+                {
+                    salud.Morir(); // Esto muestra panelDerrota y carga créditos tras 2 segundos
+                }
+                else
+                {
+                    // Si no hay SaludJugador, volvemos igual al menú o créditos después de 3 segundos
+                    Debug.LogWarning("⚠️ No se encontró SaludJugador. Volviendo al menú principal.");
+                    StartCoroutine(VolverAlMenuPrincipal());
+                }
+
+                // Ejecutar animación de muerte si existe el jugador
                 GameObject player = GameObject.FindWithTag("Player");
                 if (player != null)
                 {
                     var jugador = player.GetComponent<InteraccionJugador>();
                     if (jugador != null)
                     {
-                        jugador.Die();
-                        // Iniciar la corutina para destruir al jugador despu�s de la animaci�n
+                        jugador.Die(); // ← si tenés un método Die() para animar
                         StartCoroutine(DestruirJugadorDespuesDeAnimacion(player));
                     }
-                }
-                else
-                {
-                    // Si no hay player, pasamos directo a men� principal
-                    StartCoroutine(VolverAlMenuPrincipal());
                 }
             }
         }
     }
 
+
     IEnumerator DestruirJugadorDespuesDeAnimacion(GameObject player)
     {
-        // Ajust� este tiempo a la duraci�n de tu animaci�n de muerte
+        // Ajustá este tiempo a la duración de tu animación de muerte
         yield return new WaitForSeconds(1.5f);
 
         if (player != null)
@@ -75,13 +83,13 @@ public class GameTimer : MonoBehaviour
             Destroy(player);
         }
 
-        // Ir al men� principal despu�s de un tiempo extra (opcional)
+        // Ir al menú principal después de un tiempo extra (opcional)
         StartCoroutine(VolverAlMenuPrincipal());
     }
 
     IEnumerator VolverAlMenuPrincipal()
     {
-        yield return new WaitForSeconds(2f); // espera 2 segundos despu�s de destruir al player
+        yield return new WaitForSeconds(2f); // espera 2 segundos después de destruir al player
         SceneManager.LoadScene("MenuPrincipal");
     }
 
