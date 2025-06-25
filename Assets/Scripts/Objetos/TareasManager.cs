@@ -168,11 +168,11 @@ public class TareasManager : MonoBehaviour
         }
     }
 
-    public void VolverAlMenu()
+    /*public void VolverAlMenu()
     {
         Time.timeScale = 1f;
         SceneManager.LoadScene("MenuPrincipal"); // Asegurate de usar el nombre correcto
-    }
+    }*/
 
     public void ReiniciarTareas()
     {
