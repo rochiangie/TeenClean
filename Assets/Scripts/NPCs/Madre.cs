@@ -30,6 +30,7 @@ public class Madre : MonoBehaviour
 
     private bool enDialogo = false;
     private Transform jugador;
+    //public GameObject PanelVictoria => panelWin;
 
     void Start()
     {
@@ -222,7 +223,10 @@ public class Madre : MonoBehaviour
     private IEnumerator MostrarPanelVictoriaConDelay(float delay)
     {
         yield return new WaitForSeconds(delay);
-        TareasManager.Instance?.PanelVictoria?.SetActive(true);
+        if (TareasManager.Instance != null && TareasManager.Instance.PanelVictoria != null)
+        {
+            TareasManager.Instance.PanelVictoria.SetActive(true);
+        }
         StartCoroutine(TareasManager.Instance.CargarCreditosFinalesTrasDelay(2f));
     }
     private IEnumerator CargarCreditosTrasDelay(float delay)

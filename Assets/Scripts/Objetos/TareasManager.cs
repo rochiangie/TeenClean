@@ -64,7 +64,7 @@ public class TareasManager : MonoBehaviour
         else Debug.LogError("🚨 TareasManager: 'panelTasks' no está asignado en el Inspector.");
 
         if (panelWin != null) panelWin.SetActive(false);
-        else Debug.LogError("🚨 TareasManager: 'panelWin' no está asignado en el Inspector.");
+        //else Debug.LogError("🚨 TareasManager: 'panelWin' no está asignado en el Inspector.");
     }
 
 
