@@ -54,7 +54,7 @@ public class GameTimer : MonoBehaviour
                 {
                     // Si no hay SaludJugador, volvemos igual al menú o créditos después de 3 segundos
                     Debug.LogWarning("⚠️ No se encontró SaludJugador. Volviendo al menú principal.");
-                    StartCoroutine(VolverAlMenuPrincipal());
+                    //StartCoroutine(VolverAlMenuPrincipal());
                 }
 
                 // Ejecutar animación de muerte si existe el jugador
@@ -83,15 +83,16 @@ public class GameTimer : MonoBehaviour
             Destroy(player);
         }
 
+        StartCoroutine(TareasManager.Instance.CargarCreditosFinalesTrasDelay(3f));
         // Ir al menú principal después de un tiempo extra (opcional)
-        StartCoroutine(VolverAlMenuPrincipal());
+        //StartCoroutine(VolverAlMenuPrincipal());
     }
 
-    IEnumerator VolverAlMenuPrincipal()
+    /*IEnumerator VolverAlMenuPrincipal()
     {
         yield return new WaitForSeconds(2f); // espera 2 segundos después de destruir al player
         SceneManager.LoadScene("MenuPrincipal");
-    }
+    }*/
 
     private void UpdateTimerDisplay()
     {

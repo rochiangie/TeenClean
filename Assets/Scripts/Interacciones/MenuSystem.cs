@@ -46,8 +46,8 @@ public class MenuSystem : MonoBehaviour
         SceneManager.LoadScene("Juego1");
     }
 
-    public void VolverAlMenuPrincipal()
+    /*public void VolverAlMenuPrincipal()
     {
         SceneManager.LoadScene("MenuPrincipal");
-    }
+    }*/
 }

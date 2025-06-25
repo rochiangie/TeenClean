@@ -64,7 +64,7 @@ public class TareasManager : MonoBehaviour
         else Debug.LogError("🚨 TareasManager: 'panelTasks' no está asignado en el Inspector.");
 
         if (panelWin != null) panelWin.SetActive(false);
-        else Debug.LogError("🚨 TareasManager: 'panelWin' no está asignado en el Inspector.");
+        //else Debug.LogError("🚨 TareasManager: 'panelWin' no está asignado en el Inspector.");
     }
 
 
@@ -168,11 +168,11 @@ public class TareasManager : MonoBehaviour
         }
     }
 
-    public void VolverAlMenu()
+    /*public void VolverAlMenu()
     {
         Time.timeScale = 1f;
         SceneManager.LoadScene("MenuPrincipal"); // Asegurate de usar el nombre correcto
-    }
+    }*/
 
     public void ReiniciarTareas()
     {

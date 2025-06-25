@@ -7,11 +7,11 @@ public class SplashToMenu : MonoBehaviour
 
     private void Start()
     {
-        Invoke("VolverAlMenu", duracionSplash);
+        //Invoke("VolverAlMenu", duracionSplash);
     }
 
     private void VolverAlMenu()
     {
-        SceneManager.LoadScene("MenuPrincipal");
+        //SceneManager.LoadScene("MenuPrincipal");
     }
 }
