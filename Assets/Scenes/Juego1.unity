@@ -26187,7 +26187,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 813529136902895072, guid: d1374db74459d4443a7fd7ebb9c3c2f9, type: 3}
       propertyPath: m_Speed
-      value: 5
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 813529136902895072, guid: d1374db74459d4443a7fd7ebb9c3c2f9, type: 3}
       propertyPath: m_Enabled
@@ -26265,6 +26265,10 @@ PrefabInstance:
       propertyPath: botonNoEntendi
       value: 
       objectReference: {fileID: 1876382956}
+    - target: {fileID: 5568070895166412487, guid: d1374db74459d4443a7fd7ebb9c3c2f9, type: 3}
+      propertyPath: rangoInteraccion
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 5568070895166412487, guid: d1374db74459d4443a7fd7ebb9c3c2f9, type: 3}
       propertyPath: panelDialogoMadre
       value: 

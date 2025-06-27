@@ -9,7 +9,7 @@ public class CreditosFinales : MonoBehaviour
 
     private void Start()
     {
-        //StartCoroutine(CargarMenuTrasDelay());
+        StartCoroutine(CargarMenuTrasDelay());
     }
 
     private IEnumerator CargarMenuTrasDelay()

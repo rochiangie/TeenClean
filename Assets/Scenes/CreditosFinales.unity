@@ -584,7 +584,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1d94f5b091e43246bf4386397a57c8a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  duracion: 20
+  duracion: 10
 --- !u!4 &1373053784
 Transform:
   m_ObjectHideFlags: 0
@@ -780,9 +780,9 @@ MonoBehaviour:
     del programa:\r\nDesarrollo de Videojuegos 2D con Unity - Talento Tech\r\n\r\nAgradecimientos
     especiales:\r\nA todas las tareas del hogar que inspiraron esta aventura\r\nA
     las mam\xE1s pixeladas que nos motivan a cumplir\r\nA la inteligencia artificial
-    que colabor\xF3 con arte y c\xF3digo\r\n\r\nAssets utilizados:\r\n\U0001F3A8
-    Algunos assets fueron generados por IA,\notros tomados de bibliotecas p\xFAblicas
-    y adaptados con amor\r\n\r\n\xA1Gracias por jugar!\r\n\r\n\xA9 2025\r\n"
+    que colabor\xF3 con arte y c\xF3digo\r\n\r\nAssets utilizados:\r\nAlgunos assets
+    fueron generados por IA,\notros tomados de bibliotecas p\xFAblicas y adaptados
+    con amor\r\n\r\n\xA1Gracias por jugar!\r\n\r\n\xA9 2025\r\n"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
