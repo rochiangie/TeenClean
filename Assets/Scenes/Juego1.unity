@@ -3672,7 +3672,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 2
+  m_SortingOrder: 10
   m_TargetDisplay: 0
 --- !u!1 &357489272
 GameObject:
@@ -4266,7 +4266,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 702, y: -15}
+  m_AnchoredPosition: {x: 5, y: 31}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &453678655
@@ -4884,7 +4884,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 6
+  m_SortingOrder: 10
   m_TargetDisplay: 0
 --- !u!224 &504534370
 RectTransform:
@@ -11206,7 +11206,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 4
+  m_SortingOrder: 10
   m_TargetDisplay: 0
 --- !u!1 &1070944480
 GameObject:
@@ -12710,7 +12710,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 15, y: -101}
+  m_AnchoredPosition: {x: -951, y: -2}
   m_SizeDelta: {x: -848.821, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1127466407
@@ -18909,8 +18909,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebdd51e269661344a99f3b77bb5487ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  estadoVacio: {fileID: 0}
-  estadoLleno: {fileID: 0}
+  estadoVacio: {fileID: 1659192550}
+  estadoLleno: {fileID: 1659192550}
   nombreMostrado: Madre
   estaLleno: 0
   debugLogs: 1
@@ -19055,7 +19055,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -17.711025, y: -6.584715}
+  m_AnchoredPosition: {x: 2.6, y: -10.9}
   m_SizeDelta: {x: 450.3018, y: 279.7018}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1702179806
