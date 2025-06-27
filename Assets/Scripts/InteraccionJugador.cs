@@ -37,6 +37,8 @@ public class InteraccionJugador : MonoBehaviour
 
     public GameObject objetoEnMano;
 
+    private bool primeraInteraccion = true;
+    private bool jugadorEnRango = false;
 
     private GameObject objetoCercanoRecogible;
     private GameObject objetoTransportado;

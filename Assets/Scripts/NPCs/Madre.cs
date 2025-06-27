@@ -32,6 +32,13 @@ public class Madre : MonoBehaviour
     private Transform jugador;
     //public GameObject PanelVictoria => panelWin;
 
+    public bool interactuableDesdeSegundaVez = true;
+    public string tagInteractuable = "InteractuableMadre";
+
+
+    private bool primeraInteraccion = true;
+    private bool jugadorEnRango = false;
+
     void Start()
     {
         if (agente == null) agente = GetComponent<NavMeshAgent>();
@@ -71,6 +78,12 @@ public class Madre : MonoBehaviour
         {
             IrAlSiguientePunto();
         }
+        if (!primeraInteraccion && jugadorEnRango && !enDialogo && Input.GetKeyDown(KeyCode.E))
+        {
+            DetenerMovimiento();
+            IniciarDialogo();
+        }
+
     }
     void LateUpdate()
     {
@@ -95,10 +108,24 @@ public class Madre : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Player") && !enDialogo)
+        if (other.CompareTag("Player"))
         {
-            DetenerMovimiento();
-            IniciarDialogo();
+            jugadorEnRango = true;
+
+            if (primeraInteraccion && !enDialogo)
+            {
+                primeraInteraccion = false;
+                DetenerMovimiento();
+                IniciarDialogo();
+            }
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            jugadorEnRango = false;
         }
     }
 
