@@ -53,6 +53,27 @@ public class TareasManager : MonoBehaviour
     private bool tareaCompletada = false;
     private bool camaCompletada = false;
 
+    public enum Dificultad { Easy, Medium, Hard }
+
+    [Header("Dificultad del juego")]
+    public Dificultad dificultadActual = Dificultad.Medium;
+
+    public float ObtenerVelocidadMadre()
+    {
+        switch (dificultadActual)
+        {
+            case Dificultad.Easy:
+                return 2f;
+            case Dificultad.Medium:
+                return 3f;
+            case Dificultad.Hard:
+                return 4f;
+            default:
+                return 3f;
+        }
+    }
+
+
     void Start()
     {
         if (RopaToggle != null) { RopaToggle.interactable = false; RopaToggle.isOn = false; }

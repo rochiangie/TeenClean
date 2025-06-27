@@ -39,6 +39,18 @@ public class Madre : MonoBehaviour
         {
             agente.updateRotation = false;
             agente.updateUpAxis = false;
+
+            // 👉 Asignar velocidad según la dificultad desde TareasManager
+            if (TareasManager.Instance != null)
+            {
+                float velocidad = TareasManager.Instance.ObtenerVelocidadMadre();
+                agente.speed = velocidad;
+                Debug.Log("👟 Velocidad de la madre según dificultad: " + velocidad);
+            }
+            else
+            {
+                agente.speed = 3f; // valor por defecto
+            }
         }
 
         jugador = GameObject.FindGameObjectWithTag("Player")?.transform;
@@ -50,6 +62,7 @@ public class Madre : MonoBehaviour
 
         IrAlSiguientePunto();
     }
+
 
     void Update()
     {
