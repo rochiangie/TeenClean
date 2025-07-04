@@ -2,25 +2,30 @@
 using UnityEngine.SceneManagement;
 using System.Collections;
 
-public class VolverAlMenu : MonoBehaviour
+public class VolverAlMenuTrasCreditos : MonoBehaviour
 {
     public float delay = 30f;
     public string nombreMenu = "MenuPrincipal";
 
     private void Start()
     {
-        StartCoroutine(VolverAlMenuTrasDelay());
+        StartCoroutine(VolverAlMenu());
     }
 
-    private IEnumerator VolverAlMenuTrasDelay()
+    private IEnumerator VolverAlMenu()
     {
         yield return new WaitForSeconds(delay);
 
+        // ✅ Reiniciar progreso
         if (TareasManager.Instance != null)
         {
-            TareasManager.Instance.ReiniciarTareas(); // ✅ resetea el progreso
+            TareasManager.Instance.ReiniciarTareas();
         }
 
+        // 🧹 Limpiar PlayerPrefs si los usás
+        PlayerPrefs.DeleteAll();
+
+        // ✅ Volver al menú
         SceneManager.LoadScene(nombreMenu);
     }
 }
