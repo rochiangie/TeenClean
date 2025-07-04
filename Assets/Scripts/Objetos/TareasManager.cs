@@ -24,6 +24,26 @@ public class TareasManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name == "MenuPrincipal")
+        {
+            Debug.Log("🎮 Se cargó el menú principal. Reiniciando progreso...");
+            ReiniciarTareas();
+
+            // Opcional: borrar PlayerPrefs si usás
+            PlayerPrefs.DeleteAll();
+        }
+    }
 
     // ========================
 
