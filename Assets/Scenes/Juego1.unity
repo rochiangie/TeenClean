@@ -19282,7 +19282,7 @@ RectTransform:
   m_Father: {fileID: 2080616674}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -19769,7 +19769,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1856358769
 Transform:
   m_ObjectHideFlags: 0
@@ -20628,7 +20628,7 @@ RectTransform:
   m_Father: {fileID: 1051538699}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -23467,7 +23467,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_text: "ENTER = men\xFA principal\nR = menu de tareas\n F para atacar\nG actrivar
-    el escudo"
+    el escudo\nE hablar con Mam\xE1"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2e498d1c8094910479dc3e1b768306a4, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 2e498d1c8094910479dc3e1b768306a4, type: 2}
@@ -27084,6 +27084,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1690204873}
     m_Modifications:
+    - target: {fileID: 1660644403075226731, guid: 9d6491b7a5eba1e48b5fab2d79d93920, type: 3}
+      propertyPath: m_Size.y
+      value: 0.27
+      objectReference: {fileID: 0}
     - target: {fileID: 3853645773783209007, guid: 9d6491b7a5eba1e48b5fab2d79d93920, type: 3}
       propertyPath: m_LocalPosition.x
       value: 65.886734
@@ -27136,6 +27140,14 @@ PrefabInstance:
       propertyPath: textoInteraccion
       value: 
       objectReference: {fileID: 1851642208}
+    - target: {fileID: 7752622643640211202, guid: 9d6491b7a5eba1e48b5fab2d79d93920, type: 3}
+      propertyPath: m_Size.x
+      value: 0.18
+      objectReference: {fileID: 0}
+    - target: {fileID: 7752622643640211202, guid: 9d6491b7a5eba1e48b5fab2d79d93920, type: 3}
+      propertyPath: m_Size.y
+      value: 0.39
+      objectReference: {fileID: 0}
     - target: {fileID: 7955490072562551128, guid: 9d6491b7a5eba1e48b5fab2d79d93920, type: 3}
       propertyPath: m_Name
       value: Heladera2
