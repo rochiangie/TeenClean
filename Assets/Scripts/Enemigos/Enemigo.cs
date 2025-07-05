@@ -28,7 +28,6 @@ public class Enemigo : MonoBehaviour
     private bool puedeSerEliminado = false;
     private bool estaMuerto = false;
 
-
     [Header("Efecto de Ataque")]
     public GameObject prefabHumo;
     public Transform puntoEfecto;
@@ -64,7 +63,6 @@ public class Enemigo : MonoBehaviour
             return;
 
         float distancia = Vector3.Distance(transform.position, jugador.position);
-        //Debug.Log($"📏 Distancia al jugador: {distancia}");
 
         if (distancia <= distanciaDeteccion && distancia > distanciaAtaque)
         {
@@ -89,7 +87,6 @@ public class Enemigo : MonoBehaviour
         animator.SetBool("JugadorEnRango", jugadorEnRango);
         animator.SetBool("Atacando", atacando);
     }
-
 
     void PerseguirJugador()
     {
@@ -124,14 +121,14 @@ public class Enemigo : MonoBehaviour
                     Debug.Log("🛡️ Jugador se está defendiendo. No se aplica daño.");
                 }
             }
+
             if (prefabHumo != null && puntoEfecto != null)
             {
                 GameObject humo = Instantiate(prefabHumo, puntoEfecto.position, Quaternion.identity);
-                humo.tag = "Humo"; // asegurarse por las dudas
-                Destroy(humo, duracionHumo); // lo destruye luego de x segundos
+                humo.tag = "Humo";
+                Destroy(humo, duracionHumo);
                 Debug.Log("🌫️ Se instanció el efecto de humo contaminante.");
             }
-
         }
 
         puedeSerEliminado = true;
@@ -150,17 +147,25 @@ public class Enemigo : MonoBehaviour
         saludActual -= cantidad;
         saludActual = Mathf.Clamp(saludActual, 0, saludMaxima);
 
-        if (animator != null) animator.SetTrigger("Daño");
+        if (animator != null)
+        {
+            Debug.Log("🎯 Trigger de daño activado");
+            animator.SetTrigger("Daño");
+        }
 
-        if (saludActual <= 0) Morir();
+        if (saludActual <= 0)
+            Morir();
     }
+
 
     void Morir()
     {
         if (estaMuerto) return;
         estaMuerto = true;
 
-        if (animator != null) animator.SetTrigger("Morir");
+        if (animator != null)
+            animator.SetTrigger("Morir");
+
         if (sonidoMuerte != null && audioSource != null)
             audioSource.PlayOneShot(sonidoMuerte);
 
@@ -187,7 +192,6 @@ public class Enemigo : MonoBehaviour
         }
     }
 
-
     void OnTriggerStay2D(Collider2D other)
     {
         if (estaMuerto) return;
@@ -198,5 +202,4 @@ public class Enemigo : MonoBehaviour
             RecibirDaño(saludMaxima);
         }
     }
-
 }

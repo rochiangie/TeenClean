@@ -181,7 +181,7 @@ public class InteraccionJugador : MonoBehaviour
 
                 if (objetoInteractuableCercano.CompareTag("Madre"))
                 {
-                    mensaje = $"Presiona {teclaInteraccion} para hablar con Mamá";
+                    //mensaje = $"Presiona {teclaInteraccion} para hablar con Mamá";
                 }
                 else if (objetoInteractuableCercano.TryGetComponent(out ControladorEstados estado))
                 {
@@ -403,7 +403,7 @@ public class InteraccionJugador : MonoBehaviour
 
             if (madreCercana != null)
             {
-                texto = $"Presiona {teclaInteraccion} para hablar con Mamá";
+                //texto = $"Presiona {teclaInteraccion} para hablar con Mamá";
             }
             else if (objetoInteractuableCercano.TryGetComponent(out ControladorEstados estado))
             {
@@ -828,11 +828,11 @@ public class InteraccionJugador : MonoBehaviour
 
         foreach (Collider2D col in enemigos)
         {
-            Debug.Log($"🔍 Analizando: {col.name}");
+            //Debug.Log($"🔍 Analizando: {col.name}");
 
             if (col.CompareTag("Enemy"))
             {
-                Debug.Log($"💥 Detected tag Enemy en {col.name}");
+                //Debug.Log($"💥 Detected tag Enemy en {col.name}");
 
                 if (col.TryGetComponent(out Enemigo enemigo))
                 {
@@ -841,12 +841,12 @@ public class InteraccionJugador : MonoBehaviour
                 }
                 else
                 {
-                    Debug.LogWarning($"❌ {col.name} no tiene componente Enemigo");
+                    //Debug.LogWarning($"❌ {col.name} no tiene componente Enemigo");
                 }
             }
             else
             {
-                Debug.Log($"❌ {col.name} tiene tag '{col.tag}', no es Enemy");
+                //Debug.Log($"❌ {col.name} tiene tag '{col.tag}', no es Enemy");
 
             }
         }

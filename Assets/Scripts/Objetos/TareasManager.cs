@@ -12,18 +12,22 @@ public class TareasManager : MonoBehaviour
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioClip sonidoTareaCompletada;
 
+    [SerializeField] private GameObject particulasTareaCompletada;
+    [SerializeField] private Transform jugador; // Asignalo en el Inspector
+
     private void Awake()
     {
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject); // 👈 ESTO ES CLAVE
+            DontDestroyOnLoad(gameObject);
         }
         else
         {
             Destroy(gameObject);
         }
     }
+
     private void OnEnable()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
@@ -33,19 +37,16 @@ public class TareasManager : MonoBehaviour
     {
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
+
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         if (scene.name == "MenuPrincipal")
         {
             Debug.Log("🎮 Se cargó el menú principal. Reiniciando progreso...");
             ReiniciarTareas();
-
-            // Opcional: borrar PlayerPrefs si usás
             PlayerPrefs.DeleteAll();
         }
     }
-
-    // ========================
 
     [Header("Panel de Tasks")]
     [SerializeField] private GameObject panelTasks;
@@ -56,13 +57,13 @@ public class TareasManager : MonoBehaviour
     [SerializeField] private Toggle PlatosToggle;
     [SerializeField] private Toggle TareaToggle;
     [SerializeField] private Toggle CamaToggle;
-    [SerializeField] private Toggle PolloToggle; // 👈 nuevo toggle
+    [SerializeField] private Toggle PolloToggle;
 
-    private bool polloCompletado = false; // 👈 nueva flag
+    private bool polloCompletado = false;
 
     private int ropaContador = 0;
     private int platosContador = 0;
-    public  int tareaContador = 0;
+    public int tareaContador = 0;
 
     private const int tareasNecesariasRopa = 2;
     private const int tareasNecesariasPlatos = 2;
@@ -82,17 +83,12 @@ public class TareasManager : MonoBehaviour
     {
         switch (dificultadActual)
         {
-            case Dificultad.Easy:
-                return 2f;
-            case Dificultad.Medium:
-                return 3f;
-            case Dificultad.Hard:
-                return 4f;
-            default:
-                return 3f;
+            case Dificultad.Easy: return 2f;
+            case Dificultad.Medium: return 3f;
+            case Dificultad.Hard: return 4f;
+            default: return 3f;
         }
     }
-
 
     void Start()
     {
@@ -105,9 +101,7 @@ public class TareasManager : MonoBehaviour
         else Debug.LogError("🚨 TareasManager: 'panelTasks' no está asignado en el Inspector.");
 
         if (panelWin != null) panelWin.SetActive(false);
-        //else Debug.LogError("🚨 TareasManager: 'panelWin' no está asignado en el Inspector.");
     }
-
 
     public void CompletarTarea(string tarea)
     {
@@ -115,6 +109,7 @@ public class TareasManager : MonoBehaviour
         {
             audioSource.PlayOneShot(sonidoTareaCompletada);
         }
+
         switch (tarea)
         {
             case "Ropa":
@@ -151,13 +146,22 @@ public class TareasManager : MonoBehaviour
                     Debug.Log("✅ Cama hecha.");
                 }
                 break;
-            default:
-                Debug.LogWarning($"⚠️ Tarea '{tarea}' no reconocida.");
-                break;
             case "Pollo":
                 PolloToggle.isOn = true;
                 polloCompletado = true;
                 break;
+            default:
+                Debug.LogWarning($"⚠️ Tarea '{tarea}' no reconocida.");
+                break;
+        }
+
+        // Efecto visual de partículas
+        if (particulasTareaCompletada != null && jugador != null)
+        {
+            Vector3 pos = jugador.position + new Vector3(0, 1.5f, 0);
+            GameObject fx = Instantiate(particulasTareaCompletada, pos, Quaternion.identity);
+            fx.transform.localScale = Vector3.one * 3f;
+            Destroy(fx, 2f);
         }
 
         VerificarVictoria();
@@ -170,13 +174,11 @@ public class TareasManager : MonoBehaviour
             Debug.Log("✅ Todas las tareas completadas.");
             if (panelWin != null)
             {
-                panelWin.SetActive(true); // Mostramos el panel
-                StartCoroutine(CargarCreditosFinalesTrasDelay(3f)); // Y vamos a los créditos tras un delay
+                panelWin.SetActive(true);
+                StartCoroutine(CargarCreditosFinalesTrasDelay(3f));
             }
         }
     }
-
-
 
     public class FinDelJuego : MonoBehaviour
     {
@@ -185,7 +187,6 @@ public class TareasManager : MonoBehaviour
             SceneManager.LoadScene("Ending");
         }
     }
-
 
     public bool TodasLasTareasCompletadasParaMadre()
     {
@@ -209,12 +210,6 @@ public class TareasManager : MonoBehaviour
         }
     }
 
-    /*public void VolverAlMenu()
-    {
-        Time.timeScale = 1f;
-        SceneManager.LoadScene("MenuPrincipal"); // Asegurate de usar el nombre correcto
-    }*/
-
     public void ReiniciarTareas()
     {
         ropaContador = 0;
@@ -236,8 +231,6 @@ public class TareasManager : MonoBehaviour
         if (panelWin != null) panelWin.SetActive(false);
     }
 
-    // === Acceso desde Madre ===
-
     public GameObject PanelVictoria => panelWin;
 
     public IEnumerator CargarCreditosFinalesTrasDelay(float delay)
@@ -245,5 +238,4 @@ public class TareasManager : MonoBehaviour
         yield return new WaitForSeconds(delay);
         UnityEngine.SceneManagement.SceneManager.LoadScene("CreditosFinales");
     }
-
 }

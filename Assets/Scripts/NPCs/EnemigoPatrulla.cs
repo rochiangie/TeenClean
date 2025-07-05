@@ -113,7 +113,7 @@ public class EnemigoPatrulla : MonoBehaviour
         if (Time.time < tiempoUltimoAtaque + tiempoEntreAtaques) return;
         if (animator != null)
         {
-            animator.SetTrigger("Attack");
+            animator.SetTrigger("attack");
         }
 
         var saludJugador = jugador.GetComponent<SaludJugador>();
@@ -176,8 +176,8 @@ public class EnemigoPatrulla : MonoBehaviour
         if (estaMuerto) return;
         estaMuerto = true;
 
-        if (animator != null)
-            animator.SetTrigger("Morir");
+        /*if (animator != null)
+            animator.SetTrigger("Morir");*/
 
         // desactivar colisión
         Collider2D col = GetComponent<Collider2D>();
