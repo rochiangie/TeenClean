@@ -83,7 +83,7 @@ public class GameTimer : MonoBehaviour
             Destroy(player);
         }
 
-        StartCoroutine(TareasManager.Instance.CargarCreditosFinalesTrasDelay(3f));
+        TareasManager.Instance.MostrarFinalFelizYCreditos();
         // Ir al menú principal después de un tiempo extra (opcional)
         //StartCoroutine(VolverAlMenuPrincipal());
     }

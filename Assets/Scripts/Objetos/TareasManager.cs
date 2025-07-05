@@ -173,9 +173,36 @@ public class TareasManager : MonoBehaviour
         if (ropaCompletada && platosCompletados && tareaCompletada && camaCompletada && polloCompletado)
         {
             Debug.Log("✅ Todas las tareas completadas.");
-            // Ya no mostramos ningún panel aquí, solo espera interacción con la madre
         }
     }
+
+    public void MostrarFinalFelizYCreditos()
+    {
+        MostrarCanvasHappyEnding();
+        StartCoroutine(CargarCreditosFinalesTrasDelay(5f));
+    }
+
+
+    private IEnumerator CargarCreditosFinalesTrasDelay(float delay)
+    {
+        if (canvasHappyEnding != null)
+        {
+            Debug.Log("🎉 Mostrando cartel de happy ending");
+            canvasHappyEnding.SetActive(true);
+
+            // Partículas de celebración
+            if (particulasTareaCompletada != null && jugador != null)
+            {
+                var fx = Instantiate(particulasTareaCompletada, jugador.position + Vector3.up * 1.5f, Quaternion.identity);
+                Destroy(fx, 3f);
+            }
+
+            yield return new WaitForSeconds(delay);
+        }
+
+        SceneManager.LoadScene("CreditosFinales");
+    }
+
 
     public void MostrarCanvasHappyEnding()
     {
@@ -184,33 +211,11 @@ public class TareasManager : MonoBehaviour
             Debug.Log("🟢 Activando el canvasHappyEnding...");
             canvasHappyEnding.SetActive(true);
             Debug.Log($"✅ Activo en jerarquía después de SetActive: {canvasHappyEnding.activeInHierarchy}");
-
-            // Evitamos ocultarlo por ahora
-            // StartCoroutine(MostrarCanvasPorUnosSegundos(5f));
         }
         else
         {
             Debug.LogWarning("⚠️ canvasHappyEnding está null.");
         }
-    }
-
-
-
-    private IEnumerator MostrarCanvasPorUnosSegundos(float segundos)
-    {
-        yield return new WaitForSecondsRealtime(segundos); // ⏳ Usa tiempo real, no depende del Time.timeScale
-
-        // Restaurar el tiempo si lo pausaste
-        // Time.timeScale = 1f;
-
-        SceneManager.LoadScene("CreditosFinales");
-    }
-
-
-    private IEnumerator EsperarYIrACreditos()
-    {
-        yield return new WaitForSeconds(6f);
-        SceneManager.LoadScene("CreditosFinales");
     }
 
     public bool TodasLasTareasCompletadasParaMadre()
@@ -278,10 +283,4 @@ public class TareasManager : MonoBehaviour
 
         VerificarVictoria();
     }
-    public IEnumerator CargarCreditosFinalesTrasDelay(float delay)
-    {
-        yield return new WaitForSeconds(delay);
-        SceneManager.LoadScene("CreditosFinales");
-    }
-
 }

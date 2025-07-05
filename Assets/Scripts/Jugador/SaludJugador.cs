@@ -108,7 +108,7 @@ public class SaludJugador : MonoBehaviour
         TareasManager tareas = FindObjectOfType<TareasManager>();
         if (tareas != null)
         {
-            StartCoroutine(tareas.CargarCreditosFinalesTrasDelay(5f));
+            tareas.MostrarFinalFelizYCreditos();
         }
         else
         {

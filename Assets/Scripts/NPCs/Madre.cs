@@ -179,9 +179,13 @@ public class Madre : MonoBehaviour
             OcultarBotones(botonSi, botonNo, botonEntendi, botonNoEntendi);
             MostrarBotones(botonCerrar);
 
-            // 🎉 Llama al canvas final feliz
-            if (TareasManager.Instance != null)
-                TareasManager.Instance.MostrarCanvasHappyEnding();
+            // Espera a que el jugador cierre el diálogo antes de mostrar el final feliz
+            botonCerrar.onClick.RemoveAllListeners();
+            botonCerrar.onClick.AddListener(() =>
+            {
+                CerrarDialogo();
+                StartCoroutine(EsperarYMostrarFinalFeliz());
+            });
         }
         else
         {
@@ -190,10 +194,19 @@ public class Madre : MonoBehaviour
 
             MostrarBotones(botonCerrar);
             OcultarBotones(botonSi, botonNo, botonEntendi, botonNoEntendi);
-        }
 
-        botonCerrar.onClick.RemoveAllListeners();
-        botonCerrar.onClick.AddListener(CerrarDialogo);
+            botonCerrar.onClick.RemoveAllListeners();
+            botonCerrar.onClick.AddListener(CerrarDialogo);
+        }
+    }
+
+    private IEnumerator EsperarYMostrarFinalFeliz()
+    {
+        yield return new WaitForSeconds(2f); // ⏳ Da tiempo a leer el mensaje de la madre
+        if (TareasManager.Instance != null)
+        {
+            TareasManager.Instance.MostrarFinalFelizYCreditos();
+        }
     }
 
     private void ResponderNo()
