@@ -13,6 +13,9 @@ public class GameTimer : MonoBehaviour
 
     void Start()
     {
+        if (TareasManager.Instance != null)
+            TareasManager.Instance.ResetearTareas();
+
         int dificultad = PlayerPrefs.GetInt("Dificultad", 1);
 
         switch (dificultad)
@@ -44,17 +47,16 @@ public class GameTimer : MonoBehaviour
                 // Mostrar cartel
                 if (gameOverPanel != null) gameOverPanel.SetActive(true);
 
-                // Intentar matar al jugador (esto ya dispara los créditos)
+                // Intentar matar al jugador (esto ya dispara panelDerrota y muerte)
                 SaludJugador salud = FindObjectOfType<SaludJugador>();
                 if (salud != null)
                 {
-                    salud.Morir(); // Esto muestra panelDerrota y carga créditos tras 2 segundos
+                    salud.Morir(); // NO debe llamar a créditos felices
                 }
                 else
                 {
-                    // Si no hay SaludJugador, volvemos igual al menú o créditos después de 3 segundos
                     Debug.LogWarning("⚠️ No se encontró SaludJugador. Volviendo al menú principal.");
-                    //StartCoroutine(VolverAlMenuPrincipal());
+                    StartCoroutine(VolverAlMenuPrincipal());
                 }
 
                 // Ejecutar animación de muerte si existe el jugador
@@ -72,27 +74,20 @@ public class GameTimer : MonoBehaviour
         }
     }
 
-
     IEnumerator DestruirJugadorDespuesDeAnimacion(GameObject player)
     {
-        // Ajustá este tiempo a la duración de tu animación de muerte
         yield return new WaitForSeconds(1.5f);
-
-        if (player != null)
-        {
-            Destroy(player);
-        }
-
-        TareasManager.Instance.MostrarFinalFelizYCreditos();
-        // Ir al menú principal después de un tiempo extra (opcional)
-        //StartCoroutine(VolverAlMenuPrincipal());
+        if (player != null) Destroy(player);
+        // ❌ Eliminado: TareasManager.Instance.MostrarFinalFelizYCreditos();
+        // Si querés volver al menú después de morir por tiempo:
+        // StartCoroutine(VolverAlMenuPrincipal());
     }
 
-    /*IEnumerator VolverAlMenuPrincipal()
+    IEnumerator VolverAlMenuPrincipal()
     {
-        yield return new WaitForSeconds(2f); // espera 2 segundos después de destruir al player
+        yield return new WaitForSeconds(2f);
         SceneManager.LoadScene("MenuPrincipal");
-    }*/
+    }
 
     private void UpdateTimerDisplay()
     {

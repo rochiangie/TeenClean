@@ -302,8 +302,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -1.5435, y: 0.7776}
-  m_SizeDelta: {x: 19.1547, y: 10.108}
+  m_AnchoredPosition: {x: -1.5161, y: 0.3382}
+  m_SizeDelta: {x: 22.7251, y: 12.9643}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &411452224
 MonoBehaviour:
@@ -443,6 +443,14 @@ PrefabInstance:
       propertyPath: prefabMusicaDerrota
       value: 
       objectReference: {fileID: 1869860535427827191, guid: 4bdfe256455389343b99d94452581436, type: 3}
+    - target: {fileID: 8169963187298168422, guid: 8fc87a3552af340498f72df73b1ee671, type: 3}
+      propertyPath: mantenerMusicaActual
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8169963187298168422, guid: 8fc87a3552af340498f72df73b1ee671, type: 3}
+      propertyPath: prefabMusicaCreditos
+      value: 
+      objectReference: {fileID: 3802355062333468181, guid: 9e8256d0c00d3554eb839130ebc7eacf, type: 3}
     - target: {fileID: 8576660798354069630, guid: 8fc87a3552af340498f72df73b1ee671, type: 3}
       propertyPath: m_LocalPosition.x
       value: 19.50413

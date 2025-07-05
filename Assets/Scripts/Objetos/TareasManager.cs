@@ -21,6 +21,7 @@ public class TareasManager : MonoBehaviour
     [SerializeField] private GameObject panelTasks;
     [SerializeField] private GameObject canvasHappyEnding;
     [SerializeField] private GameObject panelDerrota;
+    [SerializeField] private GameObject panelWin;
 
     [Header("Toggles de Tasks")]
     [SerializeField] private Toggle RopaToggle;
@@ -187,6 +188,21 @@ public class TareasManager : MonoBehaviour
 
         StartCoroutine(CargarCreditosFinalesTrasDelay(5f));
     }
+
+    public void ResetearTareas()
+    {
+        Debug.Log("🔄 Reseteando tareas y UI");
+
+        if (RopaToggle != null) RopaToggle.isOn = false;
+        if (PlatosToggle != null) PlatosToggle.isOn = false;
+        if (TareaToggle != null) TareaToggle.isOn = false;
+        if (CamaToggle != null) CamaToggle.isOn = false;
+        if (PolloToggle != null) PolloToggle.isOn = false;
+
+        if (panelWin != null) panelWin.SetActive(false);
+        if (panelTasks != null) panelTasks.SetActive(false);
+    }
+
     public void MostrarFinalPorDerrota()
     {
         // Reproducir música de derrota (si existe en el AudioManager)
