@@ -15,6 +15,8 @@ public class AudioManager : MonoBehaviour
     private AudioSource musicaMenu;
     private AudioSource musicaJuego;
     private AudioSource musicaFinal;
+    public GameObject prefabMusicaDerrota;
+    private AudioSource musicaDerrota;
 
     void Awake()
     {
@@ -36,13 +38,20 @@ public class AudioManager : MonoBehaviour
             musicaJuego = Instantiate(prefabMusicaJuego).GetComponent<AudioSource>();
         if (prefabMusicaFinal != null)
             musicaFinal = Instantiate(prefabMusicaFinal).GetComponent<AudioSource>();
+        if (prefabMusicaDerrota != null)
+            musicaDerrota = Instantiate(prefabMusicaDerrota).GetComponent<AudioSource>();
+        DontDestroyIfNotNull(musicaDerrota);
 
         DontDestroyIfNotNull(musicaLogo);
         DontDestroyIfNotNull(musicaMenu);
         DontDestroyIfNotNull(musicaJuego);
         DontDestroyIfNotNull(musicaFinal);
 
-        // Suscribirse al evento de cambio de escena
+        // 🔊 Aplicar volumen guardado
+        float volumenGuardado = PlayerPrefs.GetFloat("volumenMusica", 1f);
+        CambiarVolumen(volumenGuardado);
+
+        // Escuchar cambio de escenas
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
@@ -52,12 +61,19 @@ public class AudioManager : MonoBehaviour
             DontDestroyOnLoad(source.gameObject);
     }
 
+    // Guardar escena previa para controlar si hay que detener música
+    private string escenaAnterior = "";
+    private string musicaActual = "";
+
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         string nombreEscena = scene.name;
         Debug.Log($"🎬 Escena cargada: {nombreEscena}");
 
-        DetenerTodaMusica();
+        if (nombreEscena != "Menu-opciones" && nombreEscena != "CreditosFinales")
+        {
+            DetenerTodaMusica();
+        }
 
         switch (nombreEscena)
         {
@@ -71,13 +87,31 @@ public class AudioManager : MonoBehaviour
                 ReproducirMusicaJuego();
                 break;
             case "Ending":
-            case "CreditosFinales":
                 ReproducirMusicaFinal();
                 break;
+            case "CreditosFinales":
+                // ❌ No reproducimos ninguna música aquí, para no pisar la anterior
+                Debug.Log("🎵 Música se mantiene en créditos.");
+                break;
+
+            case "Menu-opciones":
+                Debug.Log("🎵 Música de menú sigue sonando en opciones.");
+                break;
+
             default:
                 Debug.Log("🎵 No hay música asignada para esta escena.");
                 break;
         }
+    }
+
+
+
+    public void CambiarVolumen(float nuevoVolumen)
+    {
+        if (musicaLogo != null) musicaLogo.volume = nuevoVolumen;
+        if (musicaMenu != null) musicaMenu.volume = nuevoVolumen;
+        if (musicaJuego != null) musicaJuego.volume = nuevoVolumen;
+        if (musicaFinal != null) musicaFinal.volume = nuevoVolumen;
     }
 
     public void DetenerTodaMusica()
@@ -87,9 +121,24 @@ public class AudioManager : MonoBehaviour
         musicaJuego?.Stop();
         musicaFinal?.Stop();
     }
+    public void ReproducirMusicaDerrota()
+    {
+        DetenerTodaMusica();
+        musicaDerrota?.Play();
+        musicaActual = "Derrota";
+    }
+
+    public void ReproducirMusicaFinal()
+    {
+        if (musicaActual == "Derrota") return; // ❌ No reproducir si venimos de una derrota
+        DetenerTodaMusica();
+        musicaFinal?.Play();
+        musicaActual = "Final";
+    }
+
 
     public void ReproducirMusicaLogo() => musicaLogo?.Play();
     public void ReproducirMusicaMenu() => musicaMenu?.Play();
     public void ReproducirMusicaJuego() => musicaJuego?.Play();
-    public void ReproducirMusicaFinal() => musicaFinal?.Play();
+    //public void ReproducirMusicaFinal() => musicaFinal?.Play();
 }

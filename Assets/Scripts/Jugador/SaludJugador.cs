@@ -104,20 +104,18 @@ public class SaludJugador : MonoBehaviour
             panelDerrota.SetActive(true);
         }
 
-        // ✅ Solo esta corrutina debe quedar
+        // ✅ Mostramos correctamente el final por derrota
         TareasManager tareas = FindObjectOfType<TareasManager>();
         if (tareas != null)
         {
-            tareas.MostrarFinalFelizYCreditos();
+            tareas.MostrarFinalPorDerrota();
         }
         else
         {
             Debug.LogWarning("⚠️ No se encontró el TareasManager en escena.");
         }
-
-        // ❌ Esta sobra y pisaba la anterior
-        // StartCoroutine(CargarMenuDerrotaTrasDelay());
     }
+
 
 
 

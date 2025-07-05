@@ -20,6 +20,7 @@ public class TareasManager : MonoBehaviour
     [Header("UI")]
     [SerializeField] private GameObject panelTasks;
     [SerializeField] private GameObject canvasHappyEnding;
+    [SerializeField] private GameObject panelDerrota;
 
     [Header("Toggles de Tasks")]
     [SerializeField] private Toggle RopaToggle;
@@ -185,6 +186,14 @@ public class TareasManager : MonoBehaviour
         AudioManager.Instance?.ReproducirMusicaFinal();
 
         StartCoroutine(CargarCreditosFinalesTrasDelay(5f));
+    }
+    public void MostrarFinalPorDerrota()
+    {
+        // Reproducir música de derrota (si existe en el AudioManager)
+        AudioManager.Instance?.ReproducirMusicaDerrota();
+
+        // Cargar créditos después de un pequeño delay
+        StartCoroutine(CargarCreditosFinalesTrasDelay(3f));
     }
 
     private IEnumerator CargarCreditosFinalesTrasDelay(float delay)

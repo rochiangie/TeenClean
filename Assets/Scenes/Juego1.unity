@@ -1470,7 +1470,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sliderVolumen: {fileID: 1309624013}
-  musica: {fileID: 0}
 --- !u!1 &304763883 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 9004148124358793283, guid: 34a3833850ccfea4d8e03f8f79f95a8e, type: 3}
@@ -11580,7 +11579,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sliderVolumen: {fileID: 1309624013}
-  musica: {fileID: 0}
 --- !u!1 &1051538698
 GameObject:
   m_ObjectHideFlags: 0
@@ -29604,6 +29602,10 @@ PrefabInstance:
       propertyPath: PlatosToggle
       value: 
       objectReference: {fileID: 121903259}
+    - target: {fileID: 8379439569247759483, guid: 46983a116f4ba004496067b5725832f8, type: 3}
+      propertyPath: panelDerrota
+      value: 
+      objectReference: {fileID: 788271877}
     - target: {fileID: 8379439569247759483, guid: 46983a116f4ba004496067b5725832f8, type: 3}
       propertyPath: musicaVictoria
       value: 

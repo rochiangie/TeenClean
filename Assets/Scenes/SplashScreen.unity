@@ -439,6 +439,10 @@ PrefabInstance:
       propertyPath: prefabMusicaJuego
       value: 
       objectReference: {fileID: 7443768897107646734, guid: 2fd0e56a202cef044aa752db0251ee50, type: 3}
+    - target: {fileID: 8169963187298168422, guid: 8fc87a3552af340498f72df73b1ee671, type: 3}
+      propertyPath: prefabMusicaDerrota
+      value: 
+      objectReference: {fileID: 1869860535427827191, guid: 4bdfe256455389343b99d94452581436, type: 3}
     - target: {fileID: 8576660798354069630, guid: 8fc87a3552af340498f72df73b1ee671, type: 3}
       propertyPath: m_LocalPosition.x
       value: 19.50413
