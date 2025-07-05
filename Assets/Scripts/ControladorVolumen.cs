@@ -6,14 +6,23 @@ public class ControladorVolumen : MonoBehaviour
     [SerializeField] private Slider sliderVolumen;
     [SerializeField] private AudioSource musica;
 
-    private void Start()
+    void Start()
     {
-        if (sliderVolumen != null && musica != null)
+        if (sliderVolumen != null)
         {
-            sliderVolumen.value = musica.volume; // inicia con el volumen actual
-            sliderVolumen.onValueChanged.AddListener(CambiarVolumen);
+            float volumenGuardado = PlayerPrefs.GetFloat("Volumen", 1f); // valor por defecto: 1
+            sliderVolumen.value = volumenGuardado;
+            CambiarVolumen(volumenGuardado); // aplicar el volumen
+
+            sliderVolumen.onValueChanged.AddListener((valor) =>
+            {
+                CambiarVolumen(valor);
+                PlayerPrefs.SetFloat("Volumen", valor); // guardar
+                PlayerPrefs.Save(); // muy importante para que persista en la build
+            });
         }
     }
+
 
     private void CambiarVolumen(float valor)
     {

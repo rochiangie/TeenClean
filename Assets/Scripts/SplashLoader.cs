@@ -9,6 +9,7 @@ public class SplashLoader : MonoBehaviour
     private void Start()
     {
         Invoke("CargarMenu", duracion);
+
     }
 
     void CargarMenu()

@@ -10,7 +10,7 @@ public class TareasManager : MonoBehaviour
     public static TareasManager Instance { get; private set; }
 
     [Header("Audio")]
-    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioSource audioSource; // Solo para sonidos de tareas completadas
     [SerializeField] private AudioClip sonidoTareaCompletada;
 
     [Header("FX visual")]
@@ -179,30 +179,19 @@ public class TareasManager : MonoBehaviour
     public void MostrarFinalFelizYCreditos()
     {
         MostrarCanvasHappyEnding();
+
+        // ✅ Reproduce música de victoria desde el AudioManager
+        AudioManager.Instance?.DetenerTodaMusica();
+        AudioManager.Instance?.ReproducirMusicaFinal();
+
         StartCoroutine(CargarCreditosFinalesTrasDelay(5f));
     }
 
-
     private IEnumerator CargarCreditosFinalesTrasDelay(float delay)
     {
-        if (canvasHappyEnding != null)
-        {
-            Debug.Log("🎉 Mostrando cartel de happy ending");
-            canvasHappyEnding.SetActive(true);
-
-            // Partículas de celebración
-            if (particulasTareaCompletada != null && jugador != null)
-            {
-                var fx = Instantiate(particulasTareaCompletada, jugador.position + Vector3.up * 1.5f, Quaternion.identity);
-                Destroy(fx, 3f);
-            }
-
-            yield return new WaitForSeconds(delay);
-        }
-
+        yield return new WaitForSeconds(delay);
         SceneManager.LoadScene("CreditosFinales");
     }
-
 
     public void MostrarCanvasHappyEnding()
     {
@@ -210,7 +199,6 @@ public class TareasManager : MonoBehaviour
         {
             Debug.Log("🟢 Activando el canvasHappyEnding...");
             canvasHappyEnding.SetActive(true);
-            Debug.Log($"✅ Activo en jerarquía después de SetActive: {canvasHappyEnding.activeInHierarchy}");
         }
         else
         {
@@ -255,7 +243,6 @@ public class TareasManager : MonoBehaviour
         if (PlatosToggle != null) PlatosToggle.isOn = false;
         if (TareaToggle != null) TareaToggle.isOn = false;
         if (CamaToggle != null) CamaToggle.isOn = false;
-
         if (canvasHappyEnding != null) canvasHappyEnding.SetActive(false);
 
         Debug.Log("🔄 Tareas reiniciadas.");
