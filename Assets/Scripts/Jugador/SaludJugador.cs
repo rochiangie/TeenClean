@@ -105,7 +105,15 @@ public class SaludJugador : MonoBehaviour
         }
 
         // ✅ Solo esta corrutina debe quedar
-        StartCoroutine(TareasManager.Instance.CargarCreditosFinalesTrasDelay(2f));
+        TareasManager tareas = FindObjectOfType<TareasManager>();
+        if (tareas != null)
+        {
+            StartCoroutine(tareas.CargarCreditosFinalesTrasDelay(5f));
+        }
+        else
+        {
+            Debug.LogWarning("⚠️ No se encontró el TareasManager en escena.");
+        }
 
         // ❌ Esta sobra y pisaba la anterior
         // StartCoroutine(CargarMenuDerrotaTrasDelay());
@@ -115,20 +123,20 @@ public class SaludJugador : MonoBehaviour
 
 
 
-   /* public IEnumerator CargarMenuDerrotaTrasDelay()
-    {
-        yield return new WaitForSeconds(2f);
+    /* public IEnumerator CargarMenuDerrotaTrasDelay()
+     {
+         yield return new WaitForSeconds(2f);
 
-        // Mostrar panel de derrota
-        if (panelDerrota != null)
-            panelDerrota.SetActive(true);
+         // Mostrar panel de derrota
+         if (panelDerrota != null)
+             panelDerrota.SetActive(true);
 
-        // Opcional: esperar un poco más antes de cargar el menú
-        yield return new WaitForSeconds(3f);
+         // Opcional: esperar un poco más antes de cargar el menú
+         yield return new WaitForSeconds(3f);
 
-        // Cargar menú principal
-        SceneManager.LoadScene("MenuPrincipal");
-    }*/
+         // Cargar menú principal
+         SceneManager.LoadScene("MenuPrincipal");
+     }*/
 
 
 

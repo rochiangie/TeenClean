@@ -5,8 +5,6 @@ using TMPro;
 using System.Collections;
 using UnityEngine.SceneManagement;
 
-
-
 public class Madre : MonoBehaviour
 {
     [Header("Navegación")]
@@ -30,11 +28,9 @@ public class Madre : MonoBehaviour
 
     private bool enDialogo = false;
     private Transform jugador;
-    //public GameObject PanelVictoria => panelWin;
 
     public bool interactuableDesdeSegundaVez = true;
     public string tagInteractuable = "InteractuableMadre";
-
 
     private bool primeraInteraccion = true;
     private bool jugadorEnRango = false;
@@ -47,7 +43,6 @@ public class Madre : MonoBehaviour
             agente.updateRotation = false;
             agente.updateUpAxis = false;
 
-            // 👉 Asignar velocidad según la dificultad desde TareasManager
             if (TareasManager.Instance != null)
             {
                 float velocidad = TareasManager.Instance.ObtenerVelocidadMadre();
@@ -56,7 +51,7 @@ public class Madre : MonoBehaviour
             }
             else
             {
-                agente.speed = 3f; // valor por defecto
+                agente.speed = 3f;
             }
         }
 
@@ -70,7 +65,6 @@ public class Madre : MonoBehaviour
         IrAlSiguientePunto();
     }
 
-
     void Update()
     {
         if (agente != null && agente.isOnNavMesh && !enDialogo && !agente.pathPending &&
@@ -83,11 +77,10 @@ public class Madre : MonoBehaviour
             DetenerMovimiento();
             IniciarDialogo();
         }
-
     }
+
     void LateUpdate()
     {
-        // Mantener la madre siempre visible en Z = 0
         Vector3 pos = transform.position;
         pos.z = 0f;
         transform.position = pos;
@@ -100,10 +93,6 @@ public class Madre : MonoBehaviour
                 IrAlSiguientePunto();
             }
         }
-
-        // También podés fijar la altura (Y) si flota o se hunde
-        // pos.y = Mathf.Clamp(pos.y, -5f, 5f);
-        // transform.position = pos;
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -153,15 +142,12 @@ public class Madre : MonoBehaviour
         {
             agente.SetDestination(puntosRuta[indiceRuta].position);
             Debug.Log("📍 Madre va hacia el punto " + indiceRuta);
-            // No cambies indiceRuta acá todavía
         }
         else
         {
             Debug.LogWarning("⚠️ No se pudo mover: ruta vacía o no está en NavMesh");
         }
     }
-
-
 
     public void IniciarDialogo()
     {
@@ -193,7 +179,9 @@ public class Madre : MonoBehaviour
             OcultarBotones(botonSi, botonNo, botonEntendi, botonNoEntendi);
             MostrarBotones(botonCerrar);
 
-            StartCoroutine(CargarCreditosTrasDelay(1.5f)); // Espera antes de cambiar de escena
+            // 🎉 Llama al canvas final feliz
+            if (TareasManager.Instance != null)
+                TareasManager.Instance.MostrarCanvasHappyEnding();
         }
         else
         {
@@ -207,9 +195,6 @@ public class Madre : MonoBehaviour
         botonCerrar.onClick.RemoveAllListeners();
         botonCerrar.onClick.AddListener(CerrarDialogo);
     }
-
-    
-
 
     private void ResponderNo()
     {
@@ -258,21 +243,6 @@ public class Madre : MonoBehaviour
     {
         foreach (var btn in botones)
             if (btn != null) btn.gameObject.SetActive(true);
-    }
-
-    private IEnumerator MostrarPanelVictoriaConDelay(float delay)
-    {
-        yield return new WaitForSeconds(delay);
-        if (TareasManager.Instance != null && TareasManager.Instance.PanelVictoria != null)
-        {
-            TareasManager.Instance.PanelVictoria.SetActive(true);
-        }
-        StartCoroutine(TareasManager.Instance.CargarCreditosFinalesTrasDelay(2f));
-    }
-    private IEnumerator CargarCreditosTrasDelay(float delay)
-    {
-        yield return new WaitForSeconds(delay);
-        UnityEngine.SceneManagement.SceneManager.LoadScene("CreditosFinales");
     }
 
     private void OcultarBotones(params Button[] botones)

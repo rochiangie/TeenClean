@@ -7,13 +7,44 @@ using System.Collections;
 
 public class TareasManager : MonoBehaviour
 {
-    // === SINGLETON PATTERN ===
     public static TareasManager Instance { get; private set; }
+
+    [Header("Audio")]
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioClip sonidoTareaCompletada;
 
+    [Header("FX visual")]
     [SerializeField] private GameObject particulasTareaCompletada;
-    [SerializeField] private Transform jugador; // Asignalo en el Inspector
+    [SerializeField] private Transform jugador;
+
+    [Header("UI")]
+    [SerializeField] private GameObject panelTasks;
+    [SerializeField] private GameObject canvasHappyEnding;
+
+    [Header("Toggles de Tasks")]
+    [SerializeField] private Toggle RopaToggle;
+    [SerializeField] private Toggle PlatosToggle;
+    [SerializeField] private Toggle TareaToggle;
+    [SerializeField] private Toggle CamaToggle;
+    [SerializeField] private Toggle PolloToggle;
+
+    private bool ropaCompletada = false;
+    private bool platosCompletados = false;
+    private bool tareaCompletada = false;
+    private bool camaCompletada = false;
+    private bool polloCompletado = false;
+
+    private int ropaContador = 0;
+    private int platosContador = 0;
+    public int tareaContador = 0;
+
+    private const int tareasNecesariasRopa = 2;
+    private const int tareasNecesariasPlatos = 2;
+    private const int tareasNecesariasTarea = 1;
+
+    public enum Dificultad { Easy, Medium, Hard }
+    [Header("Dificultad del juego")]
+    public Dificultad dificultadActual = Dificultad.Medium;
 
     private void Awake()
     {
@@ -48,36 +79,16 @@ public class TareasManager : MonoBehaviour
         }
     }
 
-    [Header("Panel de Tasks")]
-    [SerializeField] private GameObject panelTasks;
-    [SerializeField] private GameObject panelWin;
+    void Start()
+    {
+        if (RopaToggle != null) { RopaToggle.interactable = false; RopaToggle.isOn = false; }
+        if (PlatosToggle != null) { PlatosToggle.interactable = false; PlatosToggle.isOn = false; }
+        if (TareaToggle != null) { TareaToggle.interactable = false; TareaToggle.isOn = false; }
+        if (CamaToggle != null) { CamaToggle.interactable = false; CamaToggle.isOn = false; }
 
-    [Header("Toggles de Tasks")]
-    [SerializeField] private Toggle RopaToggle;
-    [SerializeField] private Toggle PlatosToggle;
-    [SerializeField] private Toggle TareaToggle;
-    [SerializeField] private Toggle CamaToggle;
-    [SerializeField] private Toggle PolloToggle;
-
-    private bool polloCompletado = false;
-
-    private int ropaContador = 0;
-    private int platosContador = 0;
-    public int tareaContador = 0;
-
-    private const int tareasNecesariasRopa = 2;
-    private const int tareasNecesariasPlatos = 2;
-    private const int tareasNecesariasTarea = 1;
-
-    private bool ropaCompletada = false;
-    private bool platosCompletados = false;
-    private bool tareaCompletada = false;
-    private bool camaCompletada = false;
-
-    public enum Dificultad { Easy, Medium, Hard }
-
-    [Header("Dificultad del juego")]
-    public Dificultad dificultadActual = Dificultad.Medium;
+        if (panelTasks != null) panelTasks.SetActive(false);
+        if (canvasHappyEnding != null) canvasHappyEnding.SetActive(false);
+    }
 
     public float ObtenerVelocidadMadre()
     {
@@ -88,19 +99,6 @@ public class TareasManager : MonoBehaviour
             case Dificultad.Hard: return 4f;
             default: return 3f;
         }
-    }
-
-    void Start()
-    {
-        if (RopaToggle != null) { RopaToggle.interactable = false; RopaToggle.isOn = false; }
-        if (PlatosToggle != null) { PlatosToggle.interactable = false; PlatosToggle.isOn = false; }
-        if (TareaToggle != null) { TareaToggle.interactable = false; TareaToggle.isOn = false; }
-        if (CamaToggle != null) { CamaToggle.interactable = false; CamaToggle.isOn = false; }
-
-        if (panelTasks != null) panelTasks.SetActive(false);
-        else Debug.LogError("🚨 TareasManager: 'panelTasks' no está asignado en el Inspector.");
-
-        if (panelWin != null) panelWin.SetActive(false);
     }
 
     public void CompletarTarea(string tarea)
@@ -121,6 +119,7 @@ public class TareasManager : MonoBehaviour
                     Debug.Log("✅ Tarea de ropa completada.");
                 }
                 break;
+
             case "Platos":
                 platosContador++;
                 if (platosContador >= tareasNecesariasPlatos && !platosCompletados)
@@ -130,6 +129,7 @@ public class TareasManager : MonoBehaviour
                     Debug.Log("✅ Tarea de platos completada.");
                 }
                 break;
+
             case "Tarea":
                 if (!tareaCompletada)
                 {
@@ -138,6 +138,7 @@ public class TareasManager : MonoBehaviour
                     Debug.Log("✅ Tarea académica completada.");
                 }
                 break;
+
             case "Cama":
                 if (!camaCompletada)
                 {
@@ -146,21 +147,21 @@ public class TareasManager : MonoBehaviour
                     Debug.Log("✅ Cama hecha.");
                 }
                 break;
+
             case "Pollo":
                 PolloToggle.isOn = true;
                 polloCompletado = true;
                 break;
+
             default:
                 Debug.LogWarning($"⚠️ Tarea '{tarea}' no reconocida.");
                 break;
         }
 
-        // Efecto visual de partículas
         if (particulasTareaCompletada != null && jugador != null)
         {
             Vector3 pos = jugador.position + new Vector3(0, 1.5f, 0);
             GameObject fx = Instantiate(particulasTareaCompletada, pos, Quaternion.identity);
-            fx.transform.localScale = Vector3.one * 3f;
             Destroy(fx, 2f);
         }
 
@@ -172,20 +173,44 @@ public class TareasManager : MonoBehaviour
         if (ropaCompletada && platosCompletados && tareaCompletada && camaCompletada && polloCompletado)
         {
             Debug.Log("✅ Todas las tareas completadas.");
-            if (panelWin != null)
-            {
-                panelWin.SetActive(true);
-                StartCoroutine(CargarCreditosFinalesTrasDelay(3f));
-            }
+            // Ya no mostramos ningún panel aquí, solo espera interacción con la madre
         }
     }
 
-    public class FinDelJuego : MonoBehaviour
+    public void MostrarCanvasHappyEnding()
     {
-        public void IrAEscenaEnding()
+        if (canvasHappyEnding != null)
         {
-            SceneManager.LoadScene("Ending");
+            Debug.Log("🟢 Activando el canvasHappyEnding...");
+            canvasHappyEnding.SetActive(true);
+            Debug.Log($"✅ Activo en jerarquía después de SetActive: {canvasHappyEnding.activeInHierarchy}");
+
+            // Evitamos ocultarlo por ahora
+            // StartCoroutine(MostrarCanvasPorUnosSegundos(5f));
         }
+        else
+        {
+            Debug.LogWarning("⚠️ canvasHappyEnding está null.");
+        }
+    }
+
+
+
+    private IEnumerator MostrarCanvasPorUnosSegundos(float segundos)
+    {
+        yield return new WaitForSecondsRealtime(segundos); // ⏳ Usa tiempo real, no depende del Time.timeScale
+
+        // Restaurar el tiempo si lo pausaste
+        // Time.timeScale = 1f;
+
+        SceneManager.LoadScene("CreditosFinales");
+    }
+
+
+    private IEnumerator EsperarYIrACreditos()
+    {
+        yield return new WaitForSeconds(6f);
+        SceneManager.LoadScene("CreditosFinales");
     }
 
     public bool TodasLasTareasCompletadasParaMadre()
@@ -205,7 +230,6 @@ public class TareasManager : MonoBehaviour
             if (gabinetesConRopa.Count >= tareasNecesariasRopa)
             {
                 CompletarTarea("Ropa");
-                Debug.Log("✅ Tarea de ropa completada por llenar gabinetes.");
             }
         }
     }
@@ -220,22 +244,44 @@ public class TareasManager : MonoBehaviour
         platosCompletados = false;
         tareaCompletada = false;
         camaCompletada = false;
+        polloCompletado = false;
 
         if (RopaToggle != null) RopaToggle.isOn = false;
         if (PlatosToggle != null) PlatosToggle.isOn = false;
         if (TareaToggle != null) TareaToggle.isOn = false;
         if (CamaToggle != null) CamaToggle.isOn = false;
 
-        Debug.Log("🔄 Tareas reiniciadas.");
+        if (canvasHappyEnding != null) canvasHappyEnding.SetActive(false);
 
-        if (panelWin != null) panelWin.SetActive(false);
+        Debug.Log("🔄 Tareas reiniciadas.");
     }
 
-    public GameObject PanelVictoria => panelWin;
+    public void CompletarTodasLasTareasDebug()
+    {
+        Debug.Log("🧪 Completando todas las tareas desde DEBUG.");
 
+        ropaContador = tareasNecesariasRopa;
+        platosContador = tareasNecesariasPlatos;
+        tareaContador = tareasNecesariasTarea;
+
+        ropaCompletada = true;
+        platosCompletados = true;
+        tareaCompletada = true;
+        camaCompletada = true;
+        polloCompletado = true;
+
+        if (RopaToggle != null) RopaToggle.isOn = true;
+        if (PlatosToggle != null) PlatosToggle.isOn = true;
+        if (TareaToggle != null) TareaToggle.isOn = true;
+        if (CamaToggle != null) CamaToggle.isOn = true;
+        if (PolloToggle != null) PolloToggle.isOn = true;
+
+        VerificarVictoria();
+    }
     public IEnumerator CargarCreditosFinalesTrasDelay(float delay)
     {
         yield return new WaitForSeconds(delay);
-        UnityEngine.SceneManagement.SceneManager.LoadScene("CreditosFinales");
+        SceneManager.LoadScene("CreditosFinales");
     }
+
 }
