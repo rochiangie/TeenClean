@@ -211,7 +211,7 @@ public class Madre : MonoBehaviour
 
     private void ResponderNo()
     {
-        textoDialogo.text = "Debes lavar los platos, la ropa, sacar el pollo, guardar todo y luego chequear conmigo.\n¿Entendiste?";
+        textoDialogo.text = "Debes lavar los platos, la ropa, sacar el pollo, hacer la cama, guardar todo y luego chequear conmigo.\n¿Entendiste?";
 
         MostrarBotones(botonEntendi, botonNoEntendi, botonCerrar);
         OcultarBotones(botonSi, botonNo);
@@ -226,7 +226,7 @@ public class Madre : MonoBehaviour
 
         botonNoEntendi.onClick.AddListener(() =>
         {
-            textoDialogo.text = "No te preocupes... pero no es tan difícil eh 😅";
+            textoDialogo.text = "Ni que fuera tan difìcil 😅";
             MostrarBotones(botonCerrar);
             OcultarBotones(botonEntendi, botonNoEntendi);
             botonCerrar.onClick.RemoveAllListeners();
