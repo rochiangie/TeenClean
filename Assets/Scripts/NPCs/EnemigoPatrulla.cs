@@ -38,6 +38,8 @@ public class EnemigoPatrulla : MonoBehaviour
     private int saludActual;
     private bool estaMuerto = false;
 
+    private bool jugadorEnRango = false;
+
     void Start()
     {
         animator = GetComponent<Animator>();
@@ -72,9 +74,14 @@ public class EnemigoPatrulla : MonoBehaviour
 
     void Update()
     {
-        Patrullar();
-        VerificarJugadorEnZona();
+        if (!jugadorEnRango)
+        {
+            Patrullar();
+        }
+
+        VerificarJugadorEnZona(); // Esto se mantiene siempre
     }
+
 
     void Patrullar()
     {
@@ -191,6 +198,16 @@ public class EnemigoPatrulla : MonoBehaviour
         Destroy(gameObject, 2f);
     }
 
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            jugadorEnRango = true;
+            rb.velocity = Vector2.zero; // Detener movimiento
+            Debug.Log("🚪 Enemigo detectó colisión con el jugador y se detiene");
+        }
+    }
+
     void OnTriggerStay2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
@@ -212,5 +229,13 @@ public class EnemigoPatrulla : MonoBehaviour
         }
     }
 
+    void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            jugadorEnRango = false;
+            Debug.Log("🚶‍♂️ Enemigo reanuda patrullaje");
+        }
+    }
 
 }
